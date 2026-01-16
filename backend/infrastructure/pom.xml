@@ -69,6 +69,17 @@
             <version>1.2.1</version>
             <scope>test</scope>
         </dependency>
+        <!-- Google Gmail API -->
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>1.35.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-gmail</artifactId>
+            <version>v1-rev20220404-1.32.1</version>
+        </dependency>
     </dependencies>
 
     <build>

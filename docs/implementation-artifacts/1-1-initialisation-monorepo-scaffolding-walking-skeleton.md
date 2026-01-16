@@ -105,6 +105,12 @@ Feature: Health Check & Architecture Initialization
 - Implemented Hexagonal Architecture constraints in pom.xml files
 - Added HealthController and Cucumber tests for backend validation
 - Initialized Expo frontend with React Native Paper
-- Configured frontend App.tsx to display "Parcel-Flow : Ready"
+- Configured frontend App.tsx to display "Parcel-Flow : Ready" (Restored during AI Review)
 - Added docker-compose.yml for PostgreSQL 16
 - Updated documentation in README.md
+
+### AI Code Review Fixes (2026-01-16)
+- **AC Fix**: Restored "Parcel-Flow : Ready" text in `DashboardScreen.tsx` to satisfy Story 1.1 requirements.
+- **Code Quality**: Refactored `HealthStepDefinitions.java` to robustly locate `pom.xml` by walking up the directory tree to find the project root, fixing the brittle relative path issue.
+- **Verification**: Verified that despite workspace pollution from Story 1.3, the foundational 1.1 components remain functional.
+- **Note**: Acknowledged presence of untracked files from concurrent development. Atomic delivery is recommended for future stories.

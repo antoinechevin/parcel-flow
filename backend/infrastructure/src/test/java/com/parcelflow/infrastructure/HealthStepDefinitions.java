@@ -49,19 +49,29 @@ public class HealthStepDefinitions {
 
     @When("I analyze the dependencies of the {string} module")
     public void i_analyze_the_dependencies_of_the_module(String moduleName) throws IOException {
-        // Robustly finding the domain pom relative to infrastructure execution context
-        // Try multiple paths to be safe (IDE vs Maven CLI)
-        java.nio.file.Path pomPath = Paths.get("../domain/pom.xml");
-        if (!Files.exists(pomPath)) {
-             pomPath = Paths.get("backend/domain/pom.xml");
+        // Robustly finding the domain pom by locating project root first
+        java.nio.file.Path currentPath = Paths.get("").toAbsolutePath();
+        java.nio.file.Path rootPath = currentPath;
+        
+        // Walk up until we find .git or mvnw, indicating project root
+        while (rootPath != null && !Files.exists(rootPath.resolve(".git")) && !Files.exists(rootPath.resolve("mvnw"))) {
+            rootPath = rootPath.getParent();
         }
-        if (!Files.exists(pomPath)) {
-            // Fallback for when running inside infrastructure directory
-            pomPath = Paths.get("../../domain/pom.xml");
+
+        if (rootPath == null) {
+            // Fallback if root not found (unlikely in valid project)
+            rootPath = Paths.get("../.."); 
+        }
+
+        // Handle case where root might be the 'backend' folder itself or the monorepo root
+        java.nio.file.Path domainPomPath = rootPath.resolve("backend/domain/pom.xml");
+        if (!Files.exists(domainPomPath)) {
+             // If we are already in backend root
+             domainPomPath = rootPath.resolve("domain/pom.xml");
         }
         
-        assertThat(pomPath).exists();
-        domainPomContent = Files.readString(pomPath);
+        assertThat(domainPomPath).exists();
+        domainPomContent = Files.readString(domainPomPath);
     }
 
     @Then("it should only depend on standard Java libraries")

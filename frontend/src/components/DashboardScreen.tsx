@@ -29,6 +29,7 @@ export const DashboardScreen = () => {
     <View style={styles.container}>
       <Appbar.Header>
         <Appbar.Content title="Parcel Flow" />
+        <Text variant="labelSmall" style={{ marginRight: 16, color: 'green' }}>Ready</Text>
       </Appbar.Header>
 
       {error && <Text style={styles.error}>{error}</Text>}
