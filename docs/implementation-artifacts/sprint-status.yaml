@@ -42,7 +42,7 @@ story_location: docs/implementation-artifacts
 development_status:
   epic-1: in-progress
   1-1-initialisation-monorepo-scaffolding-walking-skeleton: done
-  1-2-coeur-du-domaine-colis-creation-liste: ready-for-dev
+  1-2-coeur-du-domaine-colis-creation-liste: done
   epic-1-retrospective: optional
 
   epic-2: backlog

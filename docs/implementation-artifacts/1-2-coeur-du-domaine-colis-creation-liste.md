@@ -2,7 +2,7 @@
 
 Epic 1 - Fondations & MVP
 Date 2026-01-15
-Status READY FOR DEV
+Status DONE
 
 ## 1. Description (User Story)
 En tant que Utilisateur,
@@ -44,31 +44,31 @@ Feature Gestion des Colis
 ## 4. Tâches Techniques
 
 ### Backend (Java 21  Spring Boot  Hexagonal)
-- [ ] Domain Layer (Pure Java)
-    - [ ] Créer le record `ParcelId`.
-    - [ ] Créer l'entité `Parcel` (avec validation métier  ID et Label non vides).
-    - [ ] Définir le Port de sortie  `ParcelRepository` (Interface).
-- [ ] Application Layer
-    - [ ] Créer le Port d'entrée (Use Case Interface)  `CreateParcelUseCase`, `ListParcelsUseCase`.
-    - [ ] Implémenter les services  `ParcelService` (implémente les Use Cases).
-- [ ] Infrastructure Layer (Adapters)
-    - [ ] Persistence Implémenter `PostgresParcelRepositoryAdapter` (Entity JPA - Mapper - Domain Object).
-    - [ ] API Créer `ParcelController` (REST) avec DTOs (`CreateParcelRequest`, `ParcelResponse`).
-    - [ ] Config Mapper les Beans du domaine dans une configuration Spring (`DomainConfig`).
-- [ ] Tests
-    - [ ] Implémenter les Step Definitions Cucumber pour valider les AC.
-    - [ ] Ajouter un test d'architecture (ArchUnit) pour vérifier que le `Domain` ne dépend pas de `Infrastructure`.
+- [x] Domain Layer (Pure Java)
+    - [x] Créer le record `ParcelId`.
+    - [x] Créer l'entité `Parcel` (avec validation métier  ID et Label non vides).
+    - [x] Définir le Port de sortie  `ParcelRepository` (Interface).
+- [x] Application Layer
+    - [x] Créer le Port d'entrée (Use Case Interface)  `CreateParcelUseCase`, `ListParcelsUseCase`.
+    - [x] Implémenter les services  `ParcelService` (implémente les Use Cases).
+- [x] Infrastructure Layer (Adapters)
+    - [x] Persistence Implémenter `PostgresParcelRepositoryAdapter` (Entity JPA - Mapper - Domain Object).
+    - [x] API Créer `ParcelController` (REST) avec DTOs (`CreateParcelRequest`, `ParcelResponse`).
+    - [x] Config Mapper les Beans du domaine dans une configuration Spring (`DomainConfig`).
+- [x] Tests
+    - [x] Implémenter les Step Definitions Cucumber pour valider les AC.
+    - [x] Ajouter un test d'architecture (ArchUnit) pour vérifier que le `Domain` ne dépend pas de `Infrastructure`.
 
 ### Frontend (React Native  Expo)
-- [ ] API Client
-    - [ ] Créer le service `apiparcels.ts` (fetchaxios).
-- [ ] State Management (Zustand)
-    - [ ] Créer le store `useParcelStore` (actions `fetchParcels`, `addParcel`).
-- [ ] UI (Screens)
-    - [ ] DashboardScreen  Afficher une `FlatList` des colis (Card avec Titre, ID, Statut).
-    - [ ] AddParcelModal  Formulaire (TextInput) pour ajouter un colis manuellement.
-- [ ] Validation Visuelle
-    - [ ] Vérifier le bon affichage de la liste et le rafraîchissement après ajout.
+- [x] API Client
+    - [x] Créer le service `apiparcels.ts` (fetchaxios).
+- [x] State Management (Zustand)
+    - [x] Créer le store `useParcelStore` (actions `fetchParcels`, `addParcel`).
+- [x] UI (Screens)
+    - [x] DashboardScreen  Afficher une `FlatList` des colis (Card avec Titre, ID, Statut).
+    - [x] AddParcelModal  Formulaire (TextInput) pour ajouter un colis manuellement.
+- [x] Validation Visuelle
+    - [x] Vérifier le bon affichage de la liste et le rafraîchissement après ajout.
 
 ## 5. Dev Notes (Instructions pour l'IA)
 
@@ -84,3 +84,51 @@ Feature Gestion des Colis
 ### Definition of Done
 1.  `mvn verify` passe (Tests Unitaires + Cucumber + ArchUnit).
 2.  L'application mobile affiche les données venant du Backend local.
+
+## 6. Dev Agent Record
+
+### File List
+- `backend/domain/src/main/java/com/parcelflow/domain/model/ParcelId.java`
+- `backend/domain/src/main/java/com/parcelflow/domain/model/ParcelStatus.java`
+- `backend/domain/src/main/java/com/parcelflow/domain/model/Parcel.java`
+- `backend/domain/src/main/java/com/parcelflow/domain/port/ParcelRepository.java`
+- `backend/domain/src/test/java/com/parcelflow/domain/model/ParcelTest.java`
+- `backend/application/pom.xml`
+- `backend/application/src/main/java/com/parcelflow/application/usecase/CreateParcelUseCase.java`
+- `backend/application/src/main/java/com/parcelflow/application/usecase/ListParcelsUseCase.java`
+- `backend/application/src/main/java/com/parcelflow/application/service/ParcelService.java`
+- `backend/application/src/test/java/com/parcelflow/application/service/ParcelServiceTest.java`
+- `backend/infrastructure/pom.xml`
+- `backend/infrastructure/src/main/java/com/parcelflow/infrastructure/adapter/persistence/ParcelEntity.java`
+- `backend/infrastructure/src/main/java/com/parcelflow/infrastructure/adapter/persistence/JpaParcelRepository.java`
+- `backend/infrastructure/src/main/java/com/parcelflow/infrastructure/adapter/persistence/ParcelMapper.java`
+- `backend/infrastructure/src/main/java/com/parcelflow/infrastructure/adapter/persistence/PostgresParcelRepositoryAdapter.java`
+- `backend/infrastructure/src/main/java/com/parcelflow/infrastructure/config/DomainConfig.java`
+- `backend/infrastructure/src/main/java/com/parcelflow/infrastructure/adapter/web/ParcelController.java`
+- `backend/infrastructure/src/main/java/com/parcelflow/infrastructure/adapter/web/CreateParcelRequest.java`
+- `backend/infrastructure/src/main/java/com/parcelflow/infrastructure/adapter/web/ParcelResponse.java`
+- `backend/infrastructure/src/test/resources/features/parcel_management.feature`
+- `backend/infrastructure/src/test/java/com/parcelflow/infrastructure/ParcelStepDefinitions.java`
+- `backend/infrastructure/src/test/java/com/parcelflow/infrastructure/ArchitectureTest.java`
+- `frontend/src/api/parcels.ts`
+- `frontend/src/store/useParcelStore.ts`
+- `frontend/src/components/DashboardScreen.tsx`
+- `frontend/App.tsx`
+
+### Change Log
+- Implemented core Domain model: Parcel, ParcelId, ParcelStatus
+- Added domain validations (null checks, empty checks)
+- Defined ParcelRepository output port
+- Added unit tests for Parcel creation and validation
+- Implemented Application Layer: CreateParcelUseCase, ListParcelsUseCase, ParcelService
+- Added unit tests for ParcelService using Mockito
+- Implemented Infrastructure Layer: ParcelEntity, JpaParcelRepository, PostgresParcelRepositoryAdapter
+- Implemented ParcelMapper to map between Entity and Domain
+- Configured DomainConfig for ParcelService injection
+- Implemented ParcelController with DTOs
+- Added H2 dependency for testing
+- Implemented Cucumber tests for end-to-end scenario validation
+- Implemented Architecture Tests with ArchUnit
+- Implemented Frontend API client (Axios)
+- Implemented Frontend State Management (Zustand)
+- Implemented DashboardScreen with List and Add Modal (React Native Paper)
