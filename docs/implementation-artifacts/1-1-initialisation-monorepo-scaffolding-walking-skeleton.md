@@ -5,7 +5,7 @@
 | **Epic** | Epic 1 : La Fondation "Clean Arch" & DevOps |
 | **Priorité** | **CRITICAL (Blocker)** |
 | **Estim.** | 2 Story Points |
-| **Statut** | **READY FOR DEV** |
+| **Statut** | **DONE** |
 
 ## 1. User Story
 **En tant que** Lead Developer (Supervisor),
@@ -52,20 +52,20 @@ Feature: Health Check & Architecture Initialization
 ```
 
 ### B. Frontend - Validation Visuelle
-* [ ] L'application Expo s'initialise sans erreur (`npx expo start`).
-* [ ] L'écran d'accueil affiche un texte "Parcel-Flow : Ready" stylisé avec **React Native Paper** (vérification que la librairie est bien linkée).
-* [ ] Le linter (ESLint/Prettier) est configuré et passe sans erreur.
+* [x] L'application Expo s'initialise sans erreur (`npx expo start`).
+* [x] L'écran d'accueil affiche un texte "Parcel-Flow : Ready" stylisé avec **React Native Paper** (vérification que la librairie est bien linkée).
+* [x] Le linter (ESLint/Prettier) est configuré et passe sans erreur.
 
 ### C. Infrastructure Locale
-* [ ] Un fichier `docker-compose.yml` est présent à la racine et permet de lancer une base PostgreSQL 16 (vide pour l'instant, mais connectable).
+* [x] Un fichier `docker-compose.yml` est présent à la racine et permet de lancer une base PostgreSQL 16 (vide pour l'instant, mais connectable).
 
 ## 4. Tâches Techniques (Pour l'Agent Dev)
 
-1.  **Initialisation Git & Monorepo :**
+1.  **[x] Initialisation Git & Monorepo :**
     * Créer le dossier racine et initialiser git.
     * Créer le `.gitignore` global (ignorant `node_modules`, `target`, `.idea`, etc.).
 
-2.  **Scaffolding Backend (Maven/Gradle) :**
+2.  **[x] Scaffolding Backend (Maven/Gradle) :**
     * Générer un projet Multi-module (Parent + 3 sous-modules : `domain`, `application`, `infrastructure`).
     * **Module Domain :** `pom.xml` vide de dépendances Spring. Juste JUnit/AssertJ.
     * **Module Infrastructure :** Contient la dépendance Spring Boot Starter Web et dépend de `application`.
@@ -73,11 +73,38 @@ Feature: Health Check & Architecture Initialization
     * Implémenter un endpoint REST simple (`/api/health`) dans `infrastructure` pour valider le démarrage.
     * Mettre en place Cucumber pour exécuter le Gherkin ci-dessus.
 
-3.  **Scaffolding Frontend :**
+3.  **[x] Scaffolding Frontend :**
     * Initialiser avec `npx create-expo-app frontend --template blank-typescript`.
     * Installer `react-native-paper` et ses dépendances.
     * Configurer le `PaperProvider` dans `_layout.tsx` ou `App.tsx`.
     * Créer une page simple affichant le message de validation.
 
-4.  **Documentation :**
+4.  **[x] Documentation :**
     * Créer un `README.md` racine expliquant comment lancer le Back et le Front localement.
+
+## 5. Dev Agent Record
+
+### File List
+- `.gitignore`
+- `README.md`
+- `docker-compose.yml`
+- `backend/pom.xml`
+- `backend/domain/pom.xml`
+- `backend/application/pom.xml`
+- `backend/infrastructure/pom.xml`
+- `backend/infrastructure/src/main/java/com/parcelflow/infrastructure/HealthController.java`
+- `backend/infrastructure/src/test/java/com/parcelflow/infrastructure/HealthStepDefinitions.java`
+- `backend/infrastructure/src/test/resources/features/health.feature`
+- `frontend/package.json`
+- `frontend/App.tsx`
+- `frontend/app.json`
+
+### Change Log
+- Initialized monorepo structure with git and .gitignore
+- Created Spring Boot multi-module backend (domain, application, infrastructure)
+- Implemented Hexagonal Architecture constraints in pom.xml files
+- Added HealthController and Cucumber tests for backend validation
+- Initialized Expo frontend with React Native Paper
+- Configured frontend App.tsx to display "Parcel-Flow : Ready"
+- Added docker-compose.yml for PostgreSQL 16
+- Updated documentation in README.md
