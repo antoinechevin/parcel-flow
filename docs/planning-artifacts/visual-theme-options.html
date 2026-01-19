@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parcel-Flow Visual Theme Options</title>
+    <style>
+        :root {
+            /* Base Spacing */
+            --spacing-unit: 8px;
+            
+            /* Fonts */
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        .theme-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .theme-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            width: 320px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .device-frame {
+            border: 8px solid #333;
+            border-radius: 24px;
+            height: 600px;
+            width: 100%;
+            background-color: var(--bg-color);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- UI Components --- */
+        .app-bar {
+            background-color: var(--surface-color);
+            padding: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .app-bar h3 {
+            margin: 0;
+            color: var(--text-primary);
+            font-size: 18px;
+        }
+
+        .content {
+            padding: 16px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .parcel-card {
+            background-color: var(--surface-color);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 6px solid transparent;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .parcel-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parcel-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .parcel-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .status-chip {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* --- Theme 1: Professional Utility --- */
+        .theme-utility {
+            --bg-color: #f0f2f5;
+            --surface-color: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --primary-color: #0066cc;
+            --danger-color: #d32f2f;  /* Material Red */
+            --warning-color: #ed6c02; /* Material Orange */
+            --success-color: #2e7d32; /* Material Green */
+        }
+
+        /* --- Theme 2: Modern Calm --- */
+        .theme-calm {
+            --bg-color: #fafafa;
+            --surface-color: #ffffff;
+            --text-primary: #2d3436;
+            --text-secondary: #636e72;
+            --primary-color: #6c5ce7;
+            --danger-color: #ff7675;  /* Soft Red */
+            --warning-color: #fdcb6e; /* Soft Orange */
+            --success-color: #55efc4; /* Soft Green */
+        }
+
+        /* --- Theme 3: Dark High Contrast (OLED) --- */
+        .theme-dark {
+            --bg-color: #000000;
+            --surface-color: #121212;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --primary-color: #90caf9;
+            --danger-color: #ff5252;  /* Neon Red */
+            --warning-color: #ffab40; /* Neon Orange */
+            --success-color: #69f0ae; /* Neon Green */
+        }
+
+        .btn-fab {
+            position: absolute;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Parcel-Flow Visual Directions</h1>
+    <p style="text-align: center; margin-bottom: 40px;">Compare how the "Urgency" concept feels in different visual styles.</p>
+
+    <div class="theme-container">
+
+        <!-- Theme 1 -->
+        <div class="theme-card theme-utility">
+            <h2 style="color: #0066cc;">1. Professional Utility</h2>
+            <p>Clean, standard, trustworthy. Uses standard Material colors.</p>
+            <div class="device-frame">
+                <div class="app-bar">
+                    <h3>My Parcels</h3>
+                    <span style="font-size: 20px;">👤</span>
+                </div>
+                <div class="content">
+                    <!-- Urgent Item -->
+                    <div class="parcel-card" style="border-left-color: var(--danger-color);">
+                        <div class="parcel-info">
+                            <span class="parcel-title">Vinted (Shoes)</span>
+                            <span class="parcel-subtitle">Expires: Tomorrow!</span>
+                        </div>
+                        <span class="status-chip" style="background-color: var(--danger-color);">URGENT</span>
+                    </div>
+
+                    <!-- Warning Item -->
+                    <div class="parcel-card" style="border-left-color: var(--warning-color);">
+                        <div class="parcel-info">
+                            <span class="parcel-title">Mondial Relay</span>
+                            <span class="parcel-subtitle">Expires: 3 days</span>
+                        </div>
+                        <span class="status-chip" style="background-color: var(--warning-color);">SOON</span>
+                    </div>
+
+                    <!-- Safe Item -->
+                    <div class="parcel-card" style="border-left-color: var(--success-color);">
+                        <div class="parcel-info">
+                            <span class="parcel-title">Amazon</span>
+                            <span class="parcel-subtitle">Expires: 10 days</span>
+                        </div>
+                        <span class="status-chip" style="background-color: var(--success-color);">SAFE</span>
+                    </div>
+                </div>
+                <div class="btn-fab">+</div>
+            </div>
+        </div>
+
+        <!-- Theme 2 -->
+        <div class="theme-card theme-calm">
+            <h2 style="color: #6c5ce7;">2. Modern Calm</h2>
+            <p>Softer, pastel tones. Less aggressive, more "lifestyle".</p>
+            <div class="device-frame">
+                <div class="app-bar" style="box-shadow: none; border-bottom: 1px solid #eee;">
+                    <h3>My Parcels</h3>
+                    <span style="font-size: 20px;">👤</span>
+                </div>
+                <div class="content">
+                    <!-- Urgent Item -->
+                    <div class="parcel-card" style="border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                        <div class="parcel-info">
+                            <span class="parcel-title">Vinted (Shoes)</span>
+                            <span class="parcel-subtitle">Expires: Tomorrow!</span>
+                        </div>
+                        <span style="color: var(--danger-color); font-weight: bold;">● 24h</span>
+                    </div>
+
+                    <!-- Warning Item -->
+                    <div class="parcel-card" style="border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                        <div class="parcel-info">
+                            <span class="parcel-title">Mondial Relay</span>
+                            <span class="parcel-subtitle">Expires: 3 days</span>
+                        </div>
+                        <span style="color: var(--warning-color); font-weight: bold;">● 3d</span>
+                    </div>
+
+                    <!-- Safe Item -->
+                    <div class="parcel-card" style="border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                        <div class="parcel-info">
+                            <span class="parcel-title">Amazon</span>
+                            <span class="parcel-subtitle">Expires: 10 days</span>
+                        </div>
+                        <span style="color: var(--success-color); font-weight: bold;">● 10d</span>
+                    </div>
+                </div>
+                <div class="btn-fab" style="border-radius: 16px;">+</div>
+            </div>
+        </div>
+
+        <!-- Theme 3 -->
+        <div class="theme-card theme-dark">
+            <h2 style="color: #333;">3. Dark OLED</h2>
+            <p>High contrast, battery saver. Cyberpunk vibes.</p>
+            <div class="device-frame">
+                <div class="app-bar" style="border-bottom: 1px solid #333;">
+                    <h3>My Parcels</h3>
+                    <span style="font-size: 20px;">👤</span>
+                </div>
+                <div class="content">
+                    <!-- Urgent Item -->
+                    <div class="parcel-card" style="border: 1px solid #333;">
+                        <div class="parcel-info">
+                            <span class="parcel-title">Vinted (Shoes)</span>
+                            <span class="parcel-subtitle">Expires: Tomorrow!</span>
+                        </div>
+                        <span class="status-chip" style="background-color: transparent; border: 1px solid var(--danger-color); color: var(--danger-color);">URGENT</span>
+                    </div>
+
+                    <!-- Warning Item -->
+                    <div class="parcel-card" style="border: 1px solid #333;">
+                        <div class="parcel-info">
+                            <span class="parcel-title">Mondial Relay</span>
+                            <span class="parcel-subtitle">Expires: 3 days</span>
+                        </div>
+                        <span class="status-chip" style="background-color: transparent; border: 1px solid var(--warning-color); color: var(--warning-color);">SOON</span>
+                    </div>
+
+                    <!-- Safe Item -->
+                    <div class="parcel-card" style="border: 1px solid #333;">
+                        <div class="parcel-info">
+                            <span class="parcel-title">Amazon</span>
+                            <span class="parcel-subtitle">Expires: 10 days</span>
+                        </div>
+                        <span class="status-chip" style="background-color: transparent; border: 1px solid var(--success-color); color: var(--success-color);">SAFE</span>
+                    </div>
+                </div>
+                <div class="btn-fab" style="background-color: #333; color: var(--primary-color); border: 1px solid var(--primary-color);">+</div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

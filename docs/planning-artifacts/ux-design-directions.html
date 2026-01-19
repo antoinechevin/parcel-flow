@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parcel-Flow Design Directions</title>
+    <style>
+        :root {
+            /* Base Colors (Modern Calm + Dark OLED) */
+            --bg-color-light: #fafafa;
+            --bg-color-dark: #000000;
+            --surface-light: #ffffff;
+            --surface-dark: #121212;
+            --text-primary-light: #2d3436;
+            --text-primary-dark: #ffffff;
+            --text-secondary-light: #636e72;
+            --text-secondary-dark: #b0b0b0;
+
+            /* Semantic Traffic Light */
+            --urgent-light: #FF7675;
+            --urgent-dark: #FF5252;
+            --soon-light: #FDCB6E;
+            --soon-dark: #FFAB40;
+            --safe-light: #55EFC4;
+            --safe-dark: #69F0AE;
+            
+            /* Typography */
+            --font-family: 'Inter', -apple-system, sans-serif;
+            --spacing-unit: 8px;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, h2, h3, p { margin: 0; }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 40px;
+            justify-content: center;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .design-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .design-info {
+            margin-bottom: 20px;
+        }
+
+        .design-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .design-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        /* Device Frame */
+        .device-frame {
+            border: 12px solid #1a1a1a;
+            border-radius: 32px;
+            height: 700px;
+            overflow: hidden;
+            position: relative;
+            background: var(--bg-color-light);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .device-frame.dark-mode {
+            background: var(--bg-color-dark);
+            border-color: #333;
+        }
+
+        /* --- Components --- */
+
+        /* App Bar */
+        .app-bar {
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .dark-mode .app-bar h3 { color: white; }
+
+        /* Fab */
+        .fab {
+            position: absolute;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            background: black;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+        .dark-mode .fab {
+            background: #333;
+            border: 1px solid #555;
+        }
+
+        /* --- Direction 1: Minimal List (The Classic) --- */
+        .d1-list-item {
+            padding: 16px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .dark-mode .d1-list-item { border-color: #333; }
+        
+        .d1-status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
+
+        /* --- Direction 2: Card Stack (The Modern) --- */
+        .d2-card {
+            margin: 12px 20px;
+            padding: 16px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .dark-mode .d2-card { background: #1e1e1e; }
+
+        .d2-header {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .d2-pill {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* --- Direction 3: Big Typography (The Bold) --- */
+        .d3-item {
+            padding: 24px 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .dark-mode .d3-item { border-color: #222; }
+
+        .d3-date {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        /* --- Direction 4: Timeline View (The Chrono) --- */
+        .d4-timeline {
+            padding-left: 40px;
+            position: relative;
+        }
+        .d4-timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #eee;
+        }
+        .dark-mode .d4-timeline::before { background: #333; }
+
+        .d4-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-right: 20px;
+        }
+
+        .d4-dot {
+            position: absolute;
+            left: -25px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 1px #eee;
+        }
+        .dark-mode .d4-dot { border-color: black; box-shadow: 0 0 0 1px #333; }
+
+        /* --- Utility Classes for Colors --- */
+        .urgent-text { color: var(--urgent-light); }
+        .dark-mode .urgent-text { color: var(--urgent-dark); }
+        .urgent-bg { background-color: var(--urgent-light); color: white; }
+        
+        .soon-text { color: var(--soon-light); }
+        .dark-mode .soon-text { color: var(--soon-dark); }
+        .soon-bg { background-color: var(--soon-light); color: black; }
+        
+        .safe-text { color: var(--safe-light); }
+        .dark-mode .safe-text { color: var(--safe-dark); }
+        .safe-bg { background-color: var(--safe-light); color: black; }
+
+        .text-primary { color: var(--text-primary-light); }
+        .dark-mode .text-primary { color: var(--text-primary-dark); }
+        
+        .text-secondary { color: var(--text-secondary-light); font-size: 14px; }
+        .dark-mode .text-secondary { color: var(--text-secondary-dark); }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Parcel-Flow Design Explorations</h1>
+        <p>Comparing visual hierarchies for the core list experience</p>
+    </header>
+
+    <div class="showcase-grid">
+
+        <!-- Direction 1: Minimalist List -->
+        <div class="design-card">
+            <div class="design-info">
+                <div class="design-title">1. Minimal List (Light)</div>
+                <div class="design-desc">Classic, dense, focused on efficiency. Left-aligned status indicators. Best for scanning many items quickly.</div>
+            </div>
+            <div class="device-frame">
+                <div class="app-bar">
+                    <h3>My Parcels</h3>
+                </div>
+                
+                <div class="d1-list-item">
+                    <div style="display:flex; align-items:center;">
+                        <div class="d1-status-dot" style="background: var(--urgent-light);"></div>
+                        <div>
+                            <div class="text-primary" style="font-weight:600;">Vinted (Shoes)</div>
+                            <div class="text-secondary">Pickup Point • Expires in 24h</div>
+                        </div>
+                    </div>
+                    <div class="text-secondary">›</div>
+                </div>
+
+                <div class="d1-list-item">
+                    <div style="display:flex; align-items:center;">
+                        <div class="d1-status-dot" style="background: var(--soon-light);"></div>
+                        <div>
+                            <div class="text-primary" style="font-weight:600;">Mondial Relay</div>
+                            <div class="text-secondary">Locker • Expires in 3 days</div>
+                        </div>
+                    </div>
+                    <div class="text-secondary">›</div>
+                </div>
+
+                <div class="d1-list-item">
+                    <div style="display:flex; align-items:center;">
+                        <div class="d1-status-dot" style="background: var(--safe-light);"></div>
+                        <div>
+                            <div class="text-primary" style="font-weight:600;">Amazon</div>
+                            <div class="text-secondary">Post Office • Expires in 10 days</div>
+                        </div>
+                    </div>
+                    <div class="text-secondary">›</div>
+                </div>
+                
+                <div class="fab">+</div>
+            </div>
+        </div>
+
+        <!-- Direction 2: Card Stack (Dark OLED) -->
+        <div class="design-card">
+            <div class="design-info">
+                <div class="design-title">2. Card Stack (Dark OLED)</div>
+                <div class="design-desc">Modern, separated cards. High emphasis on "Urgency Pills". More airy, better for touch targets.</div>
+            </div>
+            <div class="device-frame dark-mode">
+                <div class="app-bar">
+                    <h3>My Parcels</h3>
+                </div>
+
+                <div class="d2-card">
+                    <div class="d2-header">
+                        <div class="d2-pill urgent-bg">24H LEFT</div>
+                        <div class="text-secondary">#839210</div>
+                    </div>
+                    <div class="text-primary" style="font-size:18px; font-weight:700;">Vinted (Shoes)</div>
+                    <div class="text-secondary">📍 Épicerie des Moines</div>
+                </div>
+
+                <div class="d2-card">
+                    <div class="d2-header">
+                        <div class="d2-pill soon-bg">3 DAYS</div>
+                        <div class="text-secondary">#119283</div>
+                    </div>
+                    <div class="text-primary" style="font-size:18px; font-weight:700;">Mondial Relay</div>
+                    <div class="text-secondary">📍 Locker 24/7</div>
+                </div>
+
+                <div class="d2-card">
+                    <div class="d2-header">
+                        <div class="d2-pill safe-bg">SAFE</div>
+                        <div class="text-secondary">#992811</div>
+                    </div>
+                    <div class="text-primary" style="font-size:18px; font-weight:700;">Amazon</div>
+                    <div class="text-secondary">📍 La Poste</div>
+                </div>
+
+                <div class="fab">+</div>
+            </div>
+        </div>
+
+        <!-- Direction 3: Typographic Focus (Light) -->
+        <div class="design-card">
+            <div class="design-info">
+                <div class="design-title">3. Typographic Urgent (Light)</div>
+                <div class="design-desc">Focus purely on the DEADLINE. The date is the hero. Very editorial look.</div>
+            </div>
+            <div class="device-frame">
+                <div class="app-bar">
+                    <h3>Timeline</h3>
+                </div>
+
+                <div class="d3-item">
+                    <div class="text-secondary" style="margin-bottom:4px; font-weight:600;">URGENT</div>
+                    <div class="d3-date urgent-text">TOMORROW</div>
+                    <div class="text-primary" style="font-size:18px; margin-top:8px;">Vinted (Shoes)</div>
+                    <div class="text-secondary">Pickup Code: 839210</div>
+                </div>
+
+                <div class="d3-item">
+                    <div class="text-secondary" style="margin-bottom:4px; font-weight:600;">SOON</div>
+                    <div class="d3-date soon-text">FRIDAY</div>
+                    <div class="text-primary" style="font-size:18px; margin-top:8px;">Mondial Relay</div>
+                    <div class="text-secondary">Pickup Code: 119283</div>
+                </div>
+
+                <div class="fab">+</div>
+            </div>
+        </div>
+
+        <!-- Direction 4: Timeline (Dark OLED) -->
+        <div class="design-card">
+            <div class="design-info">
+                <div class="design-title">4. Timeline View (Dark OLED)</div>
+                <div class="design-desc">Spatial representation of time. Good for seeing relative urgency visually.</div>
+            </div>
+            <div class="device-frame dark-mode">
+                <div class="app-bar">
+                    <h3>Upcoming</h3>
+                </div>
+
+                <div style="padding-top:20px;">
+                    <div class="d4-timeline">
+                        <div class="d4-item">
+                            <div class="d4-dot" style="background: var(--urgent-dark);"></div>
+                            <div class="urgent-text" style="font-weight:700; font-size:14px;">TOMORROW</div>
+                            <div class="text-primary" style="font-size:16px; margin-top:4px;">Vinted (Shoes)</div>
+                            <div class="text-secondary">Épicerie des Moines</div>
+                        </div>
+
+                        <div class="d4-item">
+                            <div class="d4-dot" style="background: var(--soon-dark);"></div>
+                            <div class="soon-text" style="font-weight:700; font-size:14px;">IN 3 DAYS</div>
+                            <div class="text-primary" style="font-size:16px; margin-top:4px;">Mondial Relay</div>
+                            <div class="text-secondary">Locker 24/7</div>
+                        </div>
+
+                        <div class="d4-item">
+                            <div class="d4-dot" style="background: var(--safe-dark);"></div>
+                            <div class="safe-text" style="font-weight:700; font-size:14px;">NEXT WEEK</div>
+                            <div class="text-primary" style="font-size:16px; margin-top:4px;">Amazon</div>
+                            <div class="text-secondary">La Poste</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fab">+</div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

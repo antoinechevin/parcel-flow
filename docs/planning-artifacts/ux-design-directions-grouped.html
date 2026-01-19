@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parcel-Flow Design Directions (Updated)</title>
+    <style>
+        :root {
+            /* Base Colors (Modern Calm + Dark OLED) */
+            --bg-color-light: #fafafa;
+            --bg-color-dark: #000000;
+            --surface-light: #ffffff;
+            --surface-dark: #121212;
+            --surface-variant-dark: #1e1e1e;
+            --text-primary-light: #2d3436;
+            --text-primary-dark: #ffffff;
+            --text-secondary-light: #636e72;
+            --text-secondary-dark: #b0b0b0;
+
+            /* Semantic Traffic Light */
+            --urgent-light: #FF7675;
+            --urgent-dark: #FF5252;
+            --soon-light: #FDCB6E;
+            --soon-dark: #FFAB40;
+            --safe-light: #55EFC4;
+            --safe-dark: #69F0AE;
+            
+            /* Typography */
+            --font-family: 'Inter', -apple-system, sans-serif;
+            --spacing-unit: 8px;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, h2, h3, p { margin: 0; }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 40px;
+            justify-content: center;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .design-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .design-info {
+            margin-bottom: 20px;
+        }
+
+        .design-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .design-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        /* Device Frame */
+        .device-frame {
+            border: 12px solid #1a1a1a;
+            border-radius: 32px;
+            height: 700px;
+            overflow: hidden;
+            position: relative;
+            background: var(--bg-color-light);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .device-frame.dark-mode {
+            background: var(--bg-color-dark);
+            border-color: #333;
+        }
+
+        /* App Bar */
+        .app-bar {
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .dark-mode .app-bar h3 { color: white; }
+
+        /* Fab */
+        .fab {
+            position: absolute;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            background: black;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+        .dark-mode .fab {
+            background: #333;
+            border: 1px solid #555;
+        }
+
+        /* --- Direction 2B: Location Groups (Dark OLED) --- */
+        .d2b-card {
+            margin: 12px 20px;
+            padding: 20px;
+            background: var(--surface-variant-dark);
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border: 1px solid #333;
+        }
+
+        .d2b-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid #333;
+            padding-bottom: 12px;
+            margin-bottom: 4px;
+        }
+
+        .d2b-location-icon {
+            font-size: 24px;
+            margin-right: 12px;
+        }
+
+        .d2b-location-info {
+            flex: 1;
+        }
+
+        .d2b-location-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .d2b-location-address {
+            font-size: 13px;
+            color: var(--text-secondary-dark);
+        }
+
+        .d2b-status-badge {
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* Sub-items (Parcels inside location) */
+        .d2b-parcel-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .d2b-parcel-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+        }
+
+        .d2b-parcel-name {
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .d2b-parcel-meta {
+            color: var(--text-secondary-dark);
+            font-size: 12px;
+        }
+
+        /* Utility Classes */
+        .urgent-text { color: var(--urgent-dark); }
+        .urgent-border { border: 1px solid var(--urgent-dark); color: var(--urgent-dark); }
+        
+        .soon-text { color: var(--soon-dark); }
+        .soon-border { border: 1px solid var(--soon-dark); color: var(--soon-dark); }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Parcel-Flow Design: Location Grouping</h1>
+        <p>Grouping parcels by pickup location to optimize the user journey.</p>
+    </header>
+
+    <div class="showcase-grid">
+
+        <!-- Direction 2B: Location Groups -->
+        <div class="design-card">
+            <div class="design-info">
+                <div class="design-title">2B. Location Groups (Dark OLED)</div>
+                <div class="design-desc">
+                    <strong>Concept:</strong> Cards represent PLACES, not just parcels.<br>
+                    <strong>Logic:</strong> Urgency is determined by the <em>most urgent</em> parcel at that location.<br>
+                    <strong>Benefit:</strong> "I'm going to the Locker" (1 trip, 2 parcels).
+                </div>
+            </div>
+            <div class="device-frame dark-mode">
+                <div class="app-bar">
+                    <h3>My Route</h3>
+                    <span style="color:white;">📍 Map</span>
+                </div>
+
+                <!-- Group 1: Urgent Location -->
+                <div class="d2b-card" style="border-left: 4px solid var(--urgent-dark);">
+                    <div class="d2b-header">
+                        <div style="display:flex;">
+                            <span class="d2b-location-icon">📦</span>
+                            <div class="d2b-location-info">
+                                <div class="d2b-location-name">Locker Gare de Lyon</div>
+                                <div class="d2b-location-address">Open 24/7 • 2 Parcels</div>
+                            </div>
+                        </div>
+                        <div class="d2b-status-badge urgent-border">24H LEFT</div>
+                    </div>
+                    
+                    <div class="d2b-parcel-list">
+                        <!-- Parcel 1 (The urgent one) -->
+                        <div class="d2b-parcel-item">
+                            <div>
+                                <div class="d2b-parcel-name">Vinted (Shoes)</div>
+                                <div class="d2b-parcel-meta">#839210</div>
+                            </div>
+                            <div class="urgent-text" style="font-weight:700; font-size:12px;">TOMORROW</div>
+                        </div>
+                        <!-- Parcel 2 (Less urgent, but grouped) -->
+                        <div class="d2b-parcel-item">
+                            <div>
+                                <div class="d2b-parcel-name">Amazon (Book)</div>
+                                <div class="d2b-parcel-meta">#112233</div>
+                            </div>
+                            <div class="d2b-parcel-meta">Safe (5d)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 2: Warning Location -->
+                <div class="d2b-card" style="border-left: 4px solid var(--soon-dark);">
+                    <div class="d2b-header">
+                        <div style="display:flex;">
+                            <span class="d2b-location-icon">🏪</span>
+                            <div class="d2b-location-info">
+                                <div class="d2b-location-name">Épicerie des Moines</div>
+                                <div class="d2b-location-address">Closes 19:00 • 1 Parcel</div>
+                            </div>
+                        </div>
+                        <div class="d2b-status-badge soon-border">3 DAYS</div>
+                    </div>
+                    
+                    <div class="d2b-parcel-list">
+                        <div class="d2b-parcel-item">
+                            <div>
+                                <div class="d2b-parcel-name">Mondial Relay (Shirt)</div>
+                                <div class="d2b-parcel-meta">#998877</div>
+                            </div>
+                            <div class="soon-text" style="font-weight:700; font-size:12px;">FRIDAY</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fab">+</div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
