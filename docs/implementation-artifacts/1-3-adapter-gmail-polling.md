@@ -1,108 +1,48 @@
 # Story 1.3: Adapter Gmail & Polling des Emails
 
-Status: review
-
-<!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
+Status: ready-for-dev
 
 ## Story
 
-As a User,
-I want the system to automatically connect to my Gmail and identify unread emails related to deliveries,
-so that I don't have to manually forward or input tracking information.
+As a **System**,
+I want **to periodically poll Gmail for delivery-related emails**,
+so that **I can trigger the automated extraction process for every new parcel identified.**
 
 ## Acceptance Criteria
 
-1. **Given** valid Gmail OAuth2 credentials, **When** the application starts, **Then** it can authenticate successfully with the Gmail API.
-2. **Given** unread emails with subjects containing "colis" or "livraison", **When** the Polling Job runs, **Then** the system identifies these emails.
-3. **Given** an identified email, **When** it is processed, **Then** it is marked as "processed" (or read/archived in Gmail) to avoid duplicate processing.
-4. **Given** the polling configuration, **When** the configured interval elapses, **Then** the job triggers automatically.
-5. **Given** the `GmailProvider` adapter, **When** implemented, **Then** it resides in the `infrastructure` layer and implements a Domain Port.
+1. **Gmail Query Integration**: The system queries Gmail using: `subject:(colis OR livraison) is:unread`.
+2. **Infrastructure Adapter**: `GmailInboundAdapter` implements a (yet to be defined) internal port or directly calls the Use Case.
+3. **Orchestration**: For each message found, the system invokes `ProcessIncomingEmailUseCase`.
+4. **Deduplication Strategy**: 
+    - The email is marked as "READ" immediately after processing.
+    - (Optional but recommended) A "PARCEL-FLOW" label is added to the email.
+5. **Resilience**: The polling job handles Gmail API quotas and transient network errors (Retries).
 
 ## Tasks / Subtasks
 
-- [ ] **Domain Layer (Pure Java)**
-  - [x] Define `EmailMetadata` record (id, subject, snippet, date) in `domain/model`.
-  - [x] Define `EmailProviderPort` interface in `domain/port/out` with methods `fetchUnreadDeliveryEmails()` and `markAsProcessed(String id)`.
-  - [x] Define `ScanEmailsUseCase` interface in `domain/port/in`.
-  - [x] Implement `ScanEmailsService` in `application/service` that orchestrates the fetching and marking.
-- [ ] **Infrastructure Layer (Gmail Adapter)**
-  - [x] Add Google Gmail API dependencies (google-api-client, google-api-services-gmail) to `backend/infrastructure/pom.xml`.
-  - [x] Implement `GmailAdapter` in `infrastructure/adapter/gmail` implementing `EmailProviderPort`.
-  - [x] Configure `GmailConfig` to load OAuth2 credentials from environment variables (`GMAIL_CLIENT_ID`, `GMAIL_CLIENT_SECRET`, `GMAIL_REFRESH_TOKEN`).
-- [ ] **Infrastructure Layer (Job)**
-  - [x] Implement `GmailPollingJob` in `infrastructure/in/job` using `@Scheduled` (configurable interval).
-  - [x] Inject `ScanEmailsUseCase` into the Job.
-- [ ] **Tests**
-  - [x] Create `email_polling.feature` in `backend/infrastructure/src/test/resources/features`.
-  - [x] Implement Cucumber Step Definitions mocking the Gmail API (using Mockito or WireMock/MockServer if integration level).
-  - [x] Ensure ArchUnit tests pass (no new violations).
+- [ ] **Infrastructure: Gmail Adapter**
+  - [ ] Implement `GmailInboundAdapter` in `com.parcelflow.infrastructure.mail`.
+  - [ ] Configure `Gmail` SDK with OAuth2 (Credentials from Env Vars).
+- [ ] **Application: Scheduling**
+  - [ ] Implement `EmailPollingJob` with `@Scheduled`.
+  - [ ] Inject `ProcessIncomingEmailUseCase` into the job.
+- [ ] **Testing**
+  - [ ] Mock Gmail API response in integration tests.
+  - [ ] Verify that the Use Case is called exactly once per unread email.
 
 ## Dev Notes
 
-- **Architecture Compliance**:
-  - The Domain MUST NOT depend on the Google API libraries. It only defines the `EmailProviderPort` interface.
-  - The `GmailAdapter` (Infrastructure) converts Google API objects to Domain `EmailMetadata` objects.
-- **Gmail API**:
-  - Use `users.messages.list` with query `subject:(colis OR livraison) is:unread`.
-  - Use `users.messages.modify` to remove `UNREAD` label.
-- **Security**:
-  - Do NOT commit credentials. Use `application.properties` referencing Environment Variables.
-- **Testing**:
-  - For Cucumber tests, mock the `EmailProviderPort` behavior to simulate finding emails without calling real Gmail.
-  - If possible, create an integration test that uses a Mock Web Server to simulate the Gmail REST API, but simple Mockito of the Port is acceptable for this stage if the Adapter logic is tested separately.
+### Architecture & Patterns
+- **Entry Point**: This is a **Primary Adapter** (driven by time/external event).
+- **Domain Link**: It must NOT contain business logic, only the transformation from Gmail Message -> Use Case Input.
 
-### Project Structure Notes
-
-- **Module**: `backend`
-- **Packages**:
-  - `com.parcelflow.domain.model`
-  - `com.parcelflow.domain.port.out`
-  - `com.parcelflow.application.service`
-  - `com.parcelflow.infrastructure.adapter.gmail`
-  - `com.parcelflow.infrastructure.in.job`
+### Security
+- Ensure `spring.security.oauth2` is properly configured in `backend/pom.xml`.
 
 ### References
-
-- [Source: docs/planning-artifacts/epics.md#story-13-adapter-gmail--polling-des-emails](docs/planning-artifacts/epics.md)
-- [Source: docs/architecture.md#4-stack-technique--décisions](docs/architecture.md)
+- [Source: docs/architecture.md#Section 2] - High Level Architecture (Gmail -> MailAdapter -> UC_Process)
 
 ## Dev Agent Record
 
 ### Agent Model Used
-
 Gemini 2.0 Flash
-
-### Debug Log References
-
-- Mockito cannot mock `Gmail` class due to version mismatch (Fixed by downgrading `google-api-client` to 1.35.2).
-- `GmailPollingJob` context failure due to missing `ScanEmailsUseCase` bean (Fixed by creating `BeanConfiguration`).
-- Cucumber Step definition `@MockBean` injection issue (Fixed by moving `@MockBean` to `CucumberSpringConfiguration`).
-
-### Completion Notes List
-
-- Implemented Domain logic: `EmailMetadata`, `EmailProviderPort`, `ScanEmailsUseCase`, `ScanEmailsService`.
-- Added Google Gmail API dependencies.
-- Implemented Infrastructure Adapter: `GmailAdapter` using `google-api-client`.
-- Implemented Configuration: `GmailConfig` for OAuth2 setup.
-- Implemented Polling Job: `GmailPollingJob` with `@Scheduled`.
-- Implemented Tests: Unit tests for Domain, Application, Adapter, Job. Cucumber Feature test `email_polling.feature`.
-- Added `BeanConfiguration` to wire Application beans in Infrastructure.
-
-### File List
-
-- backend/domain/src/main/java/com/parcelflow/domain/model/EmailMetadata.java
-- backend/domain/src/main/java/com/parcelflow/domain/port/out/EmailProviderPort.java
-- backend/domain/src/main/java/com/parcelflow/domain/port/in/ScanEmailsUseCase.java
-- backend/domain/src/test/java/com/parcelflow/domain/model/EmailMetadataTest.java
-- backend/application/src/main/java/com/parcelflow/application/service/ScanEmailsService.java
-- backend/application/src/test/java/com/parcelflow/application/service/ScanEmailsServiceTest.java
-- backend/infrastructure/pom.xml
-- backend/infrastructure/src/main/java/com/parcelflow/infrastructure/adapter/gmail/GmailAdapter.java
-- backend/infrastructure/src/main/java/com/parcelflow/infrastructure/config/GmailConfig.java
-- backend/infrastructure/src/main/java/com/parcelflow/infrastructure/config/BeanConfiguration.java
-- backend/infrastructure/src/main/java/com/parcelflow/infrastructure/in/job/GmailPollingJob.java
-- backend/infrastructure/src/test/java/com/parcelflow/infrastructure/adapter/gmail/GmailAdapterTest.java
-- backend/infrastructure/src/test/java/com/parcelflow/infrastructure/in/job/GmailPollingJobTest.java
-- backend/infrastructure/src/test/resources/features/email_polling.feature
-- backend/infrastructure/src/test/java/com/parcelflow/infrastructure/steps/EmailPollingSteps.java
-- backend/infrastructure/src/test/java/com/parcelflow/infrastructure/CucumberSpringConfiguration.java
