@@ -86,17 +86,57 @@ Cette configuration est impérative pour garantir la compatibilité des agents I
 
 Le dossier `backend/src/main/java/com/parcelflow/domain` est sanctuarisé.
 
-### 4.1 Entités (Records)
+### 4.1 Entités & Value Objects
+Le modèle anémique est banni. Nous utilisons des **Value Objects** pour encapsuler la validation et la logique métier.
+
 ```java
-public record Parcel(
-    UUID id,
-    String trackingNumber,
-    String pickupLocation, // "Auchan - 12 rue de la Paix"
-    String retractionCode, // "884522" (Extrait par IA)
-    LocalDate deadlineDate,
-    ParcelStatus status,   // PENDING, RECEIVED, ARCHIVED
-    boolean isUrgent       // Calculé (deadline < J+2)
+// --- Value Objects (Immutables & Validés) ---
+
+public record ParcelId(UUID value) {
+    public ParcelId { java.util.Objects.requireNonNull(value); }
+    public static ParcelId random() { return new ParcelId(UUID.randomUUID()); }
+}
+
+public record TrackingNumber(String value) {
+    public TrackingNumber {
+        if (value == null || value.isBlank()) throw new IllegalArgumentException("Tracking Number required");
+    }
+}
+
+public record PickupPoint(
+    String name,       // ex: "ÉPICERIE DES MOINES"
+    String rawAddress, // ex: "8 RUE DE L ÉGLISE, 69210 EVEUX"
+    String openingHours // ex: "08:30 - 12:30 / 15:00 - 19:00"
 ) {}
+
+public record PickupCode(
+    String humanCode,  // ex: "411612"
+    String qrContent   // Contenu brut pour régénération du QR Code UI
+) {}
+
+public record Recipient(String name) {} // ex: "Noura Chevin"
+
+public enum Carrier {
+    VINTED, MONDIAL_RELAY, CHRONOPOST, UNKNOWN
+}
+
+// --- Root Aggregate ---
+
+public record Parcel(
+    ParcelId id,
+    Carrier carrier,
+    TrackingNumber trackingNumber,
+    Recipient recipient,
+    PickupPoint pickupPoint,
+    PickupCode pickupCode,
+    LocalDate deadlineDate,
+    ParcelStatus status
+) {
+    public boolean isUrgent() {
+        return status != ParcelStatus.ARCHIVED 
+            && deadlineDate.isBefore(LocalDate.now().plusDays(2));
+    }
+}
 ```
 
 ### 4.2 Ports Primaires (Use Cases)
