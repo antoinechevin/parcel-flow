@@ -52,6 +52,7 @@ so that **only necessary metadata is processed by the AI, respecting my privacy.
 
 ### Architecture & Patterns
 - **Location:** This logic belongs to the **Domain** (Core). It is a business rule (Privacy Policy).
+- **Execution Flow:** This service MUST be invoked immediately after email retrieval and **BEFORE** the sanitized content is passed to the LLM (Gemini) or any external extraction service.
 - **Package:** `com.parcelflow.domain.privacy` or `com.parcelflow.domain.service`.
 - **Constraint:** STRICTLY NO SPRING ANNOTATIONS (`@Service`, `@Component`). Use Constructor Injection if needed, but this is likely a stateless service.
 - **Instantiation:** The Infrastructure layer (Spring) will instantiate this class as a Bean in a `@Configuration` class (e.g., `DomainConfig`).

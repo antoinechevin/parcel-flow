@@ -49,7 +49,8 @@ so that **I can optimize my trip and pick up multiple parcels at once.**
 - The API output must directly map to the `LocationGroupCard` UI component.
 
 ### Technical Implementation Hints
-- **Opening Hours**: Keep it simple for now (String), but structure it enough to display.
+- **Opening Hours**: Keep it simple for now (String), but ensure the format allows basic parsing if needed later (e.g., "Mon-Fri: 09:00-19:00"). Avoid free text if possible.
+- **Identity**: Clearly distinguish `ParcelId` (Internal UUID) from `TrackingNumber` (External String). The domain logic should rely on `ParcelId`.
 - **Grouping**: Since we expect < 50 active parcels, doing the grouping in Java (`Collectors.groupingBy`) inside the Domain Service is acceptable and keeps the Domain pure and testable.
 
 ### References
