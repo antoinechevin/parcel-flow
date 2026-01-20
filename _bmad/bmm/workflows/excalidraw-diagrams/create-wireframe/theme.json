@@ -1,0 +1,23 @@
+{
+  "style": {
+    "backgroundColor": "#ffffff",
+    "strokeColor": "#000000",
+    "fillStyle": "solid",
+    "fontFamily": 1
+  },
+  "container": {
+    "backgroundColor": "#eeeeee",
+    "strokeColor": "#212121",
+    "strokeWidth": 2
+  },
+  "text": {
+    "strokeColor": "#000000",
+    "fontSize": 16,
+    "textAlign": "left"
+  },
+  "accent": {
+    "strokeColor": "#000000",
+    "backgroundColor": "#000000",
+    "fillStyle": "solid"
+  }
+}
