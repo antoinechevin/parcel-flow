@@ -31,7 +31,7 @@ export default function ParcelListScreen() {
       <FlatList
         data={parcels}
         renderItem={({ item }) => <ParcelCard parcel={item} />}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => typeof item.id === 'string' ? item.id : item.id.value}
         contentContainerStyle={styles.list}
       />
     </View>

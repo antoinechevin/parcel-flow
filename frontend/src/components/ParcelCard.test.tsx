@@ -1,9 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import { ParcelCard } from './ParcelCard';
+import { ParcelCard, Parcel } from './ParcelCard';
 
 describe('ParcelCard', () => {
-  const mockParcel = {
+  const mockParcel: Parcel = {
     id: '1',
     trackingNumber: 'SHOES-123',
     deadline: '2026-01-23',

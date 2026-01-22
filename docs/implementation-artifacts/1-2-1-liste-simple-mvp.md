@@ -88,6 +88,16 @@ so that **I can track what I need to pick up.**
 ### Change Log
 - 2026-01-22: Initial implementation of Story 1.2.1. (Amelia)
 
-Status: review
+Status: done
+
+## Senior Developer Review (AI)
+- **Review Date**: 2026-01-22
+- **Outcome**: Approve (after fixes)
+- **Summary**: Initial implementation had critical testing gaps (fake ATDD) and architecture violations (missing Value Objects, wrong packages). All issues have been addressed:
+    - Implemented `ParcelId` value object.
+    - Reorganized packages to match `.model`, `.ports`, and `.usecases` structure.
+    - Fixed `DashboardSteps` to actually use Cucumber DataTable input.
+    - Implemented "Traffic Light" urgency colors in `ParcelCard.tsx`.
+    - Fixed environment variable usage for API URL in frontend.
 
 ## Story
