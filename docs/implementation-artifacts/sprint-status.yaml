@@ -42,7 +42,7 @@ story_location: docs/implementation-artifacts
 development_status:
   epic-1: in-progress
   1-1-initialisation-monorepo-scaffolding-walking-skeleton: done
-  1-2-1-visualisation-liste-simple-mvp: ready-for-dev
+  1-2-1-visualisation-liste-simple-mvp: review
   1-2-2-regroupement-par-point-de-retrait: ready-for-dev
   1-2-3-indicateurs-d-urgence: ready-for-dev
   1-3-adapter-gmail-client-d-infrastructure: ready-for-dev
