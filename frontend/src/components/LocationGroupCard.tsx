@@ -1,41 +1,49 @@
 import React from 'react';
-import { Card, Text, Surface, Badge } from 'react-native-paper';
+import { Card, Text, Surface, Badge, useTheme } from 'react-native-paper';
 import { StyleSheet, View } from 'react-native';
-import { LocationGroup, Parcel } from '../types';
+import { LocationGroup, Parcel, UrgencyLevel } from '../types';
 import { ParcelCard } from './ParcelCard';
 
 interface LocationGroupCardProps {
   group: LocationGroup;
 }
 
-const getGroupUrgencyColor = (parcels: Parcel[]) => {
-  if (parcels.length === 0) return '#55EFC4';
-  
-  const activeParcels = parcels.filter(p => p.status === 'AVAILABLE');
-  if (activeParcels.length === 0) return '#bdc3c7';
+const getUrgencyColor = (theme: any, urgency?: UrgencyLevel) => {
+  switch (urgency) {
+    case 'HIGH': return theme.colors.error;
+    case 'MEDIUM': return theme.colors.warning || '#FDCB6E';
+    case 'LOW': return theme.colors.info || '#2196F3';
+    default: return '#bdc3c7';
+  }
+};
 
-  const earliestDeadline = activeParcels.reduce((min, p) => {
-    const d = new Date(p.deadline).getTime();
-    return d < min ? d : min;
-  }, new Date(activeParcels[0].deadline).getTime());
+const getExpirationText = (daysUntil?: number) => {
+  if (daysUntil === undefined || daysUntil === null) return null;
 
-  const today = new Date().getTime();
-  const diffDays = Math.ceil((earliestDeadline - today) / (1000 * 60 * 60 * 24));
-
-  if (diffDays <= 1) return '#FF7675'; // Red
-  if (diffDays <= 3) return '#FDCB6E'; // Orange
-  return '#55EFC4'; // Green
+  if (daysUntil < 0) return 'Expired';
+  if (daysUntil === 0) return 'Expires today';
+  if (daysUntil === 1) return 'Expires in 1 day';
+  return `Expires in ${daysUntil} days`;
 };
 
 export const LocationGroupCard: React.FC<LocationGroupCardProps> = ({ group }) => {
-  const urgencyColor = getGroupUrgencyColor(group.parcels);
+  const theme = useTheme();
+  const urgencyColor = getUrgencyColor(theme, group.urgency);
+  const expirationText = getExpirationText(group.daysUntilExpiration);
 
   return (
     <Surface style={[styles.container, { borderLeftColor: urgencyColor, borderLeftWidth: 6 }]} elevation={2}>
       <View style={styles.content}>
         <View style={styles.header}>
           <View style={styles.titleRow}>
-            <Text variant="titleMedium" style={styles.locationName}>{group.pickupPoint.name}</Text>
+            <View>
+              <Text variant="titleMedium" style={styles.locationName}>{group.pickupPoint.name}</Text>
+              {expirationText && (
+                <Text variant="labelSmall" style={{ color: urgencyColor, fontWeight: 'bold' }}>
+                  {expirationText}
+                </Text>
+              )}
+            </View>
             <Badge size={20} style={[styles.badge, { backgroundColor: urgencyColor }]}>{group.parcels.length}</Badge>
           </View>
           <Text variant="bodySmall" style={styles.address}>{group.pickupPoint.rawAddress}</Text>

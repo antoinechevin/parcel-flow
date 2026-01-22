@@ -7,6 +7,7 @@ import com.parcelflow.domain.model.ParcelId;
 import com.parcelflow.domain.model.ParcelStatus;
 import com.parcelflow.domain.model.PickupPoint;
 import com.parcelflow.domain.ports.ParcelRepositoryPort;
+import com.parcelflow.domain.service.UrgencyCalculator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -27,7 +28,7 @@ class RetrieveDashboardUseCaseTest {
 
     @Test
     void shouldReturnGroupedParcelsFromRepository() {
-        RetrieveDashboardUseCase useCase = new RetrieveDashboardUseCase(repository);
+        RetrieveDashboardUseCase useCase = new RetrieveDashboardUseCase(repository, new UrgencyCalculator(java.time.Clock.systemDefaultZone()));
         PickupPoint pp1 = new PickupPoint("pp-1", "Relais 1", "Addr 1", "08:00-19:00");
         PickupPoint pp2 = new PickupPoint("pp-2", "Relais 2", "Addr 2", "09:00-18:00");
         

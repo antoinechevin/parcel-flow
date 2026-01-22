@@ -7,6 +7,7 @@ import com.parcelflow.domain.model.ParcelId;
 import com.parcelflow.domain.model.ParcelStatus;
 import com.parcelflow.domain.model.PickupPoint;
 import com.parcelflow.domain.ports.ParcelRepositoryPort;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -19,6 +20,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DashboardSteps {
 
@@ -31,6 +33,11 @@ public class DashboardSteps {
     private ParcelRepositoryPort repository;
     
     private List<LocationGroup> retrievedGroups;
+
+    @Before
+    public void reset() {
+        repository.deleteAll();
+    }
 
     @Given("the following parcels exist:")
     public void the_following_parcels_exist(List<Map<String, String>> dataTable) {
@@ -78,7 +85,7 @@ public class DashboardSteps {
 
     @Given("there are no parcels in the system")
     public void there_are_no_parcels_in_the_system() {
-        repository.saveAll(List.of());
+        repository.deleteAll();
     }
 
     @Given("these parcels exist:")
@@ -118,5 +125,47 @@ public class DashboardSteps {
             .orElseThrow(() -> new AssertionError("Group not found: " + ppName));
         
         assertEquals(count, group.parcels().size());
+    }
+
+    @Given("a group {string} has a parcel expiring tomorrow")
+    public void a_group_has_a_parcel_expiring_tomorrow(String ppName) {
+        PickupPoint pp = new PickupPoint(ppName.toLowerCase().replace(" ", "-"), ppName, "Address", "08:00-19:00");
+        Parcel parcel = new Parcel(
+            ParcelId.random(),
+            "EXP-TOMORROW",
+            LocalDate.now().plusDays(1),
+            ParcelStatus.AVAILABLE,
+            pp
+        );
+        repository.saveAll(List.of(parcel));
+    }
+
+    @Given("a group {string} has a parcel expiring in {int} days")
+    public void a_group_has_a_parcel_expiring_in_days(String ppName, int days) {
+        PickupPoint pp = new PickupPoint(ppName.toLowerCase().replace(" ", "-"), ppName, "Address", "08:00-19:00");
+        Parcel parcel = new Parcel(
+            ParcelId.random(),
+            "EXP-IN-" + days,
+            LocalDate.now().plusDays(days),
+            ParcelStatus.AVAILABLE,
+            pp
+        );
+        repository.saveAll(List.of(parcel));
+    }
+
+    @Then("{string} should appear before {string}")
+    public void should_appear_before(String firstPpName, String secondPpName) {
+        List<String> names = retrievedGroups.stream()
+            .map(g -> g.pickupPoint().name())
+            .collect(Collectors.toList());
+        
+        int firstIndex = names.indexOf(firstPpName);
+        int secondIndex = names.indexOf(secondPpName);
+        
+        assertTrue(firstIndex != -1, "Group not found: " + firstPpName);
+        assertTrue(secondIndex != -1, "Group not found: " + secondPpName);
+        assertTrue(firstIndex < secondIndex, 
+            String.format("Expected %s (index %d) to be before %s (index %d)", 
+                firstPpName, firstIndex, secondPpName, secondIndex));
     }
 }

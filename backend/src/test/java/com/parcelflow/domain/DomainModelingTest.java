@@ -5,6 +5,7 @@ import com.parcelflow.domain.model.ParcelId;
 import com.parcelflow.domain.model.ParcelStatus;
 import com.parcelflow.domain.model.PickupPoint;
 import com.parcelflow.domain.model.LocationGroup;
+import com.parcelflow.domain.model.UrgencyLevel;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.List;
@@ -45,7 +46,7 @@ class DomainModelingTest {
             pickupPoint
         );
         
-        LocationGroup group = new LocationGroup(pickupPoint, List.of(parcel));
+        LocationGroup group = new LocationGroup(pickupPoint, List.of(parcel), UrgencyLevel.LOW, 5);
         
         assertEquals(pickupPoint, group.pickupPoint());
         assertEquals(1, group.parcels().size());

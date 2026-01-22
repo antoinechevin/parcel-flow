@@ -1,6 +1,6 @@
 # Story 1.2.2: Regroupement par Point de Retrait
 
-Status: review
+Status: done
 
 ## Story
 
