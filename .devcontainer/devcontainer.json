@@ -27,7 +27,9 @@
   "forwardPorts": [8080, 19000, 19001, 19002, 19006, 8081],
   "remoteUser": "vscode",
   "mounts": [
-    "source=parcel-flow-gemini-config,target=/home/vscode/.gemini,type=volume"
+    "source=parcel-flow-gemini-config,target=/home/vscode/.gemini,type=volume",
+    "source=parcel-flow-maven-repo,target=/home/vscode/.m2,type=volume",
+    "source=parcel-flow-npm-cache,target=/home/vscode/.npm,type=volume"
   ],
   "postCreateCommand": "bash .devcontainer/setup.sh"
 }

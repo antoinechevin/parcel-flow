@@ -97,6 +97,7 @@ Cette configuration est impérative pour garantir la compatibilité des agents I
 | **Frontend** | **React Native (Expo)** | **SDK 52+** | Framework mobile. Router v3. |
 | **UI Library** | **RN Paper** | **5.x** | Material Design 3 (Theming, Accessibility). |
 | **State** | **Zustand** | **4.5+** | Store global minimaliste + Persistance locale. |
+| **Testing (Unit)** | **Jest** | **Expo Preset** | Standard Expo (`jest-expo`) + React Testing Library. |
 | **Testing (Acceptance)** | **Cucumber JVM** | **7.x** | Validation métier (Gherkin). |
 | **Testing (Integration)** | **Testcontainers** | **1.19+** | Vrais environnements (Postgres, MockServer) en tests. |
 
