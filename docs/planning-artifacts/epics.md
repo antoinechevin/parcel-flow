@@ -131,35 +131,64 @@ So that the team can start working on a solid technical foundation that respects
 **And** the frontend project uses Expo and React Native Paper.
 **And** the CI pipeline workflow runs and passes for both.
 
-### Story 1.2: Cœur du Domaine Colis (Création & Liste)
-
-As a Developer,
-I want to implement the core Parcel domain model and the ability to create and list parcels manually,
-So that we have the central business logic ready and tested without external dependencies.
-
-**Acceptance Criteria:**
-
-**Given** the Domain module
-**When** I check the imports
-**Then** there are NO dependencies on Spring or external libraries (Pure Java).
-**And** executing `CreateParcelUseCase` returns a Parcel object with an ID and Status.
-**And** calling `POST /parcels` persists the parcel in PostgreSQL.
-**And** calling `GET /parcels` returns the list of active parcels.
-
-### Story 1.3: Adapter Gmail & Polling des Emails
+### Story 1.2.1: Visualisation Liste Simple (MVP)
 
 As a User,
-I want the system to automatically connect to my Gmail and identify unread emails related to deliveries,
-So that I don't have to manually forward or input tracking information.
+I want to see a list of my active parcels on my phone,
+so that I can track what I need to pick up.
 
 **Acceptance Criteria:**
 
-**Given** valid Gmail OAuth2 credentials
-**When** the application starts
-**Then** it can authenticate successfully with the Gmail API.
-**And** the Polling Job identifies unread emails with subjects containing "colis" or "livraison".
-**And** identified emails are marked as "processed" to avoid duplicates.
-**And** the job triggers automatically at the configured interval.
+- Backend: GET /api/parcels returns a flat list of parcels.
+- Frontend: ParcelListScreen displays parcels in a flat list.
+- ATDD: DashboardList.feature passes.
+
+### Story 1.2.2: Regroupement par Point de Retrait
+
+As a User,
+I want my parcels grouped by pickup location on my dashboard,
+so that I can see where I need to go.
+
+**Acceptance Criteria:**
+
+- Backend: RetrieveDashboardUseCase aggregates parcels by PickupPoint.
+- Frontend: LocationGroupCard displays grouped parcels.
+- ATDD: DashboardAggregation.feature passes.
+
+### Story 1.2.3: Indicateurs d'Urgence
+
+As a User,
+I want to see urgency indicators on my pickup locations,
+so that I don't miss a deadline.
+
+**Acceptance Criteria:**
+
+- Backend: Groups are sorted by Urgency (HIGH first).
+- Frontend: LocationGroupCard displays colored urgency indicators.
+- ATDD: DashboardUrgency.feature passes.
+
+### Story 1.3: Adapter Gmail (Client d'Infrastructure)
+
+As a Developer,
+I want a Gmail client that can list and read unread delivery emails,
+so that the system can fetch data from the outside world using a standardized Port.
+
+**Acceptance Criteria:**
+
+- MailSourcePort interface exists.
+- GmailInboundAdapter implements MailSourcePort.
+- Successfully connects to Gmail API via OAuth2.
+
+### Story 1.4: Polling Job & Orchestration
+
+As a System,
+I want to periodically trigger the mail checking process,
+so that new delivery emails are automatically processed without manual intervention.
+
+**Acceptance Criteria:**
+
+- Spring @Scheduled task runs at configurable interval.
+- Job calls MailSourcePort and markAsRead after processing.
 
 ## Epic 2: Le Cœur d'Extraction IA & Protection de la Vie Privée
 
