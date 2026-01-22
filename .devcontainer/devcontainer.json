@@ -25,5 +25,9 @@
     }
   },
   "forwardPorts": [8080, 19000, 19001, 19002, 19006, 8081],
-  "remoteUser": "vscode"
+  "remoteUser": "vscode",
+  "mounts": [
+    "source=parcel-flow-gemini-config,target=/home/vscode/.gemini,type=volume"
+  ],
+  "postCreateCommand": "bash .devcontainer/setup.sh"
 }
