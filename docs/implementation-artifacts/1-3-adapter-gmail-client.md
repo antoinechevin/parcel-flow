@@ -1,6 +1,6 @@
 # Story 1.3: Adapter Gmail (Client d'Infrastructure)
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -20,17 +20,17 @@ so that **the system can fetch data from the outside world using a standardized 
 
 ## Tasks / Subtasks
 
-- [ ] **Port Definition**
-  - [ ] Create `InboundEmail` DTO in Domain.
-  - [ ] Create `MailFetchResult` DTO.
-  - [ ] Create `MailSourcePort` interface.
-- [ ] **Infrastructure: Gmail Adapter**
-  - [ ] Add `google-api-client` and `google-oauth-client` dependencies.
-  - [ ] Implement `GmailInboundAdapter` using the watermark logic.
-  - [ ] Setup OAuth2 configuration (Client ID, Secret, Refresh Token).
-- [ ] **Testing**
-  - [ ] ATDD: Implement Cucumber glue code for `mail-adapter.feature`.
-  - [ ] Integration test with a Mocked Gmail Service to verify filtering and watermark update.
+- [x] **Port Definition**
+  - [x] Create `InboundEmail` DTO in Domain.
+  - [x] Create `MailFetchResult` DTO.
+  - [x] Create `MailSourcePort` interface.
+- [x] **Infrastructure: Gmail Adapter**
+  - [x] Add `google-api-client` and `google-oauth-client` dependencies.
+  - [x] Implement `GmailInboundAdapter` using the watermark logic.
+  - [x] Setup OAuth2 configuration (Client ID, Secret, Refresh Token).
+- [x] **Testing**
+  - [x] ATDD: Implement Cucumber glue code for `mail-adapter.feature`.
+  - [x] Integration test with a Mocked Gmail Service to verify filtering and watermark update.
 
 ## Dev Notes
 
@@ -46,5 +46,110 @@ so that **the system can fetch data from the outside world using a standardized 
 
 ## Dev Agent Record
 
+
+
 ### Agent Model Used
+
 Gemini 2.0 Flash
+
+
+
+### Implementation Summary
+
+- **Domain**: Created `InboundEmail` and `MailFetchResult` records. Defined `MailSourcePort`.
+
+- **Infrastructure**: 
+
+    - Added Google API dependencies.
+
+    - Implemented `GmailInboundAdapter` with `after:TIMESTAMP` query filtering for efficient polling.
+
+    - Configured `GmailConfig` for OAuth2 using Refresh Token.
+
+- **Testing**:
+
+    - implemented `MailAdapterSteps` for Cucumber ATDD.
+
+    - Added `GmailInboundAdapterTest` (Unit Test with Mockito RETURNS_DEEP_STUBS for Gmail API).
+
+    - All 20 tests (18 Cucumber + 2 Unit) are GREEN.
+
+
+
+### Decisions Made
+
+
+
+- Used `InternalDate` from Gmail Message for `receivedAt` to ensure consistency with the `after` query filter.
+
+
+
+- Simplified body extraction using `snippet` for this story; full body parsing can be refined in future stories if needed.
+
+
+
+- Centralized test configuration in `CucumberConfiguration` to maintain compatibility with existing tests.
+
+
+
+
+
+
+
+### Code Review Improvements (Adversarial Review)
+
+
+
+- **Security**: Added validation for OAuth2 credentials in `GmailConfig` to prevent runtime failures with missing configuration.
+
+
+
+- **Architecture**: Created `MailSourceException` in domain layer to map infrastructure-specific IO issues, maintaining domain purity.
+
+
+
+- **Code Quality**: Extracted `DEFAULT_DELIVERY_QUERY` as a constant in `GmailInboundAdapter`.
+
+
+
+- **Test Quality**: Refactored `GmailInboundAdapterTest` to avoid `RETURNS_DEEP_STUBS` and added explicit error handling tests.
+
+
+
+
+
+
+
+### Change Log
+
+
+
+- `backend/src/main/java/com/parcelflow/domain/model/InboundEmail.java`: Added domain record.
+
+
+
+- `backend/src/main/java/com/parcelflow/domain/model/MailFetchResult.java`: Added domain record.
+
+
+
+- `backend/src/main/java/com/parcelflow/domain/ports/MailSourcePort.java`: Added port interface.
+
+
+
+- `backend/src/main/java/com/parcelflow/domain/exception/MailSourceException.java`: Added custom domain exception.
+
+
+
+- `backend/src/main/java/com/parcelflow/infrastructure/mail/GmailInboundAdapter.java`: Implemented adapter with refined error mapping and constants.
+
+
+
+- `backend/src/main/java/com/parcelflow/infrastructure/config/GmailConfig.java`: Implemented configuration with validation.
+
+
+
+- `backend/src/test/java/com/parcelflow/infrastructure/mail/GmailInboundAdapterTest.java`: Added unit tests with robust mocking.
+
+
+
+
