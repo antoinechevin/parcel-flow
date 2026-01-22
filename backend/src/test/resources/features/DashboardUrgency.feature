@@ -1,3 +1,4 @@
+@Urgency
 Feature: Dashboard Urgency and Sorting
   As a User
   I want to see urgency levels and have my dashboard sorted by urgency

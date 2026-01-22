@@ -13,7 +13,11 @@ export type Parcel = {
   pickupPoint: PickupPoint;
 };
 
+export type UrgencyLevel = 'HIGH' | 'MEDIUM' | 'LOW';
+
 export type LocationGroup = {
   pickupPoint: PickupPoint;
   parcels: Parcel[];
+  urgency?: UrgencyLevel;
+  daysUntilExpiration?: number;
 };

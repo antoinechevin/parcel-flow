@@ -6,6 +6,7 @@ import com.parcelflow.domain.model.Parcel;
 import com.parcelflow.domain.model.ParcelId;
 import com.parcelflow.domain.model.ParcelStatus;
 import com.parcelflow.domain.model.PickupPoint;
+import com.parcelflow.domain.model.UrgencyLevel;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -36,7 +37,7 @@ class ParcelControllerTest {
         when(useCase.retrieve()).thenReturn(List.of(
             new LocationGroup(pp, List.of(
                 new Parcel(id, "123", LocalDate.now(), ParcelStatus.AVAILABLE, pp)
-            ))
+            ), UrgencyLevel.LOW, 0)
         ));
 
         mockMvc.perform(get("/api/dashboard"))

@@ -4,5 +4,7 @@ import java.util.List;
 
 public record LocationGroup(
     PickupPoint pickupPoint,
-    List<Parcel> parcels
+    List<Parcel> parcels,
+    UrgencyLevel urgency,
+    Integer daysUntilExpiration
 ) {}
