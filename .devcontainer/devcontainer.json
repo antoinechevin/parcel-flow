@@ -1,0 +1,35 @@
+{
+  "name": "Parcel-Flow Monorepo",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "21",
+      "installMaven": "true"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "22"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:1": {
+      "version": "latest"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "vmware.vscode-spring-boot-dashboard",
+        "vscjava.vscode-spring-boot-extension-pack",
+        "expo.vscode-expo",
+        "dbaeumer.vscode-eslint"
+      ]
+    }
+  },
+  "forwardPorts": [8080, 19000, 19001, 19002, 19006, 8081],
+  "remoteUser": "vscode",
+  "mounts": [
+    "source=parcel-flow-gemini-config,target=/home/vscode/.gemini,type=volume",
+    "source=parcel-flow-maven-repo,target=/home/vscode/.m2,type=volume",
+    "source=parcel-flow-npm-cache,target=/home/vscode/.npm,type=volume"
+  ],
+  "postCreateCommand": "bash .devcontainer/setup.sh"
+}
