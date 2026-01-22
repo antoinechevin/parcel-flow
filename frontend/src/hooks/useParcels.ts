@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Parcel } from '../components/ParcelCard';
 
-const API_URL = 'http://localhost:8080/api/parcels';
+const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8080';
 
 export const useParcels = () => {
   const [parcels, setParcels] = useState<Parcel[]>([]);
@@ -11,7 +11,7 @@ export const useParcels = () => {
   useEffect(() => {
     const fetchParcels = async () => {
       try {
-        const response = await fetch(API_URL);
+        const response = await fetch(`${API_URL}/api/parcels`);
         if (!response.ok) {
           throw new Error('Failed to fetch parcels');
         }

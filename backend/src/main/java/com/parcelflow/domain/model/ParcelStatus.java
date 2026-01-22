@@ -1,4 +1,4 @@
-package com.parcelflow.domain;
+package com.parcelflow.domain.model;
 
 public enum ParcelStatus {
     AVAILABLE,

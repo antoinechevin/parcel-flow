@@ -1,7 +1,7 @@
 package com.parcelflow.infrastructure.config;
 
-import com.parcelflow.application.RetrieveDashboardUseCase;
-import com.parcelflow.domain.ParcelRepositoryPort;
+import com.parcelflow.application.usecases.RetrieveDashboardUseCase;
+import com.parcelflow.domain.ports.ParcelRepositoryPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

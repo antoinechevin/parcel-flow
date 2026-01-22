@@ -1,7 +1,7 @@
 package com.parcelflow.infrastructure.api;
 
-import com.parcelflow.application.RetrieveDashboardUseCase;
-import com.parcelflow.domain.Parcel;
+import com.parcelflow.application.usecases.RetrieveDashboardUseCase;
+import com.parcelflow.domain.model.Parcel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

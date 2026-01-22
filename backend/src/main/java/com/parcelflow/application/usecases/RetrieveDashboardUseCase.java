@@ -1,7 +1,7 @@
-package com.parcelflow.application;
+package com.parcelflow.application.usecases;
 
-import com.parcelflow.domain.Parcel;
-import com.parcelflow.domain.ParcelRepositoryPort;
+import com.parcelflow.domain.model.Parcel;
+import com.parcelflow.domain.ports.ParcelRepositoryPort;
 
 import java.util.List;
 

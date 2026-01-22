@@ -1,7 +1,8 @@
 package com.parcelflow.application;
 
-import com.parcelflow.domain.Parcel;
-import com.parcelflow.domain.ParcelRepositoryPort;
+import com.parcelflow.application.usecases.RetrieveDashboardUseCase;
+import com.parcelflow.domain.model.Parcel;
+import com.parcelflow.domain.ports.ParcelRepositoryPort;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;

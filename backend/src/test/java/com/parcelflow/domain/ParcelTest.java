@@ -1,5 +1,8 @@
 package com.parcelflow.domain;
 
+import com.parcelflow.domain.model.Parcel;
+import com.parcelflow.domain.model.ParcelId;
+import com.parcelflow.domain.model.ParcelStatus;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -10,7 +13,7 @@ class ParcelTest {
 
     @Test
     void shouldCreateParcelWithValidData() {
-        UUID id = UUID.randomUUID();
+        ParcelId id = ParcelId.random();
         String trackingNumber = "123456789";
         LocalDate deadline = LocalDate.now().plusDays(3);
         ParcelStatus status = ParcelStatus.AVAILABLE;
