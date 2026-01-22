@@ -6,6 +6,8 @@ import Heartbeat from './components/Heartbeat';
 // Mock fetch globalement
 global.fetch = jest.fn(() =>
   Promise.resolve({
+    ok: true,
+    status: 200,
     json: () => Promise.resolve({ status: 'UP', message: 'Parcel-Flow Backend is running' }),
   })
 ) as jest.Mock;

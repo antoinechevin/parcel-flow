@@ -1,18 +1,15 @@
-Feature: Parcel List MVP
+Feature: Dashboard List
   As a User
-  I want to see a flat list of my parcels
-  To track my deliveries
+  I want to see a list of my active parcels on my phone
+  So that I can track what I need to pick up
 
-  Scenario: Retrieve all active parcels
-    Given the repository contains the following active parcels:
-      | trackingNumber | status    |
-      | SHOES-123      | AVAILABLE |
-      | BOOK-456       | AVAILABLE |
-    When I request the parcel list
-    Then I should receive 2 parcels
-    And the parcel "SHOES-123" should be marked as "AVAILABLE"
-
-  Scenario: No parcels available
-    Given the repository is empty
-    When I request the parcel list
-    Then I should receive an empty list
+  Scenario: Retrieve active parcels
+    Given the following parcels exist:
+      | trackingNumber | status      | daysRelativeToNow |
+      | SHOES-123      | AVAILABLE   | 1                 |
+      | BOOK-456       | AVAILABLE   | 2                 |
+      | HAT-789        | PICKED_UP   | -1                |
+    When I request the dashboard parcel list
+    Then I should receive 3 parcels
+    And the parcel with tracking number "SHOES-123" should be "AVAILABLE"
+    And the parcel with tracking number "HAT-789" should be "PICKED_UP"
