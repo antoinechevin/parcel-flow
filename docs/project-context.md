@@ -40,8 +40,12 @@ sections_completed: []
 - **Frontend:** Handle loading, error, and empty states explicitly.
 
 ### Testing Strategy
+- **Quality Standards (Critical):**
+    - **No Story without Gherkin:** Any new User Story MUST include a corresponding `.feature` file (Cucumber) BEFORE implementation begins. This is a mandatory "Definition of Ready" (DoR) requirement.
+    - **ATDD Workflow:** Official adoption of the `_bmad/bmm/workflows/testarch/atdd` workflow for all new features. Tests must be in "RED" phase (failing) before handoff to development.
+    - **Nominal Flow Guard:** The frontend nominal flow test (`NominalFlow.test.tsx`) MUST pass in CI for every PR.
 - **Backend:** ATDD First. Write `.feature` (Gherkin) -> Glue Code -> Domain Logic.
-- **Frontend:** Component testing with React Native Testing Library.
+- **Frontend:** Component testing with React Native Testing Library. Focus on user-centric behavior.
 
 ## 4. Development Environment
 
