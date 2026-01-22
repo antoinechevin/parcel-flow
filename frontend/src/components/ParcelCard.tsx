@@ -1,13 +1,7 @@
 import React from 'react';
 import { Card, Text, Badge } from 'react-native-paper';
 import { StyleSheet, View } from 'react-native';
-
-export type Parcel = {
-  id: { value: string } | string;
-  trackingNumber: string;
-  deadline: string;
-  status: 'AVAILABLE' | 'PICKED_UP';
-};
+import { Parcel } from '../types';
 
 interface ParcelCardProps {
   parcel: Parcel;

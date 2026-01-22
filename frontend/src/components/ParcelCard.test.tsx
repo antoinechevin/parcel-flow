@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import { ParcelCard, Parcel } from './ParcelCard';
+import { ParcelCard } from './ParcelCard';
+import { Parcel } from '../types';
 
 describe('ParcelCard', () => {
   const mockParcel: Parcel = {
@@ -8,6 +9,12 @@ describe('ParcelCard', () => {
     trackingNumber: 'SHOES-123',
     deadline: '2026-01-23',
     status: 'AVAILABLE',
+    pickupPoint: {
+      id: 'p1',
+      name: 'Test Point',
+      rawAddress: '123 Test St',
+      openingHours: '9am-5pm'
+    }
   };
 
   it('renders parcel details correctly', () => {

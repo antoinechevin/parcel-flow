@@ -6,7 +6,8 @@ public record Parcel(
     ParcelId id,
     String trackingNumber,
     LocalDate deadline,
-    ParcelStatus status
+    ParcelStatus status,
+    PickupPoint pickupPoint
 ) {
     public boolean isUrgent() {
         return status != ParcelStatus.PICKED_UP 

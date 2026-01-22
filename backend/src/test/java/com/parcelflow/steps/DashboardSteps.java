@@ -1,9 +1,11 @@
 package com.parcelflow.steps;
 
 import com.parcelflow.application.usecases.RetrieveDashboardUseCase;
+import com.parcelflow.domain.model.LocationGroup;
 import com.parcelflow.domain.model.Parcel;
 import com.parcelflow.domain.model.ParcelId;
 import com.parcelflow.domain.model.ParcelStatus;
+import com.parcelflow.domain.model.PickupPoint;
 import com.parcelflow.domain.ports.ParcelRepositoryPort;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -11,6 +13,7 @@ import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,13 +22,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DashboardSteps {
 
+    private static final PickupPoint DEFAULT_PP = new PickupPoint("default", "Default Relais", "Address", "08:00-19:00");
+
     @Autowired
     private RetrieveDashboardUseCase useCase;
 
     @Autowired
     private ParcelRepositoryPort repository;
     
-    private List<Parcel> retrievedParcels;
+    private List<LocationGroup> retrievedGroups;
 
     @Given("the following parcels exist:")
     public void the_following_parcels_exist(List<Map<String, String>> dataTable) {
@@ -39,7 +44,8 @@ public class DashboardSteps {
                 ParcelId.random(),
                 trackingNumber,
                 deadline,
-                status
+                status,
+                DEFAULT_PP
             );
         }).collect(Collectors.toList());
         
@@ -48,21 +54,69 @@ public class DashboardSteps {
 
     @When("I request the dashboard parcel list")
     public void i_request_the_dashboard_parcel_list() {
-        retrievedParcels = useCase.retrieve();
+        retrievedGroups = useCase.retrieve();
     }
 
     @Then("I should receive {int} parcels")
     public void i_should_receive_parcels(int count) {
-        assertEquals(count, retrievedParcels.size());
+        long totalParcels = retrievedGroups.stream()
+            .mapToLong(g -> g.parcels().size())
+            .sum();
+        assertEquals(count, totalParcels);
     }
 
     @Then("the parcel with tracking number {string} should be {string}")
     public void the_parcel_with_tracking_number_should_be(String trackingNumber, String statusStr) {
-        Parcel parcel = retrievedParcels.stream()
+        Parcel parcel = retrievedGroups.stream()
+            .flatMap(g -> g.parcels().stream())
             .filter(p -> p.trackingNumber().equals(trackingNumber))
             .findFirst()
             .orElseThrow(() -> new AssertionError("Parcel not found: " + trackingNumber));
         
         assertEquals(ParcelStatus.valueOf(statusStr), parcel.status());
+    }
+
+    @Given("there are no parcels in the system")
+    public void there_are_no_parcels_in_the_system() {
+        repository.saveAll(List.of());
+    }
+
+    @Given("these parcels exist:")
+    public void these_parcels_exist(List<Map<String, String>> dataTable) {
+        List<Parcel> parcels = dataTable.stream().map(row -> {
+            String trackingNumber = row.get("trackingNumber");
+            String ppName = row.get("pickupPoint");
+            PickupPoint pp = new PickupPoint(ppName.toLowerCase().replace(" ", "-"), ppName, "Address of " + ppName, "08:00-19:00");
+            
+            return new Parcel(
+                ParcelId.random(),
+                trackingNumber,
+                LocalDate.now().plusDays(5),
+                ParcelStatus.AVAILABLE,
+                pp
+            );
+        }).collect(Collectors.toList());
+        
+        repository.saveAll(parcels);
+    }
+
+    @When("I retrieve the dashboard")
+    public void i_retrieve_the_dashboard() {
+        retrievedGroups = useCase.retrieve();
+    }
+
+    @Then("I should see {int} location groups")
+    public void i_should_see_location_groups(int count) {
+        assertEquals(count, retrievedGroups.size());
+    }
+
+    @Then("the group {string} should contain {int} parcel(s)")
+    public void the_group_should_contain_parcels(String ppName, int count) {
+        LocationGroup group = retrievedGroups.stream()
+            .filter(g -> g.pickupPoint().name().equals(ppName))
+            .findFirst()
+            .orElseThrow(() -> new AssertionError("Group not found: " + ppName));
+        
+        assertEquals(count, group.parcels().size());
     }
 }
