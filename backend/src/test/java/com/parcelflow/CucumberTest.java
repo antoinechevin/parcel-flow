@@ -13,6 +13,7 @@ import static io.cucumber.junit.platform.engine.Constants.PLUGIN_PROPERTY_NAME;
 @SelectClasspathResource("features/DashboardList.feature")
 @SelectClasspathResource("features/DashboardAggregation.feature")
 @SelectClasspathResource("features/DashboardUrgency.feature")
+@SelectClasspathResource("features/mail-adapter.feature")
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.parcelflow.steps")
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty")
 public class CucumberTest {
