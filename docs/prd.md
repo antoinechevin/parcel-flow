@@ -41,7 +41,6 @@ Cela entraîne deux problèmes majeurs :
 * **FR1.3 :** Le système doit marquer les emails comme "traités" (ou lus) pour éviter les doublons.
 
 #### FR2 : Extraction par IA (Le Cœur du Système)
-* **FR2.1 - Sanitization :** Avant tout envoi à l'IA, le système **DOIT** anonymiser les données sensibles via Regex (suppression des adresses postales, numéros de téléphone) pour respecter le principe de *Data Minimization*.
 * **FR2.2 - Prompting Contextuel :** Le système utilise un prompt générique pour extraire : Code de retrait, Transporteur, Date limite, Lieu.
 * **FR2.3 - Gestion d'Erreur :** Si le score de confiance de l'IA est bas, le colis est créé avec un statut "A vérifier" et un lien vers l'email.
 

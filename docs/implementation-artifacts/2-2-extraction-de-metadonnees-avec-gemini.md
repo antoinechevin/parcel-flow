@@ -12,8 +12,8 @@ so that **structured parcel information is created automatically and I don't hav
 
 ## Acceptance Criteria
 
-1. **Input**: A sanitized email text (from Story 2.1).
-2. **AI Processing**: The text is sent to the Gemini Adapter via Spring AI.
+**Given** a raw email text
+**When** sent to the Gemini Adapter via Spring AI
 3. **Structured Output**: A `ParcelMetadata` object is returned containing:
     - `trackingCode`: String (e.g., "1Z999...")
     - `carrier`: String (e.g., "UPS", "La Poste")
@@ -36,7 +36,7 @@ so that **structured parcel information is created automatically and I don't hav
   - [ ] Implement error handling for AI timeouts/failures.
 - [ ] **Application Service**
   - [ ] Create `ExtractParcelUseCase` (or update existing service).
-  - [ ] Orchestrate: Receive Email -> Call Sanitizer (Stub for now or integrate if ready) -> Call Gemini Adapter -> Save Parcel.
+  - [ ] Orchestrate: Receive Email -> Call Gemini Adapter -> Save Parcel.
 - [ ] **Testing**
   - [ ] Unit Test `GeminiExtractionAdapter` (Mock `ChatClient`).
   - [ ] Integration Test with WireMock or Spring AI Mock for Vertex AI calls.

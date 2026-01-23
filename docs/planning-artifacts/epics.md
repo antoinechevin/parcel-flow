@@ -25,7 +25,6 @@ FR1: Ingestion Intelligente (The "Pull" Strategy)
 - FR1.3: Le système doit marquer les emails comme "traités" (ou lus) pour éviter les doublons.
 
 FR2: Extraction par IA (Le Cœur du Système)
-- FR2.1 - Sanitization: Avant tout envoi à l'IA, le système DOIT anonymiser les données sensibles via Regex (suppression des adresses postales, numéros de téléphone) pour respecter le principe de Data Minimization.
 - FR2.2 - Prompting Contextuel: Le système utilise un prompt générique pour extraire : Code de retrait, Transporteur, Date limite, Lieu.
 - FR2.3 - Gestion d'Erreur: Si le score de confiance de l'IA est bas, le colis est créé avec un statut "A vérifier" et un lien vers l'email.
 
@@ -77,7 +76,6 @@ From UX (Inferred):
 FR1.1: Epic 1 - Connexion API Gmail OAuth2
 FR1.2: Epic 1 - Polling périodique des emails
 FR1.3: Epic 1 - Marquage des emails traités
-FR2.1: Epic 2 - Sanitization et anonymisation
 FR2.2: Epic 2 - Extraction par Gemini
 FR2.3: Epic 2 - Gestion d'erreur et fallback
 FR3.1: Epic 3 - Liste triée par urgence
@@ -102,7 +100,7 @@ Mettre en place l'infrastructure technique (Monorepo, CI/CD, Architecture Hexago
 
 ### Epic 2: Le Cœur d'Extraction IA & Protection de la Vie Privée
 Implémenter la logique d'extraction des données par Gemini en garantissant l'anonymisation stricte des données sensibles avant traitement.
-**FRs covered:** FR2.1, FR2.2, FR2.3, NFR1.1
+**FRs covered:** FR2.2, FR2.3, NFR1.1
 
 ### Epic 3: Le Dashboard Mobile & Consultation "Zéro Stress"
 Créer l'interface mobile pour afficher la liste des colis triée par urgence, avec une gestion performante et un accès hors ligne.
@@ -193,19 +191,6 @@ so that new delivery emails are automatically processed without manual intervent
 ## Epic 2: Le Cœur d'Extraction IA & Protection de la Vie Privée
 
 Implémenter la logique d'extraction des données par Gemini en garantissant l'anonymisation stricte des données sensibles avant traitement.
-
-### Story 2.1: Sanitization & Anonymisation (Data Minimization)
-
-As a Privacy-Conscious User,
-I want my sensitive personal data (phone numbers, addresses) removed from the email body,
-So that only necessary metadata is processed by the AI, respecting my privacy.
-
-**Acceptance Criteria:**
-
-**Given** an email body containing a phone number or address
-**When** the sanitization service runs
-**Then** sensitive data is replaced with masking placeholders (e.g., `[PHONE_REMOVED]`).
-**And** the original raw email body is NOT saved to the database.
 
 ### Story 2.2: Extraction de Métadonnées avec Gemini
 
