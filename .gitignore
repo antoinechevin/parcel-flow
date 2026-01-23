@@ -5,6 +5,7 @@ target/
 *.war
 *.ear
 *.log
+application-local.properties
 .metadata/
 .recommenders/
 .settings/
