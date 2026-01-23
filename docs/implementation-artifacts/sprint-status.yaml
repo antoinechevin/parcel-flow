@@ -50,8 +50,7 @@ development_status:
   epic-1-retrospective: optional
 
   epic-2: in-progress
-  2-1-sanitization-anonymisation-data-minimization: ready-for-dev
-  2-2-extraction-de-metadonnees-avec-gemini: backlog
+    2-2-extraction-de-metadonnees-avec-gemini: backlog
   2-3-gestion-d-erreur-fallback-extraction: backlog
   epic-2-retrospective: optional
 

@@ -41,8 +41,7 @@ filesIncluded:
     - **FR1.2 :** Interrogation périodique (Job planifié) des emails correspondant à une requête stricte (ex: `subject:(colis OR livraison) is:unread`).
     - **FR1.3 :** Marquage des emails comme "traités" (ou lus) pour éviter les doublons.
 - **FR2 : Extraction par IA (Le Cœur du Système)**
-    - **FR2.1 - Sanitization :** Anonymisation des données sensibles via Regex avant envoi à l'IA.
-    - **FR2.2 - Prompting Contextuel :** Extraction du Code de retrait, Transporteur, Date limite et Lieu.
+        - **FR2.2 - Prompting Contextuel :** Extraction du Code de retrait, Transporteur, Date limite et Lieu.
     - **FR2.3 - Gestion d'Erreur :** Statut "A vérifier" + lien vers l'email si le score de confiance est bas.
 - **FR3 : Consultation Mobile "Zéro Stress"**
     - **FR3.1 :** Liste triée par Urgence (Date limite la plus proche).
@@ -79,7 +78,6 @@ filesIncluded:
 | **FR1.1** | Connexion API Gmail OAuth2 | Epic 1 / Story 1.3 | ✓ Couvert |
 | **FR1.2** | Polling périodique des emails | Epic 1 / Story 1.3 | ✓ Couvert |
 | **FR1.3** | Marquage des emails traités | Epic 1 / Story 1.3 | ✓ Couvert |
-| **FR2.1** | Sanitization & Anonymisation | Epic 2 / Story 2.1 | ✓ Couvert |
 | **FR2.2** | Extraction par Gemini | Epic 2 / Story 2.2 | ✓ Couvert |
 | **FR2.3** | Gestion d'Erreur Extraction | Epic 2 / Story 2.3 | ✓ Couvert |
 | **FR3.1** | Liste triée par Urgence | Epic 3 / Story 3.1 | ✓ Couvert |

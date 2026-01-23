@@ -249,7 +249,7 @@ L'architecture doit supporter un flux de données unidirectionnel partant de Gma
 
 **Non-Functional Requirements:**
 *   **Purity (NFR2.1) :** Le domaine doit être 100% découplé.
-*   **Privacy (NFR1.1) :** Éphémérité des données sensibles imposant une logique de "sanitization" amont.
+*   **Privacy (NFR1.1) :** Éphémérité des données sensibles.
 *   **Offline Availability (NFR3.1) :** Implique une stratégie de synchronisation et de cache robuste côté frontend.
 
 **Scale & Complexity:**
@@ -266,7 +266,7 @@ Le projet est un "Dojo" : la complexité réside dans la rigueur architecturale 
 *   OAuth2 Gmail restricted scope.
 
 ### Cross-Cutting Concerns Identified
-*   **Anonymisation des données :** Doit être gérée de manière transverse avant l'envoi à l'IA.
+
 ## Core Architectural Decisions
 
 ### Data Architecture
