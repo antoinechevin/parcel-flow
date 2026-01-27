@@ -50,6 +50,7 @@ public class DashboardSteps {
             return new Parcel(
                 ParcelId.random(),
                 trackingNumber,
+                "Carrier",
                 deadline,
                 status,
                 DEFAULT_PP
@@ -98,6 +99,7 @@ public class DashboardSteps {
             return new Parcel(
                 ParcelId.random(),
                 trackingNumber,
+                "Carrier",
                 LocalDate.now().plusDays(5),
                 ParcelStatus.AVAILABLE,
                 pp
@@ -133,6 +135,7 @@ public class DashboardSteps {
         Parcel parcel = new Parcel(
             ParcelId.random(),
             "EXP-TOMORROW",
+            "Carrier",
             LocalDate.now().plusDays(1),
             ParcelStatus.AVAILABLE,
             pp
@@ -146,6 +149,7 @@ public class DashboardSteps {
         Parcel parcel = new Parcel(
             ParcelId.random(),
             "EXP-IN-" + days,
+            "Carrier",
             LocalDate.now().plusDays(days),
             ParcelStatus.AVAILABLE,
             pp

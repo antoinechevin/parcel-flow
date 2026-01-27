@@ -22,7 +22,7 @@ Cela entraîne deux problèmes majeurs :
 1.  **Le retour expéditeur accidentel :** Oubli du colis car l'email de rappel est perdu.
 2.  **La friction sociale au guichet :** Difficulté à retrouver le bon QR code ou PIN au moment critique.
 
-**Parcel-Flow** résout cela via une approche hybride : une IA (Gemini 3 via Spring AI) pour structurer le chaos des emails entrants, et une app mobile réactive (React Native) pour la restitution.
+**Parcel-Flow** résout cela via une approche hybride : une **Ingestion Déterministe** (Regex & Patterns spécifiques) pour structurer le chaos des emails entrants, et une app mobile réactive (React Native) pour la restitution.
 
 ### Historique des Modifications (Change Log)
 | Date | Version | Description | Auteur |
@@ -37,12 +37,12 @@ Cela entraîne deux problèmes majeurs :
 
 #### FR1 : Ingestion Intelligente (The "Pull" Strategy)
 * **FR1.1 :** Le système doit se connecter à l'API Gmail via OAuth2 (Scope Readonly restreint).
-* **FR1.2 :** Le système doit interroger périodiquement (Job planifié) les emails correspondant à une requête stricte (ex: `subject:(colis OR livraison) is:unread`).
+* **FR1.2 :** Le système doit interroger périodiquement (Job planifié) Gmail avec des requêtes spécifiques pour chaque transporteur (ex: `from:ne-pas-repondre@chronopost.fr subject:disponible`).
 * **FR1.3 :** Le système doit marquer les emails comme "traités" (ou lus) pour éviter les doublons.
 
-#### FR2 : Extraction par IA (Le Cœur du Système)
-* **FR2.2 - Prompting Contextuel :** Le système utilise un prompt générique pour extraire : Code de retrait, Transporteur, Date limite, Lieu.
-* **FR2.3 - Gestion d'Erreur :** Si le score de confiance de l'IA est bas, le colis est créé avec un statut "A vérifier" et un lien vers l'email.
+#### FR2 : Extraction Déterministe (Regex)
+* **FR2.2 - Stratégie par Provider :** Le système applique un parser spécifique (Chronopost, Mondial Relay, Vinted) basé sur l'émetteur de l'email pour extraire : Code, Date limite, Lieu.
+* **FR2.3 - Gestion de Format :** Si le format de l'email change et que l'extraction échoue (Regex miss), le colis est marqué "A vérifier" pour ajustement manuel du code.
 
 #### FR3 : Consultation Mobile "Zéro Stress"
 * **FR3.1 :** Liste triée par **Urgence** (Date limite la plus proche en premier).
@@ -103,7 +103,7 @@ Interface utilitaire, minimaliste et tactique. Pas de fioritures e-commerce.
 ### Backend (Le Cœur "Expert")
 * **Langage :** Java 21 (LTS).
 * **Framework :** Spring Boot 3.3+.
-* **AI Integration :** **Spring AI** (Abstraction standard).
+* **Extraction :** **Java Regex** + **Jsoup** (Parsing robuste).
 * **Méthodologie :** **ATDD** (Acceptance Test-Driven Development).
 * **Tests :**
     * **Acceptance :** **Cucumber JVM** (Gherkin). Chaque Story a son `.feature`. Le développement est piloté par ces tests.
@@ -134,9 +134,9 @@ Interface utilitaire, minimaliste et tactique. Pas de fioritures e-commerce.
 * **Objectif :** Mettre en place le Monorepo, le "Hello World" Backend & Frontend, et le Pipeline CI/CD complet avec Preview Apps.
 * **Livrable :** Une PR technique validée par QR Code.
 
-### Epic 2 : Le "Videur" (Ingestion & IA)
-* **Objectif :** Cœur Backend. Connecter l'API Gmail et l'extraction Gemini.
-* **Focus :** Adapters `GmailProvider` et `GeminiExtractor`. Tests ATDD d'extraction.
+### Epic 2 : Le "Videur" (Ingestion & Regex)
+* **Objectif :** Cœur Backend. Connecter l'API Gmail et implémenter les parsers (Regex) pour Chronopost, Mondial Relay et Vinted.
+* **Focus :** Adapters `GmailProvider` et `RegexParsers`. Tests ATDD d'extraction.
 
 ### Epic 3 : Le "Dashboard" (API & UI Mobile)
 * **Objectif :** Exposer les données et afficher la liste triée sur mobile.

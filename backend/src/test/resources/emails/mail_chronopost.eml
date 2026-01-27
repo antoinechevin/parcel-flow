@@ -1,0 +1,1182 @@
+Delivered-To: antoine.chevin@gmail.com
+Received: by 2002:adf:fbc2:0:b0:42f:ab8a:35ad with SMTP id d2csp2630028wrs;
+        Mon, 12 Jan 2026 05:04:05 -0800 (PST)
+X-Forwarded-Encrypted: i=4; AJvYcCWnlncIyoW5Ae8xXYAtWqbqeReO9o/NE96gkfZdr0VbnJY7JxZovsXYsU3gqYxst1oA7ojl6of6YYbj1xEUNg==@gmail.com
+X-Received: by 2002:a17:907:25c4:b0:b83:15cb:d491 with SMTP id a640c23a62f3a-b844541e387mr1718104066b.53.1768223045419;
+        Mon, 12 Jan 2026 05:04:05 -0800 (PST)
+ARC-Seal: i=3; a=rsa-sha256; t=1768223045; cv=pass;
+        d=google.com; s=arc-20240605;
+        b=ZqysMMCzAmzsMZLEcJH1NW5hyxGxihEb+S7QZXrOuW7bpl0QMBYedtkpr5lldLdkzH
+         1uoXV+uV34NQUtc5rBzoUVVpYwpBPLj2ovxORtmudJSE4UXJquu7nIVmcwL+o3tAlKfI
+         MhcuRcZ+6Gp7IWj4pnNcaV8Xt8cVZpqCQqH0CLGa9bPj+diziRlnBpIPt1Yc74lBcEA3
+         hUJSm0Zznk6vpwgsUg2f1JilwgDZo5jb86x4Xw6ywgeOAATUOUnKmV4dwPjNTfvebl/N
+         IaW9zLOlXLM+g1gghFp6w4S44qCiMoiKHqCeC+L3lJgq+7IRBE/wz67iWrHYgmCn38Gk
+         UxlA==
+ARC-Message-Signature: i=3; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=list-unsubscribe:list-unsubscribe-post:mime-version:subject
+         :message-id:to:from:date:dkim-signature:delivered-to;
+        bh=x5W0NcjwiMGTh8kmmYkt48aTA7mpv7hE3n8g3BPX+sI=;
+        fh=gmjCqj2udCyfGNOGxU0hbCXZlo5AXheSZrgkiwBQW0A=;
+        b=CIofTQKkr0HJMpMukOLXrv6plp9zqxQQnU0/TfI41vbvsrlVz/d8TDTcuvqmdaiw1S
+         pVduACgBg3rKe7EMfX8/JrNE0fi3Sc1euRnDkC3LRBMolupe/KJeuN1qHxL/i+tmlhA+
+         NWshTd/MKM9fJlFunL0brIpjZ8828s66PhDAfKGnlYcK/9B2+TjKq8aDZTpinGqMeckc
+         27UtLBXVRlPR5MmngmPSEnJ7oomJsU2kmU4aaHvssiSVmk/+HADeL0uOu4rlR2A455Aj
+         7HF3f01N0ooF8P112Rh6OmrT+9oF2GPjOtRuGeGxUJe5gvG3/bM/g3AVEpBuJePcty/9
+         eUBQ==;
+        dara=google.com
+ARC-Authentication-Results: i=3; mx.google.com;
+       dkim=pass header.i=@network1.pickup.fr header.s=smtp1 header.b=AsxH6eIu;
+       arc=pass (i=2 spf=pass spfdomain=network1.pickup.fr dkim=pass dkdomain=network1.pickup.fr dmarc=pass fromdomain=network1.pickup.fr);
+       spf=pass (google.com: domain of anou.chevin+caf_=antoine.chevin=gmail.com@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom="anou.chevin+caf_=antoine.chevin=gmail.com@gmail.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=network1.pickup.fr;
+       dara=pass header.i=@gmail.com
+Return-Path: <anou.chevin+caf_=antoine.chevin=gmail.com@gmail.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id a640c23a62f3a-b872d7477e2sor32617166b.11.2026.01.12.05.04.05
+        for <antoine.chevin@gmail.com>
+        (Google Transport Security);
+        Mon, 12 Jan 2026 05:04:05 -0800 (PST)
+Received-SPF: pass (google.com: domain of anou.chevin+caf_=antoine.chevin=gmail.com@gmail.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@network1.pickup.fr header.s=smtp1 header.b=AsxH6eIu;
+       arc=pass (i=2 spf=pass spfdomain=network1.pickup.fr dkim=pass dkdomain=network1.pickup.fr dmarc=pass fromdomain=network1.pickup.fr);
+       spf=pass (google.com: domain of anou.chevin+caf_=antoine.chevin=gmail.com@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom="anou.chevin+caf_=antoine.chevin=gmail.com@gmail.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=network1.pickup.fr;
+       dara=pass header.i=@gmail.com
+ARC-Seal: i=2; a=rsa-sha256; t=1768223045; cv=pass;
+        d=google.com; s=arc-20240605;
+        b=Bw5uPdtAEEo/8IFgH0BAygTcHTxvm1ORJ5c9DzUKRZFoSBgxlOAFu5yALMPm6jNJj9
+         2qfwZmyjK9MWZL85z6bZABOwCz3k+jgwzJx+Fax1LBPxt2pNKFLYzY41QS4+prk46LdG
+         P1ZZDA+1ptsClF1py6Mrg2XNp1+LGT26TnkTDsquCwY6tdDOEhpjL7gJz+Xz7eREBM77
+         mvb79lwamkuxR0DvbHwYSB/PTmYYsMOeKERDZaF5O6MYH8+Yyj7rbVo7fctjZJZRWEm/
+         6FGZO3NDfSAaYj0/t6zQ4CQ996YBe1/zXnVg5sVqNaAGjgsNRbAVY/B/wFl2YuFQyWi7
+         bBEw==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=list-unsubscribe:list-unsubscribe-post:mime-version:subject
+         :message-id:to:from:date:dkim-signature:delivered-to;
+        bh=x5W0NcjwiMGTh8kmmYkt48aTA7mpv7hE3n8g3BPX+sI=;
+        fh=gmjCqj2udCyfGNOGxU0hbCXZlo5AXheSZrgkiwBQW0A=;
+        b=dfmnB1KuEvmVcJQ12pqEza1QtQXeWmH3Unhs2bUyX9WIn/wzJrT9AH1L3CfUVq+mMx
+         ZGY21z1Ve4Jwqs4wurjCcSPVd8nhMiBq+EabaLvwW26oqon9tGxRls6iw59cf8gEQkFR
+         oQrwx18B5zGhrPUxTTOZ+a/DOCy6RNW75eEkDlpNZccQaDKxtHXKLPhOlXzenSCFz69f
+         jyeSbgQ1i40KLMvKPa9B6XFO0WjvZ3yyHvKnrqYE9PhyNPIE8Dhyk7L01Lzz4yroE2iA
+         OpNlCka6R/c7QqRm8m5jtvBoWNg1jCbQFAwDjZ1qXx0xJE4qGq2aXjHacXWwO4H4MNq3
+         hEmw==;
+        dara=google.com
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@network1.pickup.fr header.s=smtp1 header.b=AsxH6eIu;
+       spf=pass (google.com: domain of ib_bounces-anou.chevin=gmail.com@network1.pickup.fr designates 62.140.31.47 as permitted sender) smtp.mailfrom="ib_bounces-anou.chevin=gmail.com@network1.pickup.fr";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=network1.pickup.fr
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768223045; x=1768827845;
+        h=list-unsubscribe:list-unsubscribe-post:mime-version:subject
+         :message-id:to:from:date:dkim-signature:delivered-to:x-forwarded-for
+         :x-forwarded-to:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=x5W0NcjwiMGTh8kmmYkt48aTA7mpv7hE3n8g3BPX+sI=;
+        b=gY+61nqEH70U+brurs03VbFJmfxOzRoYg7jdL4KrOSczX0yUjHZoaquDhXKQ783fau
+         jDIkOLdJxbgsupfZMhquu7dNBZSyqZ7XmsRifQetXKCHMwC9fNwGUNURht05murI4nR5
+         boYA5JPHZ4RsCXL5UseseWzGLTQS300Jp585J6i8Yn4JlVfTifJDb3VnZkks2Dec0Cr2
+         rk/XYdDlljtq5a2Ul9pzlg52gwab9q/daVVf5Vcp0pohLALIssad3SJQLM37HcoRWIRA
+         C1aooojOJ6lfnGqYl4nJCx+1TvuC0nad5JzbbUbfoGC2yvwmyKEJ9Pxv/n9x2LZj/AUU
+         llGg==
+X-Forwarded-Encrypted: i=2; AJvYcCX5kjnoFmLalvF5Zwwh1S+Kv8I+6RxmFXhHw6WURYmSD2gL0dU3tRKVddRXE48Zx4RR/tbWIwbbUDgnzMEoqQ==@gmail.com
+X-Gm-Message-State: AOJu0Yy/qy0Y/ARzuYvYYJz6WiJfZ9nzOa5kO1nw0WQJ9rodfPtjO9En
+	Pn13bJ8lazELIBbBW5k1iwN8cOFbZTpWlMjgkwlTBbAAqcZIFHcojqTwiR8jWh8hzv1O9Bj80hF
+	DzKTAdCOZ8IX0DN1JD/AuMBYF7XJz2QvRHIRGydvDcdBOBjqsDVQHejHOI1rBYA==
+X-Received: by 2002:a17:907:9491:b0:b87:1df1:40da with SMTP id a640c23a62f3a-b871df14ee7mr240311066b.44.1768223044654;
+        Mon, 12 Jan 2026 05:04:04 -0800 (PST)
+X-Forwarded-To: noura.chevin@gmail.com, antoine.chevin@gmail.com
+X-Forwarded-For: anou.chevin@gmail.com noura.chevin@gmail.com, antoine.chevin@gmail.com
+Delivered-To: anou.chevin@gmail.com
+Received: by 2002:a05:7208:420d:b0:fa:50cc:d5ad with SMTP id u13csp190992rbf;
+        Mon, 12 Jan 2026 05:04:03 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IERsfl6d8kCJs9GbE/7yjie7/LX5oIOKrWfvnkRGTY7rp8dq021SvViFOWdKf8msIWxU3O6
+X-Received: by 2002:a05:600c:a106:b0:47d:73a4:45a7 with SMTP id 5b1f17b1804b1-47d84b3badfmr190321425e9.24.1768223042814;
+        Mon, 12 Jan 2026 05:04:02 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768223042; cv=none;
+        d=google.com; s=arc-20240605;
+        b=HgHdcAPU6LST0XrF5reenhZ1ip29xefPS/pbiGjoc0ul2nnMbpGKRx/66rvo3aAHyp
+         cqGrQTW1/7cG55f0ZHoDh2rxogI+LimPhBHupFcALMEKyOAoRPdQoJ0VR8BJF+5ezCvi
+         fOMuiqp4/7C7jiL8hHuR7S1heucTV4ZXjQWBzLdCGQAYPhM/B8+egK5fB+Uy4cAAtnwa
+         X1wxR+Cq9to5biDfNugpsfBClSmBlNlXOhkn0Vnelzm8GUJK+dzXdbeurB/KhEfOe+NQ
+         B+FagcWkYqBfznK13rX8ObOTWngiBVw/7mBb6fHX0EuN7eZZyjp3irfy/QV1rspN+mg1
+         98cA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=list-unsubscribe:list-unsubscribe-post:mime-version:subject
+         :message-id:to:from:date:dkim-signature;
+        bh=x5W0NcjwiMGTh8kmmYkt48aTA7mpv7hE3n8g3BPX+sI=;
+        fh=udNoXpeG+OMEkgJAXtykmfhVkwwLlXB0f7WfAuY6LWU=;
+        b=Zm+hVsvpbcV7HsnLrVXaFddhYf3gevSPN32mFoJkqAIweq3sn9pMfH3VB8N6sjr+zS
+         QwqbH8CIYe6xzQdMmeD/EIDZNFE7szz4egEC7Lj59s+HHqfCxi+MBVBsh8BVZBRikwJi
+         vbWom8IODUJcXDXhVKE/1inM/7YL6F0BqEBDGugvw2unXObV8Gtgfyge9k3gBow60ItW
+         qRBH9iqXiOWMBAb+PfZM/SuHSUvP90KJOSMwrp3NzLNWh7xiN/ZtIc/FO5XERRb28gwd
+         bBbyjK3tApfFDuDF+X9RFOb7BdbPHoD3+SDh48/FRpaohthkRrwDfBU7rcUDenKs5ogb
+         p/aA==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@network1.pickup.fr header.s=smtp1 header.b=AsxH6eIu;
+       spf=pass (google.com: domain of ib_bounces-anou.chevin=gmail.com@network1.pickup.fr designates 62.140.31.47 as permitted sender) smtp.mailfrom="ib_bounces-anou.chevin=gmail.com@network1.pickup.fr";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=network1.pickup.fr
+Return-Path: <ib_bounces-anou.chevin=gmail.com@network1.pickup.fr>
+Received: from abcg-fr4.mta.cloud (abcg-fr4.mta.cloud. [62.140.31.47])
+        by mx.google.com with ESMTPS id ffacd0b85a97d-432bd612ca7si28398989f8f.338.2026.01.12.05.04.02
+        for <anou.chevin@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Jan 2026 05:04:02 -0800 (PST)
+Received-SPF: pass (google.com: domain of ib_bounces-anou.chevin=gmail.com@network1.pickup.fr designates 62.140.31.47 as permitted sender) client-ip=62.140.31.47;
+DKIM-Signature: q=dns/txt; a=rsa-sha256; b=AsxH6eIufZrlplT8C/KpCoPwIFuNn9eyZTv6L0xfCTCrLsrwc4z3jcYQ4IHJMDjaW6zeGX6PXQvkKBxETYqJl7BmF2OiqWlvoVidW6Lfx/r/OJ2n/I//BC+AgEpJXMVTld4HIVa33ClUDpJRza8pOs/do5aMX+I0kulQQCpKjig=; s=smtp1; c=relaxed/relaxed; t=1768223042; d=network1.pickup.fr; v=1; bh=x5W0NcjwiMGTh8kmmYkt48aTA7mpv7hE3n8g3BPX+sI=; h=Content-Type:MIME-Version:Date:From:To:Message-ID:Subject:List-Unsubscribe-Post:List-Unsubscribe;
+Received: from 5D175F93659EE877FE298CEA3F98565E by 0EC405F1DBEA1F6C242A06BBD643E932; Mon, 12 Jan 2026 13:04:02 +0000 (UTC)
+Date: Mon, 12 Jan 2026 13:04:02 +0000 (UTC)
+From: Chronopost Pickup <chronopost@network1.pickup.fr>
+To: anou.chevin@gmail.com
+Message-ID: <bd15bee8e4f7803b842b9a8848be981ac0105fee380dd63dd2e075e6e4936114@network1.pickup.fr>
+Subject: =?UTF-8?Q?Votre_colis_VINTED_est_arriv=C3=A9_dans_votre_relais_Pickup_!?=
+MIME-Version: 1.0
+X-IB-WebHookData: A152085520FB60C3623AB0CF631ED2CC2C7AB5F8FED5030D14AB7B856900054B1A0D900A54DBCC4576820D6AEC415D65BB236D8236FB676220A1925453761C6DF52FD6712D87254E86F75A74A435311ECB5389B31614998F3911CD4FC819F1C82F2A08DB3B0405A507771B3E72A20496C9F1906908D4D820FD2E276FAC413C56FC8773D34EA505E566FC052914CA79851DDED3270DE79F0B7D48281C95E7208D50C57243CEEDB944BE65AE7158FE2C59A6C12CE37A95EB1E80A6DB9593D04FB14D86C14E8C80F7B2EE0BCA9834CCAFFC0A876EC565007CFD659FBB04084479819F2E199AFC26A129CBFFDCC6BC11ECA5101644C9363CA035B743BFCAC192BEC4DDBA5BF8F7B3A4782C0381E8B2251D0353EA4CFCCF306CDDC8713838A4032AA4CEC7C54717597BC46FFFE57FA370E78DD611236D588D98B7347C13456C1B67C81F5EB8E6342B55E936D3C39CBCF53C42A46321E176F17185386DC689DF48C2D3D2203BF5333E71532911DBC3528E54C8D243B7EB258EE65D3ED9BB998F39ADCE9FF756346AA8227E90D9EFF900FF1D99EFC66C9522156CA129716E8E5C98ED1A0B1269170FAA4EFF16AD44A1D0915DAA4DC7C70C7A80B9A768E749B2FA3B3213F60DADE101AD42622A4F40318AD23820269F15F2DB810747259294
+X-IB-WebHookData2: 15E19ACE23D7BE629DC14EF011D8C3E2EECBDAA924E42A16BAD6383921E9F372D248AA8078DA8FC5B773237B2F76D9CDCF490B6B54EDC0F0E377EB4347E9E5D6032B418444E0A42CB2787819B7528648C296B35401000FA0BC825432BB2FCB49E38574E78E3E6CB45793950673D1DA9074F39EC4F4C63061BC0B565AF3FB15628F6451BF4A38EF3C4AD187D22D3B2C92A86DD5FD1FC6FB71AB449168D0A5D58CEDDB50A612D247ED9FA5F5EBC7B8F42B98546825DFEBC1089E25F92D5923E74271D5A89068FBCAC7F90077A781E5CFC2CFB9AFA496E500634579C91F887F99BA49E2F5961228B582C21B986B79871CD1C18CB3AA9C8DE535D3D6CBE3D63C625B34E38FCF40
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+List-Unsubscribe: <https://tracking.network1.pickup.fr/tracking/1/unsubscribeUser/DV8LxZc8BG8JmUd9Jpu1MhSTufLGi598uO1zmhME-9VSbhdKZxt6bE3K-E8sEcoUj_FiB0XW12v3ytHTT02RziOIDnYZUJh9SEK7J4rQtVxugUKgQjc8Lr2g6oK_-OI4mfzIDwZi7bIhWP-_9BDek7ZsGXRINDCuPuJiaGyUMQJ_o-OoFazJKvKhpenGx8Fg-5qITIIQVZhFvLaGIWpRinM9o7PPLb1rQ0NQg5TznWU3CD6bViG87xCLXOzlD0kzh0Nj4c-WaUbjEtdj6GSisLiESHOg9Nk9-WH1yHcUGHTp0-_edMPYF24L5MqwOQNDMgkTujQiP-ZmjLDgKCRXG75XfTx1mbULxPltWJEHy0_Mp_sW5bIYm18_n0C_-Lv4S_YPIlwGbhrvFJNJDG0JD0epC3ArpVnX0fO_5QIw3PkPAc6Q1XrDmjb6hlvMnxUrh2EOgsc6NaRaqhLV1qCRp3Ft0uJX1wRdTBKqgMc7fjts25AspVs9w5ALspv6Q0NjlUHWdTluEccvRnYD_3bVh3fATYgVQxFa2ayJfj7Pziyd67_HQze1vavp5fDzRV8nNcpq4QlsFb4RVBkRdrw7a3UTK1FlDfxj9XrlRQWPCa4=>, <mailto:unsubscribe@network1.pickup.fr?subject=unsubscribe|2BE419FA2C0DE313DEF82A4E48C036A2|DV8LxZc8BG8JmUd9Jpu1MhSTufLGi598uO1zmhME-9VSbhdKZxt6bE3K-E8sEcoUj_FiB0XW12v3ytHTT02RziOIDnYZUJh9SEK7J4rQtVxugUKgQjc8Lr2g6oK_-OI4mfzIDwZi7bIhWP-_9BDek7ZsGXRINDCuPuJiaGyUMQJ
+ _o-OoFazJKvKhpenGx8Fg-5qITIIQVZhFvLaGIWpRinM9o7PPLb1rQ0NQg5TznWU3CD6bViG87xCLXOzlD0kzh0Nj4c-WaUbjEtdj6GSisLiESHOg9Nk9-WH1yHcUGHTp0-_edMPYF24L5MqwOQNDMgkTujQiP-ZmjLDgKCRXG75XfTx1mbULxPltWJEHy0_Mp_sW5bIYm18_n0C_-Lv4S_YPIlwGbhrvFJNJDG0JD0epC3ArpVnX0fO_5QIw3PkPAc6Q1XrDmjb6hlvMnxUrh2EOgsc6NaRaqhLV1qCRp3Ft0uJX1wRdTBKqgMc7fjts25AspVs9w5ALspv6Q0NjlUHWdTluEccvRnYD_3bVh3fATYgVQxFa2ayJfj7Pziyd67_HQze1vavp5fDzRV8nNcpq4QlsFb4RVBkRdrw7a3UTK1FlDfxj9XrlRQWPCa4=>
+X-IB-Sending-Ip: 62.140.31.47
+Content-Type: multipart/alternative; boundary="=--115948498_1768223042686_19749932"
+
+--=--115948498_1768223042686_19749932
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+=0A<!--=20=3D=3D=3D=3D=3D=3D=3D=20START=20CSS/HEAD=20=3D=3D=3D=3D=3D=3D=3D=
+=20-->=0A=0A<!DOCTYPE=20html=0A=20=20=20=20PUBLIC=20"-//W3C//DTD=20XHTML=20=
+1=2E0=20Transitional//EN"=20"http://www=2Ew3=2Eorg/TR/xhtml1/DTD/xhtml1-tra=
+nsitional=2Edtd">=0A<html=20xmlns=3D"http://www=2Ew3=2Eorg/1999/xhtml">=0A=
+=0A<head>=0A=20=20=20=20<meta=20http-equiv=3D"Content-Type"=20content=3D"te=
+xt/html;=20charset=3Dutf-8"=20/>=0A=20=20=20=20<!--[if=20!mso]><!-->=0A=20=
+=20=20=20<meta=20http-equiv=3D"X-UA-Compatible"=20content=3D"IE=3Dedge"=20/=
+>=0A=20=20=20=20<!--<![endif]-->=0A=20=20=20=20<meta=20name=3D"viewport"=20=
+content=3D"width=3Ddevice-width,=20initial-scale=3D1=2E0"=20/>=0A=20=20=20=
+=20<link=20rel=3D"preconnect"=20href=3D"https://fonts=2Egoogleapis=2Ecom"=
+=20/>=0A=20=20=20=20<link=20rel=3D"preconnect"=20href=3D"https://fonts=2Egs=
+tatic=2Ecom"=20crossorigin=20/>=0A=20=20=20=20<link=20href=3D"https://fonts=
+=2Egoogleapis=2Ecom/css2?family=3DBarlow:wght@400;500;700&display=3Dswap"=
+=20rel=3D"stylesheet"=20/>=0A=20=20=20=20<link=20href=3D"https://fonts=2Ego=
+ogleapis=2Ecom/css2?family=3DMontserrat:wght@400;640&display=3Dswap"=20rel=
+=3D"stylesheet"=20/>=0A=20=20=20=20<title></title>=0A=20=20=20=20<style=20t=
+ype=3D"text/css">=0A=20=20=20=20=20=20=20=20*=20{=0A=20=20=20=20=20=20=20=
+=20=20=20=20=20-webkit-font-smoothing:=20antialiased;=0A=20=20=20=20=20=20=
+=20=20}=0A=0A=20=20=20=20=20=20=20=20body=20{=0A=20=20=20=20=20=20=20=20=20=
+=20=20=20margin:=200;=0A=20=20=20=20=20=20=20=20=20=20=20=20padding:=200;=
+=0A=20=20=20=20=20=20=20=20=20=20=20=20min-width:=20100%;=0A=20=20=20=20=20=
+=20=20=20=20=20=20=20-webkit-font-smoothing:=20antialiased;=0A=20=20=20=20=
+=20=20=20=20=20=20=20=20mso-line-height-rule:=20exactly;=0A=20=20=20=20=20=
+=20=20=20}=0A=0A=20=20=20=20=20=20=20=20table=20{=0A=20=20=20=20=20=20=20=
+=20=20=20=20=20border-spacing:=200;=0A=20=20=20=20=20=20=20=20}=0A=0A=20=20=
+=20=20=20=20=20=20img=20{=0A=20=20=20=20=20=20=20=20=20=20=20=20border:=200=
+;=0A=20=20=20=20=20=20=20=20}=0A=0A=20=20=20=20=20=20=20=20=2Ewrapper=20{=
+=0A=20=20=20=20=20=20=20=20=20=20=20=20width:=20100%;=0A=20=20=20=20=20=20=
+=20=20=20=20=20=20table-layout:=20fixed;=0A=20=20=20=20=20=20=20=20=20=20=
+=20=20-webkit-text-size-adjust:=20100%;=0A=20=20=20=20=20=20=20=20=20=20=20=
+=20-ms-text-size-adjust:=20100%;=0A=20=20=20=20=20=20=20=20}=0A=0A=20=20=20=
+=20=20=20=20=20=2Ewebkit=20{=0A=20=20=20=20=20=20=20=20=20=20=20=20max-widt=
+h:=20640px;=0A=20=20=20=20=20=20=20=20}=0A=0A=20=20=20=20=20=20=20=20=2Eout=
+er=20{=0A=20=20=20=20=20=20=20=20=20=20=20=20margin:=200=20auto;=0A=20=20=
+=20=20=20=20=20=20=20=20=20=20width:=20100%;=0A=20=20=20=20=20=20=20=20=20=
+=20=20=20max-width:=20640px;=0A=20=20=20=20=20=20=20=20}=0A=0A=20=20=20=20=
+=20=20=20=20=2Einner=20{=0A=20=20=20=20=20=20=20=20=20=20=20=20padding:=201=
+0px;=0A=20=20=20=20=20=20=20=20}=0A=0A=20=20=20=20=20=20=20=20=2Eone-column=
+=20=2Econtents=20{=0A=20=20=20=20=20=20=20=20=20=20=20=20-webkit-font-smoot=
+hing:=20antialiased;=0A=20=20=20=20=20=20=20=20}=0A=0A=20=20=20=20=20=20=20=
+=20=2Etwo-column=20=2Ecolumn=20{=0A=20=20=20=20=20=20=20=20=20=20=20=20widt=
+h:=20100%;=0A=20=20=20=20=20=20=20=20=20=20=20=20max-width:=20300px;=0A=20=
+=20=20=20=20=20=20=20=20=20=20=20display:=20inline-block;=0A=20=20=20=20=20=
+=20=20=20=20=20=20=20vertical-align:=20top;=0A=20=20=20=20=20=20=20=20}=0A=
+=0A=20=20=20=20=20=20=20=20=2Econtents=20{=0A=20=20=20=20=20=20=20=20=20=20=
+=20=20width:=20100%;=0A=20=20=20=20=20=20=20=20}=0A=0A=20=20=20=20=20=20=20=
+=20=2Etwo-column=20img=20{=0A=20=20=20=20=20=20=20=20=20=20=20=20width:=201=
+00%;=0A=20=20=20=20=20=20=20=20=20=20=20=20max-width:=20280px;=0A=20=20=20=
+=20=20=20=20=20=20=20=20=20height:=20auto;=0A=20=20=20=20=20=20=20=20}=0A=
+=0A=0A=20=20=20=20=20=20=20=20@media=20only=20screen=20and=20(max-width:=20=
+599px),=0A=20=20=20=20=20=20=20=20screen=20and=20(max-device-width:=20599px=
+)=20{=0A=20=20=20=20=20=20=20=20=20=20=20=20=2Emarg-mob=20{=0A=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20height:=2030px=20!important;=0A=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20line-height:=2030px=20!important;=
+=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20font-size:=2030px=20!imp=
+ortant;=0A=20=20=20=20=20=20=20=20=20=20=20=20}=0A=0A=0A=20=20=20=20=20=20=
+=20=20=20=20=20=2Emarg-mob2=20{=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20width:=2030px;=0A=20=20=20=20=20=20=20=20=20=20=20=20}=0A=0A=20=20=
+=20=20=20=20=20=20=20=20=20=20=2Emarg-mob-3=20{=0A=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20padding:=2010px=200=20!important;=0A=20=20=20=20=20=
+=20=20=20=20=20=20=20}=0A=0A=20=20=20=20=20=20=20=20=20=20=20=20=2Etxt-mob=
+=20{=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20font-size:=2030px=20=
+!important;=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20line-height:=
+=2032px=20!important;=0A=20=20=20=20=20=20=20=20=20=20=20=20}=0A=0A=20=20=
+=20=20=20=20=20=20=20=20=20=20=2Edesktop-only=20{=0A=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20display:=20none;=0A=20=20=20=20=20=20=20=20=20=
+=20=20=20}=0A=20=20=20=20=20=20=20=20=20=20=0A=20=20=20=20=20=20=20=20=20=
+=09=2Emobile-only=20{=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20dis=
+play:=20table;=0A=20=20=20=20=20=20=20=20=20=20=20=20}=0A=0A=20=20=20=20=20=
+=20=20=20=20=20=20=20=2Emb-padding-top-10=20{=0A=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20padding-top:=2010px;=0A=20=20=20=20=20=20=20=20=20=20=
+=20=20}=0A=0A=20=20=20=20=20=20=20=20=20=20=20=20=2Emb-padding-bottom-10=20=
+{=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20padding-bottom:=2010px;=
+=0A=20=20=20=20=20=20=20=20=20=20=20=20}=0A=20=20=20=20=20=20=20=20=20=20=
+=0A=20=20=20=20=20=20=20=20=20=20=20=20=2Emb-padding-bottom-20=20{=0A=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20padding-bottom:=2020px;=0A=20=20=
+=20=20=20=20=20=20=20=20=20=20}=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=0A=20=20=20=20=20=20=20=20}=0A=0A@media=20only=20scre=
+en=20and=20(max-width:=20350px),=0A=20=20=20=20=20=20=20=20screen=20and=20(=
+max-device-width:=20350px)=20{=0A=2Emarg-mob2=20{=0A=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20width:=2015px;=0A=20=20=20=20=20=20=20=20=20=20=
+=20=20}=0A=20=20=20=20=20=20=20=20}=0A=0A@media=20only=20screen=20and=20(mi=
+n-width:=20600px),=0A=20=20=20=20=20=20=20=20screen=20and=20(min-device-wid=
+th:=20600px)=20{=0A=0A=09=09=09=2Emb-applocker=20{=0A=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20padding-left:=2030px=20!important;=0A=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=09padding-right:=200=20!important=0A=20=20=
+=20=20=20=20=20=20=20=20=20=20}=0A=20=20=20=20=20=20=20=20=20=20=0A=20=20=
+=20=20=20=20=20=20=20=20=2Edesktop-only=20{=0A=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20display:=20table;=0A=20=20=20=20=20=20=20=20=20=20=20=
+=20}=0A=20=20=20=20=20=20=20=20=20=20=0A=20=20=20=20=20=20=20=20=20=09=2Emo=
+bile-only=20{=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20display:=20=
+none;=0A=20=20=20=20=20=20=20=20=20=20=20=20}=0A=20=20=20=20=20=20=20=20=20=
+=20=0A=20=20=20=20=20=20=20=20}=0A=0A=20=20=20=20</style>=0A=20=20=20=20<!-=
+-[if=20(gte=20mso=209)|(IE)]>=0A=09<style=20type=3D"text/css">=0A=09=09tabl=
+e=20{border-collapse:=20collapse=20!important;}=0A=09</style>=0A=09<![endif=
+]-->=0A=0A=20=20=20=20<!--[if=20mso]>=0A<style=20type=3D"text/css">=20=0Abo=
+dy,table=20tr,table=20td,a,=20span,table=2EMsoNormalTable=20{font-family:Ar=
+ial,=20Helvetica,=20sans-serif=20!important;}=0A</style>=0A<![endif]-->=0A<=
+/head>=0A=0A<!--=20=3D=3D=3D=3D=3D=3D=3D=20END=20CSS/HEAD=20=3D=3D=3D=3D=3D=
+=3D=3D=20-->=0A=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=0A=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=0A<!--=20=3D=3D=3D=3D=3D=3D=3D=20START=20HEADER=20=3D=3D=3D=3D=3D=3D=3D=20=
+-->=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=0A<body=20style=3D"margin:0;padding=
+-top:0;padding-bottom:0;padding-right:0;padding-left:0;min-width:100%;"><im=
+g=20alt=3D""=20src=3D"https://tracking=2Enetwork1=2Epickup=2Efr/tracking/1/=
+open/DV8LxZc8BG8JmUd9Jpu1MhSTufLGi598uO1zmhME-9VSbhdKZxt6bE3K-E8sEcoUj_FiB0=
+XW12v3ytHTT02RziOIDnYZUJh9SEK7J4rQtVxugUKgQjc8Lr2g6oK_-OI4mfzIDwZi7bIhWP-_9=
+BDek7ZsGXRINDCuPuJiaGyUMQJ_o-OoFazJKvKhpenGx8Fg-5qITIIQVZhFvLaGIWpRinM9o7PP=
+Lb1rQ0NQg5TznWU3CD6bViG87xCLXOzlD0kzh0Nj4c-WaUbjEtdj6GSisLiESHOg9Nk9-WH1yHc=
+UGHTp0-_edMPYF24L5MqwOQNDMgkTujQiP-ZmjLDgKCRXG75XfTx1mbULxPltWJEHy0_Mp_sW5b=
+IYm18_n0C_-Lv4S_YPIlwGbhrvFJNJDG0JD0epC3ArpVnX0fO_5QIw3PkPAc6Q1XrDmjb6hlvMn=
+xUrh2EOgsc6NaRaqhLV1qCRp3Ft0uJX1wRdTBKqgMc7fjts25AspVs9w5ALspv6Q0NjlUHWdTlu=
+EccvRnYD_3bVh3fATYgVQxFa2ayJfj7Pziyd67_HQze1vavp5fDzRV8nNcpq4QlsFb4RVBkRdrw=
+7a3UTK1FlDfxj9XrlRQWPCa4=3D"=20width=3D"1"=20height=3D"1">=0A=20=20=20=20<c=
+enter=20class=3D"wrapper"=20style=3D"width:100%;table-layout:fixed;-webkit-=
+text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#F6F6F6;">=
+=0A=20=20=20=20=20=20=20=20<table=20width=3D"100%"=20cellpadding=3D"0"=20ce=
+llspacing=3D"0"=20border=3D"0"=20style=3D"background-color:#F6F6F6;"=20bgco=
+lor=3D"#F6F6F6;">=0A=20=20=20=20=20=20=20=20=20=20=20=20<tr>=0A=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20<td=20width=3D"100%">=0A=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<div=20class=3D"webkit"=20styl=
+e=3D"max-width:640px;margin:0=20auto;">=0A=0A=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20<!--[if=20(gte=20mso=209)|(IE)]>=
+=0A=0A=09=09=09=09=09=09<table=20width=3D"640"=20align=3D"center"=20cellpad=
+ding=3D"0"=20cellspacing=3D"0"=20border=3D"0"=20style=3D"border-spacing:0;f=
+ont-family:=20Calibri,=20sans-serif;color:#333333;"=20>=0A=09=09=09=09=09=
+=09=09<tr>=0A=09=09=09=09=09=09=09=09<td=20style=3D"padding-top:0;padding-b=
+ottom:0;padding-right:0;padding-left:0;"=20>=0A=09=09=09=09=09=09=09=09<![e=
+ndif]-->=0A=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20<!--=20=3D=3D=3D=3D=3D=3D=3D=20start=20main=20body=20=3D=3D=3D=
+=3D=3D=3D=3D=20-->=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20<table=20class=3D"outer"=20align=3D"center"=20cellpadding=
+=3D"0"=20cellspacing=3D"0"=20border=3D"0"=20style=3D"border-spacing:0;margi=
+n:0=20auto;width:100%;max-width:640px;"=20bgcolor=3D"#F6F6F6">=0A=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+<tr>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20<td=20style=3D"padding-top:0;padding-bottom:0=
+;padding-right:0;padding-left:0;">=0A=0A=0A<table=20border=3D"0"=20width=3D=
+"100%"=20cellpadding=3D"0"=20cellspacing=3D"0"=20bgcolor=3D"#F6F6F6">=0A=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20<tr>=0A=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20<td=20style=3D"background-color:=20#F6F6F6=
+;"=20bgcolor=3D"#F6F6F6">=0A=0A=20=20=09=09=09=09=09=09=09=09=09=09=09=0A<t=
+able=20border=3D"0"=20cellpadding=3D"0"=20cellspacing=3D"0"=20width=3D"100%=
+"=20style=3D"border-spacing:0;background-color:=20#F6F6F6;border-radius:0px=
+=20!important;"=20bgcolor=3D"#F6F6F6">=0A=20=20<tr>=0A=20=09=09<td=20height=
+=3D"20"=20width=3D"100%"=20style=3D"font-size:=2020px;=20line-height:=2020p=
+x;=20border-radius:0px=20!important;">=0A=09=09&nbsp;=0A=09=09</td>=0A=20=
+=09</tr>=0A</table>=0A=0A=0A=0A=09=0A=0A=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20<table=20border=3D"0"=20cellpadding=3D"=
+0"=20cellspacing=3D"0"=20width=3D"100%"=20style=3D"border-spacing:0;font-fa=
+mily:=20'Montserrat',=20Arial,=20sans-serif;">=0A=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<tr>=0A=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20<td=20width=3D"20"></td>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<td=20style=3D"font-f=
+amily:=20'Montserrat',=20Arial,=20sans-serif;font-size:14px;color:#706F6F;l=
+ine-height:16px;text-align:=20center;">=0A=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20Si=20ce=20message=20ne=20s'aff=
+iche=20pas=20correctement,=20<a=20href=3D"https://tracking=2Enetwork1=2Epic=
+kup=2Efr/tracking/1/click/x50UBCfzy36GLwhsrzzpx452439SQVZutLhCr8qQD5lGj--rq=
+gvG7IULu6_eTzz9LCg3H3_Q-MAQ8hP_Xtq1qehaqX66D66PKqiwrRuE8WsJrbN05prLM9MDBAd6=
+o-Y-HioKtTUxH3yfkPUzriT2K_u7gL8yNazJAAGU8ay9GpqWV47sHvMsR_roErkw6EyQ5Yws3wj=
+KT5Wf3fP_f3HYS4hvPDUzUA_pKPZHdnBrSuBVbniIwSJX_DSAdEUI78EpxL69x_becbcl-d1vm7=
+PUB0xty35gqDNypqsk7d0RqK5Cx5Go60P7nUo2GPiBsVK8hMAfCjWUk4scWqeqDCboDWnCI9cKs=
+gLMTGyDJ6B-XalvQkknR-sBCNeU4HLB0DMqE-mx8GVe1xdXMCFujodNCKIDZBSe-o7W08nkFsvx=
+1q68-rE8RX40vgLOR68P8zyQtMgb8RjXyx3i5r1pdFY_iGvN33KhMM2c2fxe8j0pqHq7lQ6nXxi=
+MJfWTCWL03uUADkwn3sBrOlxfKzM6lCZRe6dostHd5bH6rHiEQDgBePp2rS2WEGQdtUDSQthssU=
+d3ughp6YefmcAFRByYhGyZNFid3Rv6jQn_o5IT5UF94gw=3D"=20target=3D"_blank"=20sty=
+le=3D"text-decoration:underline;color:#706F6F;">cliquez=20ici</a>=2E=0A=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20</td>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20<td=20width=3D"20"></td>=0A=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+</tr>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20</table>=0A=20=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=0A<table=20border=3D"0"=20cellpadding=3D"0"=20cellspacing=
+=3D"0"=20width=3D"100%"=20style=3D"border-spacing:0;background-color:=20#F6=
+F6F6;border-radius:0px=20!important;"=20bgcolor=3D"#F6F6F6">=0A=20=20<tr>=
+=0A=20=09=09<td=20height=3D"20"=20width=3D"100%"=20style=3D"font-size:=2020=
+px;=20line-height:=2020px;=20border-radius:0px=20!important;">=0A=09=09&nbs=
+p;=0A=09=09</td>=0A=20=09</tr>=0A</table>=0A=0A=0A=0A=09=0A=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=0A=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20</td>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20</t=
+r>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20</table>=0A=0A<!--=20=3D=3D=3D=3D=3D=
+=3D=3D=20END=20HEADER=20=3D=3D=3D=3D=3D=3D=3D=20-->=0A=0A=0A=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=0A<!--=20=3D=3D=3D=3D=3D=3D=3D=20START=20LOGOS=20=3D=3D=3D=
+=3D=3D=3D=3D=20-->=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=0A<!--=20=3D=3D=3D=
+=3D=3D=3D=3D=20START=20LOGOS=20=3D=3D=3D=3D=3D=3D=3D=20-->=0A=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<table=20class=3D"=
+one-column"=20border=3D"0"=20cellpadding=3D"0"=20cellspacing=3D"0"=20width=
+=3D"100%"=20style=3D"border-spacing:0;max-width:=20640px;background-color:=
+=20#E6E7E8;border-top-left-radius:20px;border-top-right-radius:20px;"=20bgc=
+olor=3D"#E6E7E8">=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<tr>=0A=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<td=20class=3D"mar=
+g-mob2"=20width=3D"40"></td>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20<td>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20<table=20border=3D"0"=20cellpadding=3D"0"=20cellspacing=
+=3D"0"=20width=3D"100%"=20style=3D"border-spacing:0;">=0A=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<tr>=0A=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20<td=20class=3D"marg-mob"=20height=3D"40"=20width=3D"100%"=20=
+style=3D"font-size:=2020px;=20line-height:=2020px;">&nbsp;=0A=0A=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20</td>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20</tr>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20</table>=0A=0A=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20<table=20border=3D"0"=20cellpadding=3D"=
+0"=20cellspacing=3D"0"=20width=3D"100%"=20style=3D"border-spacing:0;">=0A=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20<tr>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20<td=20align=3D"left">=0A=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20<img=20src=3D"https://avn-webexternal=2Eazureedge=2Enet/avn-pro=
+d/LOGO_CHR_PICKUP"=20width=3D"131"=20alt=3D"Logo"=20style=3D"max-width:131p=
+x;=20width:131px;padding-right:10px;"=20/>=0A=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20</td>=0A=0A=
+=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20<td=20align=3D"right">=0A=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20<img=20src=3D"https://avn-webexternal=2Eazureedge=2Enet/avn-prod/VINTED"=
+=20width=3D"131"=20alt=3D"Logo"=20style=3D"=20max-width:131px;=20width:131p=
+x;padding-left:10px;"=20/>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20</td>=0A=0A=0A=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20</tr>=
+=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20</t=
+able>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=0A<table=20border=3D"0"=20cellpadding=3D"0"=20cellspacing=3D"0"=20width=3D=
+"100%"=20style=3D"border-spacing:0;background-color:=20#E6E7E8;border-radiu=
+s:0px=20!important;"=20bgcolor=3D"#E6E7E8">=0A=20=20<tr>=0A=20=09=09<td=20h=
+eight=3D"40"=20width=3D"100%"=20style=3D"font-size:=2040px;=20line-height:=
+=2040px;=20border-radius:0px=20!important;">=0A=09=09&nbsp;=0A=09=09</td>=
+=0A=20=09</tr>=0A</table>=0A=0A=0A=0A=09=0A=0A=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20<!--=20=3D=3D=3D=3D=3D=3D=3D=20EN=
+D=20LOGOS=20=3D=3D=3D=3D=3D=3D=3D=20-->=0A=0A<!--=20=3D=3D=3D=3D=3D=3D=3D=
+=20END=20LOGOS=20=3D=3D=3D=3D=3D=3D=3D=20-->=0A=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=0A=20=20=0A=0A<!--=20=3D=3D=3D=3D=3D=3D=3D=20START=20INTRO=20=3D=3D=3D=3D=
+=3D=3D=3D=20-->=0A=0A<table=20border=3D"0"=20cellpadding=3D"0"=20cellspacin=
+g=3D"0"=20width=3D"100%"=0A=20=20=20=20style=3D"border-spacing:0;font-famil=
+y:=20'Montserrat',=20Arial,=20sans-serif;">=0A=20=20=20=20<tr>=0A=20=20=20=
+=20=20=20=20=20<td=20class=3D"txt-mob"=0A=20=20=20=20=20=20=20=20=20=20=20=
+=20style=3D"width:100%;font-family:=20'Montserrat',=20Arial,=20sans-serif;f=
+ont-size:32px;color:#414042;line-height:34px;font-weight:400;text-align:=20=
+left;">=0A=0A=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20Votre=20col=
+is=20VINTED=20est=20disponible=20en=20relais=20Pickup=0A=20=20=20=20=20=20=
+=20=20=20=20=20=20=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=20=20=20=20=0A=20=20=
+=20=20=0A=20=20=20=20=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=
+=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=
+=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=
+=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=20=20=20=20=20=20=20=20</td>=0A=20=20=20=
+=20</tr>=0A</table>=0A=0A=0A<table=20border=3D"0"=20cellpadding=3D"0"=20cel=
+lspacing=3D"0"=20width=3D"100%"=20style=3D"border-spacing:0;background-colo=
+r:=20#E6E7E8;border-radius:0px=20!important;"=20bgcolor=3D"#E6E7E8">=0A=20=
+=20<tr>=0A=20=09=09<td=20height=3D"40"=20width=3D"100%"=20style=3D"font-siz=
+e:=2040px;=20line-height:=2040px;=20border-radius:0px=20!important;">=0A=09=
+=09&nbsp;=0A=09=09</td>=0A=20=09</tr>=0A</table>=0A=0A=0A=0A=09=0A=0A=0A</t=
+d>=0A<td=20class=3D"marg-mob2"=20width=3D"40"></td>=0A</tr>=0A</table>=0A=
+=0A<!--=20=3D=3D=3D=3D=3D=3D=3D=20END=20INTRO=20=3D=3D=3D=3D=3D=3D=3D=20-->=
+=0A=0A=0A=0A<!--=20=3D=3D=3D=3D=3D=3D=3D=20START=20PEAK=20=3D=3D=3D=3D=3D=
+=3D=3D=20-->=0A=0A=0A=0A<!--=20=3D=3D=3D=3D=3D=3D=3D=20END=20PEAK=20=3D=3D=
+=3D=3D=3D=3D=3D=20-->=0A=20=0A=0A=0A<!--=20=3D=3D=3D=3D=3D=3D=3D=20START=20=
+RATP=20=3D=3D=3D=3D=3D=3D=3D=20-->=0A=0A=0A=0A<!--=20=3D=3D=3D=3D=3D=3D=3D=
+=20END=20RATP=20=3D=3D=3D=3D=3D=3D=3D=20-->=0A=0A=0A=0A<!--=20=3D=3D=3D=3D=
+=3D=3D=3D=20START=20HELLO=20=3D=3D=3D=3D=3D=3D=3D=20-->=0A=0A=0A=0A<table=
+=20border=3D"0"=20cellpadding=3D"0"=20cellspacing=3D"0"=20width=3D"100%"=20=
+style=3D"border-spacing:0;background-color:=20#FFFFFF;border-radius:0px=20!=
+important;"=20bgcolor=3D"#FFFFFF">=0A=20=20<tr>=0A=20=09=09<td=20height=3D"=
+40"=20width=3D"100%"=20style=3D"font-size:=2040px;=20line-height:=2040px;=
+=20border-radius:0px=20!important;">=0A=09=09&nbsp;=0A=09=09</td>=0A=20=09<=
+/tr>=0A</table>=0A=0A=0A=0A=09=0A=0A<table=20class=3D"one-column"=20border=
+=3D"0"=20cellpadding=3D"0"=20cellspacing=3D"0"=20width=3D"100%"=0A=20=20=20=
+=20style=3D"border-spacing:0;background-color:=20#ffffff;font-family:=20'Mo=
+ntserrat',=20Arial,=20sans-serif;"=20bgcolor=3D"#ffffff">=0A=20=20=20=20<tr=
+>=0A=20=20=20=20=20=20=20=20<td=20class=3D"marg-mob2"=20width=3D"40"></td>=
+=0A=0A=20=20=20=20=20=20=20=20<td=0A=20=20=20=20=20=20=20=20=20=20=20=20sty=
+le=3D"font-family:=20'Montserrat',=20Arial,=20sans-serif;font-size:16px;col=
+or:#414042;line-height:19px;text-align:=20left;font-weight:400;">=0A=0A=20=
+=20=20=20=20=20=20=20=20=20=20=20Bonjour=20Noura=20Chevin&nbsp;!<br=20/><br=
+=20/>=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20Votre=20colis=20VINTED=20n&deg;&nbsp;<a=20target=
+=3D"_blank"=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20style=3D"text-decoration:=20underline;=20color:#414042"=0A=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20href=
+=3D"https://tracking=2Enetwork1=2Epickup=2Efr/tracking/1/click/5PeNAjKT77y5=
+jh_u41dBgYl3DmJXTuvOGC2YOHmpdAAnRL1DUvWXm9wY-l2Nrgr9pu-lN5JoUC8VwUB1XTFAR5K=
+8mAcCGnYU0-MUBLd9at5Kj8HhJBcfGaAM3Szgk79bDG_dWBMW8M7HLxlmrfr1lSZEJBcrymXac7=
+AP83-5MOzDztW2LdSF2Pjz8z-U7UwmfMKtoqlisOrtx3KCXUpsecfP0_k7gdtw_XDbEMmutU_lf=
+KOJ-g7Ugm6CPRmmsSRwAshmuZsq89WkOkjoQ7Ha5-vyiVuKvFOTvA9c77fXfXzkpnDLAgP35UvE=
+9EbrMhZTlOVWt7RCyDh2lCmH9ey1a0D7_LXrjoDgpqgfmO3WcN9HK4x1g3I-eGgj9fFG8H05NQq=
+TI6P6qPkaY9emnmnBcbfw_TcsJc_qR3YYmDLl7JvXCItRo-r445DKG8PnpCfn6ylGAgTINokLzV=
+KQaWmegn-DYHN0iJkSmloKXx0IPL009CghEBFoo7tUaSMOUBzd3-geu46wT5c-nIgNvq9EOf-VH=
+rJIebqYzXo9Ws8nB1gXIB7ejmOkzBZfr_7wk2NyDx75HyVddTFvbDnoqGWFSkY_tXuGtfDCn0D0=
+Qyj-sYnkY4S1T5GiwbEr_p9RXkBeU4GElW4lwGFo9YTFvTOk3A=3D=3D">XW251575070TS</a>=
+=20est=20disponible=20=C3=A0=20Panier=20Sympa=20L=20Alambic=20jusqu'au=0A=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<strong>lundi=
+=2019=20janvier=202026</strong>=2E=20Pass=C3=A9=20cette=20date,=20il=20sera=
+=20renvoy=C3=A9=20&#224;=20son=20exp=C3=A9diteur=2E=0A=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=0A=20=20=20=20=0A=20=20=20=20=0A=0A=
+=0A=0A=20=20=20=20=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=20=20=20=20=20=20=
+=20=20=20=20=20=20<!--=20=3D=3D=3D=3D=3D=3D=3D=20LECLERC=20=3D=3D=3D=3D=3D=
+=3D=3D=20-->=20=0A=0A=0A=0A=0A=0A=0A=0A=20=20=20=20=20=20=20=20=20=20=20=20=
+<!--=20=3D=3D=3D=3D=3D=3D=3D=20VIP=20=3D=3D=3D=3D=3D=3D=3D=20-->=20=0A=0A=
+=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=20=20=20=20=0A=0A=
+=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=20=20=20=20=20=20=20=20=20=20=20=20<!-=
+-=20=3D=3D=3D=3D=3D=3D=3D=20SHOP2SHOP=20=3D=3D=3D=3D=3D=3D=3D=20-->=20=0A=
+=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=
+=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=0A=20=20=20=20=20=20=20=20</td>=0A=20=20=
+=20=20=20=20=20=20<td=20class=3D"marg-mob2"=20width=3D"40"></td>=0A=20=20=
+=20=20</tr>=0A</table>=0A=0A<!--=20=3D=3D=3D=3D=3D=3D=3D=20END=20HELLO=20=
+=3D=3D=3D=3D=3D=3D=3D=20-->=0A=0A=0A=0A<!--=20=3D=3D=3D=3D=3D=3D=3D=20START=
+=20DIVERTED=20=3D=3D=3D=3D=3D=3D=3D=20-->=20=20=20=20=20=0A=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=0A=0A=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=0A<!--=20=3D=3D=3D=3D=3D=
+=3D=3D=20END=20HELLO=20=3D=3D=3D=3D=3D=3D=3D=20-->=0A=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=0A=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=0A=0A=20<!--=20=3D=3D=3D=3D=3D=3D=3D=20START=20=
+PROCESS=20=3D=3D=3D=3D=3D=3D=3D=20-->=20=20=20=20=20=0A=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=0A=0A<!--=20START=20PROCES=
+S=20-->=0A=0A<!--=20START=20PICKUP=20PASS=20-->=0A=0A=0A=0A<table=20border=
+=3D"0"=20cellpadding=3D"0"=20cellspacing=3D"0"=20width=3D"100%"=20style=3D"=
+border-spacing:0;background-color:=20#FFFFFF;border-radius:0px=20!important=
+;"=20bgcolor=3D"#FFFFFF">=0A=20=20<tr>=0A=20=09=09<td=20height=3D"17"=20wid=
+th=3D"100%"=20style=3D"font-size:=2017px;=20line-height:=2017px;=20border-r=
+adius:0px=20!important;">=0A=09=09&nbsp;=0A=09=09</td>=0A=20=09</tr>=0A</ta=
+ble>=0A=0A=0A=0A=09=0A<table=20align=3D"center"=20class=3D"one-column"=20bo=
+rder=3D"0"=20cellpadding=3D"0"=20cellspacing=3D"0"=20width=3D"100%"=20style=
+=3D"border-spacing:0;background-color:=20#ffffff;"=20bgcolor=3D"#ffffff">=
+=0A<tr>=0A<td>=0A=0A=20<table=20width=3D"320"=20align=3D"center"=20class=3D=
+"one-column"=20border=3D"0"=20cellpadding=3D"0"=20cellspacing=3D"0"=20style=
+=3D"border-spacing:0;background-color:=20#ffffff;max-width:=20320px;=20widt=
+h:100%;"=20bgcolor=3D"#ffffff">=0A=20=20=20=20=20<tr=20align=3D"center">=0A=
+=20=20=20=20=20=20=20=20=20<td=20class=3D"marg-mob2"=20width=3D"40"></td>=
+=0A=20=20=20=20=20=20=20=20=20<td=20width=3D"320">=0A=0A=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20<img=20src=3D"https://avisageng-colis-webexte=
+rnal=2Epickup-services=2Ecom/api/barcode/AztecCode?d=3DPICKUPPASS:2=2E00:FR=
+41570;XW251575070TS;;;;;;;;;;;;;;;;;;;;H;;;;;;611553"=20width=3D"300"=20alt=
+=3D"QR=20code"=20style=3D"max-width:300px;=20width:100%;"=20/>=0A=0A=0A=20=
+=20=20=20=20=20=20=20=20</td>=0A=20=20=20=20=20=20=20=20=20<td=20class=3D"m=
+arg-mob2"=20width=3D"40"></td>=0A=20=20=20=20=20</tr>=0A=20</table>=0A=0A</=
+td>=0A</tr>=0A</table>=0A=0A=0A=0A<table=20border=3D"0"=20cellpadding=3D"0"=
+=20cellspacing=3D"0"=20width=3D"100%"=20style=3D"border-spacing:0;backgroun=
+d-color:=20#FFFFFF;border-radius:0px=20!important;"=20bgcolor=3D"#FFFFFF">=
+=0A=20=20<tr>=0A=20=09=09<td=20height=3D"10"=20width=3D"100%"=20style=3D"fo=
+nt-size:=2010px;=20line-height:=2010px;=20border-radius:0px=20!important;">=
+=0A=09=09&nbsp;=0A=09=09</td>=0A=20=09</tr>=0A</table>=0A=0A=0A=0A=09=0A<!-=
+-=20END=20PICKUP=20PASS=20-->=0A=0A=0A<!--=20START=20PINCODE=20-->=0A<table=
+=20align=3D"center"=20class=3D"one-column"=20border=3D"0"=20cellpadding=3D"=
+0"=20cellspacing=3D"0"=20width=3D"100%"=20style=3D"border-spacing:0;backgro=
+und-color:=20#ffffff;"=20bgcolor=3D"#ffffff">=0A<tr>=0A<td>=0A=0A<table=20w=
+idth=3D"100%"=20align=3D"center"=20class=3D"one-column"=20border=3D"0"=20ce=
+llpadding=3D"0"=20cellspacing=3D"0"=20style=3D"border-spacing:0;background-=
+color:=20#ffffff;max-width:=20230px;=20width:100%;"=20bgcolor=3D"#ffffff">=
+=0A=20=20=20=20=0A<tr=20align=3D"center">=0A=20=20=20=20=20=20=20=20<td=20s=
+tyle=3D"font-family:=20'Montserrat',=20Arial,=20sans-serif;font-size:18px;l=
+ine-height:16px;color:#414042;text-align:=20center;font-weight:500;border-t=
+op:4px=20solid=20#F2F3F5;padding-top:10px;">=0A=20=20=20=20=20=20=20=20=20=
+=20=20=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<text>=0A=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20Code=20de=20retrait<br/><br/>=
+=20<span=20style=3D"font-weight:=20500;=20font-size:=2030px;=20letter-spaci=
+ng:=204px;">611553</span>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20</text>=0A=0A=20=20=20=20=20=20=20=20</td>=0A</tr>=0A=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=0A</table>=0A</td>=0A</tr>=0A</table>=
+=0A=0A<table=20border=3D"0"=20cellpadding=3D"0"=20cellspacing=3D"0"=20width=
+=3D"100%"=20style=3D"border-spacing:0;background-color:=20#FFFFFF;border-ra=
+dius:0px=20!important;"=20bgcolor=3D"#FFFFFF">=0A=20=20<tr>=0A=20=09=09<td=
+=20height=3D"40"=20width=3D"100%"=20style=3D"font-size:=2040px;=20line-heig=
+ht:=2040px;=20border-radius:0px=20!important;">=0A=09=09&nbsp;=0A=09=09</td=
+>=0A=20=09</tr>=0A</table>=0A=0A=0A=0A=09<!--=20END=20PINCODE=20-->=0A=20=
+=20=0A=20=20=0A=0A=0A=0A=0A<!--=20START=20MESSAGE=20-->=0A=20=20=20=20=0A<t=
+able=20class=3D"one-column"=20border=3D"0"=20cellpadding=3D"0"=20cellspacin=
+g=3D"0"=20width=3D"100%"=20style=3D"border-spacing:0;max-width:=20640px;bac=
+kground-color:=20#ffffff;"=20bgcolor=3D"#ffffff;">=0A=20=20=20=20<tr>=0A=20=
+=20=20=20=20=20=20=20<td=20class=3D"marg-mob2"=20width=3D"40"></td>=0A=0A=
+=20=20=20=20=20=20=20=20<td>=0A=0A<table=20class=3D"one-column"=20border=3D=
+"0"=20cellpadding=3D"0"=20cellspacing=3D"0"=20width=3D"100%"=20style=3D"bor=
+der-spacing:0;max-width:=20560px;background-color:=20#009adf;border-radius:=
+20px;"=20bgcolor=3D"#009adf;">=0A=20=20=20=20<tr>=0A=20=20=20=20=20=20=20=
+=20<td=20class=3D"marg-mob2"=20width=3D"40"></td>=0A=20=20=20=20=20=20=20=
+=20<td>=0A=0A=20=20=0A<table=20border=3D"0"=20cellpadding=3D"0"=20cellspaci=
+ng=3D"0"=20width=3D"100%"=20style=3D"border-spacing:0;background-color:=20#=
+009adf;border-radius:0px=20!important;"=20bgcolor=3D"#009adf">=0A=20=20<tr>=
+=0A=20=09=09<td=20height=3D"20"=20width=3D"100%"=20style=3D"font-size:=2020=
+px;=20line-height:=2020px;=20border-radius:0px=20!important;">=0A=09=09&nbs=
+p;=0A=09=09</td>=0A=20=09</tr>=0A</table>=0A=0A=0A=0A=09=0A=0A=20=20=20=20=
+=20=20=20=20=20=20=20=20<table=20border=3D"0"=20cellpadding=3D"0"=20cellspa=
+cing=3D"0"=20width=3D"100%"=20style=3D"border-spacing:0;font-family:=20'Mon=
+tserrat',=20Arial,=20sans-serif;">=0A=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20<tr>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20<td=20style=3D"width:100%;font-family:=20'Montserrat',=20Arial,=20san=
+s-serif;font-size:16px;color:#ffffff;line-height:19px;font-weight:500;text-=
+align:=20center;">=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=0A=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20Pour=20retirer=20votre=20colis=
+,=20pr=C3=A9sentez=20le=20<strong>Pickup=20Pass</strong><br=20class=3D"desk=
+top-only">=20ou=20communiquez=20votre=20code=20de=20retrait=20ci-dessus=2E<=
+br/><br/>=20Ainsi,=20plus=20besoin=20de=20pi=C3=A8ce=20d'identit=C3=A9&nbsp=
+;!=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20</td>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20</tr=
+>=0A=20=20=20=20=20=20=20=20=20=20=20=20</table>=0A=0A=20=20=20=20=20=20=20=
+=20=20=20=20=20=0A<table=20border=3D"0"=20cellpadding=3D"0"=20cellspacing=
+=3D"0"=20width=3D"100%"=20style=3D"border-spacing:0;background-color:=20#00=
+9adf;border-radius:0px=20!important;"=20bgcolor=3D"#009adf">=0A=20=20<tr>=
+=0A=20=09=09<td=20height=3D"20"=20width=3D"100%"=20style=3D"font-size:=2020=
+px;=20line-height:=2020px;=20border-radius:0px=20!important;">=0A=09=09&nbs=
+p;=0A=09=09</td>=0A=20=09</tr>=0A</table>=0A=0A=0A=0A=09=0A=20=20=20=20=20=
+=20=20=20=20=20=20=20=0A=20=20=20=20=20=20=20=20</td>=0A=20=20=20=20=20=20=
+=20=20<td=20class=3D"marg-mob2"=20width=3D"40"></td>=0A=20=20=20=20</tr>=0A=
+</table>=0A=0A=20=20=20=20=20=20=20=20</td>=0A=20=20=20=20=20=20=20=20<td=
+=20class=3D"marg-mob2"=20width=3D"40"></td>=0A=20=20=20=20</tr>=0A</table>=
+=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=0A<!--=20END=20MESSAGE=20-->=0A=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=0A=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=0A=0A<!--=20ST=
+ART=20PROXY=20-->=0A=0A<table=20border=3D"0"=20cellpadding=3D"0"=20cellspac=
+ing=3D"0"=20width=3D"100%"=20style=3D"border-spacing:0;background-color:=20=
+#FFFFFF;border-radius:0px=20!important;"=20bgcolor=3D"#FFFFFF">=0A=20=20<tr=
+>=0A=20=09=09<td=20height=3D"40"=20width=3D"100%"=20style=3D"font-size:=204=
+0px;=20line-height:=2040px;=20border-radius:0px=20!important;">=0A=09=09&nb=
+sp;=0A=09=09</td>=0A=20=09</tr>=0A</table>=0A=0A=0A=0A=09<table=20class=3D"=
+one-column"=20border=3D"0"=20cellpadding=3D"0"=20cellspacing=3D"0"=20width=
+=3D"100%"=0A=20=20=20=20style=3D"border-spacing:0;background-color:=20#ffff=
+ff;font-family:=20'Montserrat',=20Arial,=20sans-serif;"=20bgcolor=3D"#fffff=
+f">=0A=20=20=20=20<tr>=0A=20=20=20=20=20=20=20=20<td=20class=3D"marg-mob2"=
+=20width=3D"40"></td>=0A=0A=20=20=20=20=20=20=20=20<td=0A=20=20=20=20=20=20=
+=20=20=20=20=20=20style=3D"font-family:=20'Montserrat',=20Arial,=20sans-ser=
+if;font-size:16px;color:#414042;line-height:19px;text-align:=20left;font-we=
+ight:500;">=0A=0A=20=20=20=20=20=20=20=20=20=20=20=20Un=20impr=C3=A9vu&nbsp=
+;?<br=20/><br=20/>=0A=0A=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20Une=
+=20personne=20de=20votre=20choix=20peut=20=C3=A9galement=20retirer=20votre=
+=20colis=20en=20pr=C3=A9sentant=20<strong>le=20Pickup=20Pass</strong>=20ou=
+=20<strong>le=20code=20de=20retrait</strong>,=20sinon=20il=20devra=20pr=C3=
+=A9senter=20sa=20pi=C3=A8ce=20d=E2=80=99identit=C3=A9=20ainsi=20que=20la=20=
+v=C3=B4tre=20(les=20photocopies=20ne=20sont=20pas=20accept=C3=A9es)=2E=0A=
+=20=20=20=20=20=20=20=20=20=20=20=20=0A=20=20=20=20=20=20=20=20</td>=0A=20=
+=20=20=20=20=20=20=20<td=20class=3D"marg-mob2"=20width=3D"40"></td>=0A=20=
+=20=20=20</tr>=0A</table>=0A<!--=20END=20PROXY=20-->=0A=0A=0A=0A<!--=20END=
+=20PROCESS=20-->=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=0A<!--=20=3D=3D=3D=3D=3D=3D=3D=20END=20PROCESS=20=3D=3D=3D=3D=
+=3D=3D=3D=20-->=0A=0A=0A=0A=20<!--=20=3D=3D=3D=3D=3D=3D=3D=20START=20INFO=
+=20=3D=3D=3D=3D=3D=3D=3D=20-->=20=20=20=20=20=0A=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=0A=0A<!--=20START=20ACCESS=20-->=0A=
+=0A=0A<table=20border=3D"0"=20cellpadding=3D"0"=20cellspacing=3D"0"=20width=
+=3D"100%"=20style=3D"border-spacing:0;background-color:=20#FFFFFF;border-ra=
+dius:0px=20!important;"=20bgcolor=3D"#FFFFFF">=0A=20=20<tr>=0A=20=09=09<td=
+=20height=3D"40"=20width=3D"100%"=20style=3D"font-size:=2040px;=20line-heig=
+ht:=2040px;=20border-radius:0px=20!important;">=0A=09=09&nbsp;=0A=09=09</td=
+>=0A=20=09</tr>=0A</table>=0A=0A=0A=0A=09=0A=0A<table=20class=3D"one-column=
+"=20border=3D"0"=20cellpadding=3D"0"=20cellspacing=3D"0"=20width=3D"100%"=
+=0A=20=20=20style=3D"color:#414042;border-spacing:0;background-color:=20#ff=
+ffff;font-family:=20'Montserrat',=20Arial,=20sans-serif;"=20bgcolor=3D"#fff=
+fff">=0A=20=20=20=20<tr>=0A=20=20=20=20=20=20=20=20<td=20class=3D"marg-mob2=
+"=20width=3D"40"></td>=0A=20=20=20=20=20=20=20=20<td=0A=20=20=20=20=20=20=
+=20=20=20=20=20style=3D"font-family:=20'Montserrat',=20Arial,=20sans-serif;=
+font-size:28px;line-height:28px;text-align:=20left;">=0A=0AVotre=20relais=
+=20Pickup=0A=20=20=0A=0A=20=20=20=20=20=20=20=20</td>=0A=20=20=20=20=20=20=
+=20=20<td=20class=3D"marg-mob2"=20width=3D"40"></td>=0A=20=20=20=20</tr>=0A=
+</table>=0A=0A=0A=0A=0A<table=20border=3D"0"=20cellpadding=3D"0"=20cellspac=
+ing=3D"0"=20width=3D"100%"=20style=3D"border-spacing:0;background-color:=20=
+#FFFFFF;border-radius:0px=20!important;"=20bgcolor=3D"#FFFFFF">=0A=20=20<tr=
+>=0A=20=09=09<td=20height=3D"30"=20width=3D"100%"=20style=3D"font-size:=203=
+0px;=20line-height:=2030px;=20border-radius:0px=20!important;">=0A=09=09&nb=
+sp;=0A=09=09</td>=0A=20=09</tr>=0A</table>=0A=0A=0A=0A=09=0A=0A<table=20cel=
+lpadding=3D"0"=20cellspacing=3D"0"=20border=3D"0"=20width=3D"100%"=20style=
+=3D"background-color:=20#ffffff;"=20bgcolor=3D"#ffffff">=0A=20=20=20=20<tr>=
+=0A=20=20=20=20=20=20=20=20<td=20style=3D"padding-top:0;padding-bottom:0;pa=
+dding-right:0;padding-left:0;text-align:center;font-size:0;">=0A=20=20=20=
+=20=20=20=20=20=20=20=20=20<!--[if=20(gte=20mso=209)|(IE)]>=0A=20=20=20=20=
+=20=20=20=20=20=20=20=20<table=20cellpadding=3D"0"=20cellspacing=3D"0"=20bo=
+rder=3D"0"=20width=3D"100%"=20style=3D"border-spacing:0;font-family:=20Cali=
+bri,=20sans-serif;color:#333333;"=20>=0A=20=20=20=20=20=20=20=20=20=20=20=
+=20<tr>=0A=20=20=20=20=20=20=20=20=20=20=20=20<td=20width=3D"50%"=20valign=
+=3D"top"=20style=3D"padding-top:0;padding-bottom:0;padding-right:0;padding-=
+left:0;"=20>=0A=20=20=20=20=20=20=20=20=20=20=20=20<![endif]-->=0A=20=20=20=
+=20=20=20=20=20=20=20=20=20<div=20class=3D"column"=0A=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20style=3D"width:100%;max-width:320px;display:inline-=
+block;vertical-align:top;direction:ltr;">=0A=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20<table=20cellpadding=3D"0"=20cellspacing=3D"0"=20border=
+=3D"0"=20width=3D"100%"=20style=3D"border-spacing:0;">=0A=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20<tr>=0A=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<td=20class=3D"inner"=20sty=
+le=3D"padding-top:0;padding-bottom:30px;padding-right:30px;padding-left:30p=
+x;">=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20<table=20cellpadding=3D"0"=20cellspacing=3D"0"=20border=
+=3D"0"=20class=3D"contents"=20style=3D"border-spacing:0;width:100%;font-fam=
+ily:=20'Montserrat',=20Arial,=20sans-serif;"=0A=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20bgcolo=
+r=3D"#ffffff">=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20<tr>=0A=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20<td=20width=3D"30"=20class=3D"marg-mob-3"=20style=3D"text-align:=20le=
+ft;padding:=200=2010px=2010px=2010px=20!important;vertical-align:top;">=0A=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<img=20src=3D"https://avn-webe=
+xternal=2Eazureedge=2Enet/avn-prod/ICO_CHR_LOCATION"=20width=3D"23"=20alt=
+=3D"Fl=C3=A8che"=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+style=3D"border-width:0;margin:=200=20auto;"=20/>=0A=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20</td>=0A=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<td=20style=3D"fon=
+t-family:=20'Montserrat',=20Arial,=20sans-serif;font-size:15px;color:#41404=
+2;line-height:18px;text-align:=20left;font-weight:500;">=0A=20=20=20=20=20=
+=20=20=20=20=20=0A<strong>Panier=20Sympa=20L=20Alambic</strong><BR><BR>=0A1=
+8=20RUE=20DU=20COLOMBIER<BR>=0A69210=20ST=20GERMAIN=20NUELLES<BR>=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=0A=20=20=20=20=20=20=20=20=20=20=0A=20=
+=20=20=20=20=20=20=20=20=20=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20</td>=0A=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20</tr>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20</table>=0A=0A=0A=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=0A<table=20=
+border=3D"0"=20cellpadding=3D"0"=20cellspacing=3D"0"=20width=3D"100%"=20sty=
+le=3D"border-spacing:0;background-color:=20#FFFFFF;border-radius:0px=20!imp=
+ortant;"=20bgcolor=3D"#FFFFFF">=0A=20=20<tr>=0A=20=09=09<td=20height=3D"30"=
+=20width=3D"100%"=20style=3D"font-size:=2030px;=20line-height:=2030px;=20bo=
+rder-radius:0px=20!important;">=0A=09=09&nbsp;=0A=09=09</td>=0A=20=09</tr>=
+=0A</table>=0A=0A=0A=0A=09=0A=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20<table=20cellpadding=3D"0"=20cell=
+spacing=3D"0"=20border=3D"0"=20class=3D"contents"=20style=3D"border-spacing=
+:0;width:100%;font-family:=20'Montserrat',=20Arial,=20sans-serif;"=20bgcolo=
+r=3D"#ffffff">=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20<tr>=0A=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20<td=20width=3D"30"=20class=3D"marg-mob-3"=20style=3D"text-align:=20le=
+ft;padding:=2010px">=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=0A=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20</td>=0A=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20<td=20style=3D"font-family:=20'Montserrat',=20Arial,=20sans-serif;=
+font-size:14px;color:#414042;line-height:16px;text-align:=20center;font-wei=
+ght:400;border:1px=20solid=20#404241;border-radius:20px;padding:8px;">=0A=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=09<a=20target=3D"_blank"=20href=3D"https://tracking=2Enetwork1=
+=2Epickup=2Efr/tracking/1/click/y7qzEZ0zMjVnays4ZXoqLNH-5SFm0hfE_B9Tn_g9A5C=
+Pbxcwt0JAGLjr1lI32YZLCKrLOwlVFr3kk60CR8dFcMzBKcM_W7OTQSQsl-mx3WhENzSJ-gkrsv=
+rOI8MP0ytrY14-LqVVqY7UAaHKrhd23953Gr_vrGmqJimq8tOc6caUrPnn0rHIuO0R2D66wWiE9=
+RRZlwkTgiKApFZytgL85VBA2Iy6Lpy0XSYNRMelqrYEP0Tic1opPQ1_gaDYoUpypv_j-Ya5FFq0=
+yJYwyzhbQrZU3GMP-4w92wtjtIIThYCf893iWEsXkThqtIg4Ubhjdw7jzDxBR7RnSHZP7kNVeO6=
+cInLsVdylb3sB9Hy0J6fTPxE_5Gsrtd2rONNjzylRlPYYhZNzNBnI4KVC43fzqTH30v9sOgldaP=
+76ibiSmxICbIeykPKbtN3dF5AafpQQffc6nfZyLAsjjbKQux69cD9_eqkIseeJqbZKb7aiEaYI9=
+nfHv4637y8smT_MFKZbHfvqqvbsL3jgJpJDFNvT2KTH9PGoBAYtOR5jwTr-ilpDcYGY9doqV_dJ=
+jjuCa8artPIRb_HJMbI7_59x3Pn2pGF7izKZsTLki_jIAWT5ItWcW_jRHGq0kd6BjrBXz7-3Gph=
+UCgktaoyrDcrzxjypkSoAX2-zJSpImEeWMupSHa4QM3cKmpJmPgnwyN3-hS9Z"=20style=3D"c=
+olor:=20#414042;text-decoration:none;">Voir=20sur=20la=20carte</a>=0A=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=0A=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20</td>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<td=20width=3D"50"=20=
+class=3D"marg-mob-3"=20style=3D"text-align:=20left;padding:=2010px">=0A=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=0A=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20</td>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20</tr>=0A=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20</table>=0A=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20</td>=0A=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20</tr>=0A=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20</table>=0A=20=20=20=20=20=20=20=20=20=
+=20=20=20</div>=0A=20=20=20=20=20=20=20=20=20=20=20=20<!--[if=20(gte=20mso=
+=209)|(IE)]>=0A=20=20=20=20=20=20=20=20=20=20=20=20</td><td=20width=3D"50%"=
+=20valign=3D"top"=20style=3D"padding-top:0;padding-bottom:0;padding-right:0=
+;padding-left:0;"=20>=0A=20=20=20=20=20=20=20=20=20=20=20=20<![endif]-->=0A=
+=20=20=20=20=20=20=20=20=20=20=20=20<div=20class=3D"column"=0A=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20style=3D"width:100%;max-width:320px;displa=
+y:inline-block;vertical-align:top;direction:ltr;">=0A=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20<table=20cellpadding=3D"0"=20cellspacing=3D"0"=
+=20border=3D"0"=20width=3D"100%"=20style=3D"border-spacing:0;">=0A=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<tr>=0A=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<td=20class=3D"inn=
+er"=20style=3D"padding-top:0;padding-bottom:0px;padding-right:30px;padding-=
+left:30px;">=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20<table=20cellpadding=3D"0"=20cellspacing=3D"0"=20bo=
+rder=3D"0"=20class=3D"contents"=20style=3D"border-spacing:0;width:100%;font=
+-family:=20'Montserrat',=20Arial,=20sans-serif;"=0A=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20bgc=
+olor=3D"#ffffff">=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20<tr>=0A=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<td=
+=20width=3D"30"=20class=3D"marg-mob-3"=20style=3D"text-align:=20left;paddin=
+g:=200=2010px=2010px=2010px=20!important;vertical-align:top;">=0A=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20<img=20src=3D"https://avn-webexternal=
+=2Eazureedge=2Enet/avn-prod/ICO_CHR_CLOCK"=20width=3D"23"=20alt=3D"Fl=C3=A8=
+che"=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20style=3D"bor=
+der-width:0;margin:=200=20auto;"=20/>=0A=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+</td>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20<td=20style=3D"font-family:=20'Mo=
+ntserrat',=20Arial,=20sans-serif;font-size:15px;color:#414042;line-height:1=
+8px;text-align:=20left;font-weight:500;">=0A=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20<strong>Horaires=20d&#8217;ouverture&nbsp;:</strong><br=20/>=
+=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<TABLE=20style=3D"margin:10=
+px=200=200=200;"=20align=3D'center'>=0A=20=20=20=20<TR><TD=20style=3D'width=
+:45%=20!important;padding-right:=205px;font-family:=20Montserrat,=20Arial,=
+=20sans-serif;font-size:14px=20!important;color:#414042;line-height:18px;te=
+xt-align:=20left;font-weight:500;=20mso-line-height-rule:=20exactly'=20vAli=
+gn=3Dmiddle=20width=3D120=20align=3Dleft>lun=2E=20-=20sam=2E</TD><TD=20styl=
+e=3D'width:55%=20!important;=20font-family:=20Montserrat,=20Arial,=20sans-s=
+erif;font-size:14px=20!important;color:#414042;line-height:18px;text-align:=
+=20center;font-weight:500;=20mso-line-height-rule:=20exactly;=20background-=
+color:#eee;=20border-radius:10px;=20padding:4px=207px;'=20vAlign=3Dtop=20al=
+ign=3Dcenter>07:30=20-=2013:30=20/=20<br/>=2015:30=20-=2019:00</TD></TR><TR=
+><TD=20style=3D'FONT-SIZE:=201px;=20HEIGHT:=205px;=20LINE-HEIGHT:=201px;'=
+=20height=3D5=20colSpan=3D2>&nbsp;</TD></TR>=0A=20=20=20=20<TR><TD=20style=
+=3D'width:45%=20!important;padding-right:=205px;font-family:=20Montserrat,=
+=20Arial,=20sans-serif;font-size:14px=20!important;color:#414042;line-heigh=
+t:18px;text-align:=20left;font-weight:500;=20mso-line-height-rule:=20exactl=
+y'=20vAlign=3Dmiddle=20width=3D120=20align=3Dleft>dim=2E</TD><TD=20style=3D=
+'width:55%=20!important;=20font-family:=20Montserrat,=20Arial,=20sans-serif=
+;font-size:14px=20!important;color:#414042;line-height:18px;text-align:=20c=
+enter;font-weight:500;=20mso-line-height-rule:=20exactly;=20background-colo=
+r:#eee;=20border-radius:10px;=20padding:4px=207px;'=20vAlign=3Dtop=20align=
+=3Dcenter>07:30=20-=2012:30</TD></TR><TR><TD=20style=3D'FONT-SIZE:=201px;=
+=20HEIGHT:=205px;=20LINE-HEIGHT:=201px;'=20height=3D5=20colSpan=3D2>&nbsp;<=
+/TD></TR>=0A=0A</TABLE><br/>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20</td>=0A=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20</t=
+r>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20</table>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20</td>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20</tr>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<=
+/table>=0A=20=20=20=20=20=20=20=20=20=20=20=20</div>=0A=20=20=20=20=20=20=
+=20=20=20=20=20=20<!--[if=20(gte=20mso=209)|(IE)]>=0A=20=20=20=20=20=20=20=
+=20=20=20=20=20</td>=0A=20=20=20=20=20=20=20=20=20=20=20=20</tr>=0A=20=20=
+=20=20=20=20=20=20=20=20=20=20</table>=0A=20=20=20=20=20=20=20=20=20=20=20=
+=20<![endif]-->=0A=20=20=20=20=20=20=20=20</td>=0A=20=20=20=20</tr>=0A</tab=
+le>=0A=0A<!--=20=3D=3D=3D=3D=3D=3D=3D=20START=20RSE=20=3D=3D=3D=3D=3D=3D=3D=
+=20-->=0A<table=20cellpadding=3D"0"=20cellspacing=3D"0"=20border=3D"0"=20cl=
+ass=3D"contents"=20style=3D"border-spacing:0;width:100%;font-family:=20'Mon=
+tserrat',=20Arial,=20sans-serif;=20background-color:#FFFFFF;"=20bgcolor=3D"=
+#FFFFFF">=0A=20=20=20=20=20=20=20=20<tr>=0A=0A=20=20=20=20=20=20=20=20=20=
+=20=20=20<td=20width=3D"20"=20class=3D"marg-mob-3"=20style=3D"text-align:=
+=20left;padding:=2010px">=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=0A=20=20=20=20=20=20=20=20=20=20=20=20</td>=0A=0A=20=20=20=20=20=20=20=20=
+=20=20=20=20<td=20width=3D"40"=20style=3D"text-align:=20center;padding:=202=
+1px=2021px=207px=2029px;vertical-align:middle;=20border-top:=201px=20solid=
+=20#CCC3BE;">=0A=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<img=20s=
+rc=3D"https://avn-webexternal=2Eazureedge=2Enet/avn-prod/ICO_CHR_BIKE"=20wi=
+dth=3D"30"=20alt=3D""=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20style=3D"border-width:0;margin:=200=20auto;"=20/>=0A=0A=20=20=20=20=
+=20=20=20=20=20=20=20=20</td>=0A=0A=20=20=20=20=20=20=20=20=20=20=20=20<td=
+=20style=3D"font-family:=20'Montserrat',=20Arial,=20sans-serif;font-size:14=
+px;color:#414042;line-height:16px;text-align:=20left;font-weight:400;=20pad=
+ding:=2020px=2020px=2010px=2010px;=20border-top:=201px=20solid=20#CCC3BE">=
+=0A=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20Pour=20r=C3=A9cup=C3=
+=A9rer=20votre=20colis,=20privil=C3=A9giez=20la=20marche,=20le=20v=C3=A9lo=
+=20ou=20les=20transports=20en=20commun=2E=20Parce=20que=20nous=20avons=20to=
+us=20un=20r=C3=B4le=20=C3=A0=20jouer=20pour=20limiter=20notre=20impact=20=
+=C3=A9cologique&nbsp;!=0A=0A=20=20=20=20=20=20=20=20=20=20=20=20</td>=0A=0A=
+=20=20=20=20=20=20=20=20=20=20=20=20<td=20width=3D"20"=20class=3D"marg-mob-=
+3"=20style=3D"text-align:=20left;padding:=2010px">=0A=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=0A=20=20=20=20=20=20=20=20=20=20=20=20</td>=0A=0A=
+=20=20=20=20=20=20=20=20</tr>=0A=20=20=20=20</table>=0A<!--=20=3D=3D=3D=3D=
+=3D=3D=3D=20END=20RSE=20=3D=3D=3D=3D=3D=3D=3D=20-->=0A=0A=0A=0A<table=20bor=
+der=3D"0"=20cellpadding=3D"0"=20cellspacing=3D"0"=20width=3D"100%"=20style=
+=3D"border-spacing:0;background-color:=20#FFFFFF;border-bottom-left-radius:=
+20px;=20border-bottom-right-radius:20px;"=20bgcolor=3D"#FFFFFF">=0A=20=20<t=
+r>=0A=20=09=09<td=20height=3D"10"=20width=3D"100%"=20style=3D"font-size:=20=
+10px;=20line-height:=2010px;=20border-bottom-left-radius:20px;=20border-bot=
+tom-right-radius:20px;">=0A=09=09&nbsp;=0A=09=09</td>=0A=20=09</tr>=0A</tab=
+le>=0A=0A=09=0A<!--=20=3D=3D=3D=3D=3D=3D=3D=20START=20MYCHRONOPOST=20=3D=3D=
+=3D=3D=3D=3D=3D=20-->=0A=0A<table=20border=3D"0"=20cellpadding=3D"0"=20cell=
+spacing=3D"0"=20width=3D"100%"=20style=3D"border-spacing:0;background-color=
+:=20#F6F6F6;border-radius:0px=20!important;"=20bgcolor=3D"#F6F6F6">=0A=20=
+=20<tr>=0A=20=09=09<td=20height=3D"40"=20width=3D"100%"=20style=3D"font-siz=
+e:=2040px;=20line-height:=2040px;=20border-radius:0px=20!important;">=0A=09=
+=09&nbsp;=0A=09=09</td>=0A=20=09</tr>=0A</table>=0A=0A=0A=0A=09<!--=20=3D=
+=3D=3D=3D=3D=3D=3D=20END=20MYCHRONOPOST=20=3D=3D=3D=3D=3D=3D=3D=20-->=0A<ta=
+ble=20class=3D"one-column"=20border=3D"0"=20cellpadding=3D"0"=20cellspacing=
+=3D"0"=20width=3D"100%"=0Astyle=3D"border-spacing:0;font-family:=20'Barlow'=
+,=20Arial,=20sans-serif;">=0A<tr>=20=20=20=20=20=20=20=20=20=20=20=20=0A=09=
+=0A=09<td=20width=3D"640"=20style=3D"font-size:=200=20!important;=20line-he=
+ight:=200=20!important;=20border-radius:20px;">=0A=0A<a=20target=3D"_blank"=
+=20href=3D"https://tracking=2Enetwork1=2Epickup=2Efr/tracking/1/click/fmdwG=
+yJW9-XsWDfJFEKUP0B3qfjfN2zCXC4EAmhXMe4alk50HA4h47-W-Gn30MfKg0HQhjXzkE3-N9A8=
+7e_y3554QJBK5hCiYoY3V8ucAZ_ue5mQvTKXYg6MX-EgF-ItOW1ZnbD-8JPQD752nJw3akt31I_=
+EFyccE9izlHmgk1u00ySwO1Yir-RA7xcQDEOxywyvkY47xoG7tla5rTduvQYVIB2mcYPUI7wJpV=
+LFXhMqC6kPwR5OPDfiU_UvZJtokrStghP--lam3GVYL93g8FZj3jkRWATpFKCacdP25kgBcv61L=
+XSKjxL_E7ac1cqYrzrKUxIqx7ms7ADIkpk2_ci77ba72kJH2_jUa5s1DKDTOGslV4GbkEDzWty8=
+sMMubycznU10DvSIUfaak698vOXDHNpjtPulJyLPkSLXfo05eZaCQ5W4lsaHxjGjfNNHRI5bemv=
+HCqvd-kpHMYqTEG-4xtWf4GmZo6lYLD23oDXu6Mm9s1LQRAShNRnC6XDSwNnFSMOLNyvyXB5ony=
+uXV8W0c8e0OTiFY9VHssToi5G42soPFyO-lH5IV7YoMtPDj1s77NAv-Mo8YOlfmufkR7Jv4krJZ=
+dE7WfVcjcBqj0pf9Em9hMEgfqFmaapBzQbb">=0A=09=09<img=20src=3D"https://avn-web=
+external=2Eazureedge=2Enet/avn-prod/BANNER_MYCHRONOPOST"=20alt=3D"Parcelpoi=
+nt"=20width=3D"640"=20style=3D"max-width:640px;=20width:100%;=20border-radi=
+us:20px=20!important;"=20/>=0A</a>=0A=0A=09</td>=0A=09=09=0A</tr>=0A</table=
+>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=0A<!=
+--=20=3D=3D=3D=3D=3D=3D=3D=20END=20INFO=20=3D=3D=3D=3D=3D=3D=3D=20-->=0A=0A=
+=0A=0A<!--=20=3D=3D=3D=3D=3D=3D=3D=20START=20RSE=20=3D=3D=3D=3D=3D=3D=3D=20=
+-->=0A=0A=0A=0A<table=20border=3D"0"=20cellpadding=3D"0"=20cellspacing=3D"0=
+"=20width=3D"100%"=20style=3D"border-spacing:0;background-color:=20#F6F6F6;=
+border-radius:0px=20!important;"=20bgcolor=3D"#F6F6F6">=0A=20=20<tr>=0A=20=
+=09=09<td=20height=3D"40"=20width=3D"100%"=20style=3D"font-size:=2040px;=20=
+line-height:=2040px;=20border-radius:0px=20!important;">=0A=09=09&nbsp;=0A=
+=09=09</td>=0A=20=09</tr>=0A</table>=0A=0A=0A=0A=09=0A=0A=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20<table=20class=3D"one-column"=20border=3D"0"=20cellpadding=
+=3D"0"=20cellspacing=3D"0"=20width=3D"100%"=20style=3D"border-spacing:0;max=
+-width:=20640px;background-color:=20#009ADF;border-radius:20px;"=20bgcolor=
+=3D"#009ADF;">=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<tr>=0A=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<td=20class=3D"marg-m=
+ob2"=20width=3D"40"></td>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20<td>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=0A<table=20border=
+=3D"0"=20cellpadding=3D"0"=20cellspacing=3D"0"=20width=3D"100%"=20style=3D"=
+border-spacing:0;background-color:=20#009ADF;border-radius:0px=20!important=
+;"=20bgcolor=3D"#009ADF">=0A=20=20<tr>=0A=20=09=09<td=20height=3D"30"=20wid=
+th=3D"100%"=20style=3D"font-size:=2030px;=20line-height:=2030px;=20border-r=
+adius:0px=20!important;">=0A=09=09&nbsp;=0A=09=09</td>=0A=20=09</tr>=0A</ta=
+ble>=0A=0A=0A=0A=09=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=0A=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<table=20border=
+=3D"0"=20cellpadding=3D"0"=20cellspacing=3D"0"=20width=3D"100%"=20style=3D"=
+border-spacing:0;font-family:=20'Montserrat',=20Arial,=20sans-serif;">=0A=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20<tr>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20<td=20style=3D"width:100%;font-family:=20'=
+Montserrat',=20Arial,=20sans-serif;font-size:16px;color:#ffffff;line-height=
+:19px;font-weight:500;text-align:=20center;">=0A=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20Chronopost=20s'engage,=20aux=20c=C3=B4t=C3=A9s=20de=20Geopost,<br=20clas=
+s=3D"desktop-only">=20=C3=A0=20r=C3=A9duire=20drastiquement=20les=20=C3=A9m=
+issions=20de=20gaz=20=C3=A0=20effet=20de=20serre<br=20class=3D"desktop-only=
+">=20pour=20atteindre=20z=C3=A9ro=20=C3=A9mission=20nette=20d'ici=20=C3=A0=
+=202040=20=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20</td>=0A=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20</tr>=0A=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20</table>=0A=0A=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=0A<table=20bor=
+der=3D"0"=20cellpadding=3D"0"=20cellspacing=3D"0"=20width=3D"100%"=20style=
+=3D"border-spacing:0;background-color:=20#009ADF;border-radius:0px=20!impor=
+tant;"=20bgcolor=3D"#009ADF">=0A=20=20<tr>=0A=20=09=09<td=20height=3D"20"=
+=20width=3D"100%"=20style=3D"font-size:=2020px;=20line-height:=2020px;=20bo=
+rder-radius:0px=20!important;">=0A=09=09&nbsp;=0A=09=09</td>=0A=20=09</tr>=
+=0A</table>=0A=0A=0A=0A=09=0A=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20<table=20align=3D"center"=20border=3D"0"=20cellp=
+adding=3D"0"=20cellspacing=3D"0"=20width=3D"100%"=20style=3D"border-spacing=
+:0;background-color:=20#009ADF;"=20bgcolor=3D"#009ADF">=0A=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<tbody>=
+=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20<tr>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<td=20align=3D"=
+center">=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<table=20align=3D"cen=
+ter"=20border=3D"0"=20cellpadding=3D"0"=20cellspacing=3D"0"=20style=3D"marg=
+in:0=20auto;border:=201px=20solid=20#fff;border-radius:=2040px">=0A=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<tr>=0A=0A=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<td>=0A=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<table=20ali=
+gn=3D"center"=20width=3D"100%"=20border=3D"0"=20cellpadding=3D"0"=20cellspa=
+cing=3D"0"=20style=3D"margin:0=20auto;font-family:=20'Montserrat',=20Arial,=
+=20sans-serif;">=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20<tr>=0A=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<td=
+=20height=3D"10"=20width=3D"100%"=20style=3D"font-size:=2010px;=20line-heig=
+ht:=2010px;">=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20&nbsp;=0A=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20</td>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20</tr>=0A=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<tr>=0A=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20<td=20align=3D"center"=20bgcolor=3D"#00A6E1"=20w=
+idth=3D"220"=20style=3D"width:220px;">=0A=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20<a=20href=3D"https://tracking=2Enetwork1=2Epickup=2Efr/tracking/1/cli=
+ck/XSTnwMwjz5u8h7nQ-BKPdVo5x-3JQYDKsKVjuTRoAnvutEkluuwphQdOqvHfWTPjxb_m04wb=
+_Y5_Kx8yroeYqqawWQK-Dgd8gGosxJCaQiY68-CT8NfMhHrRNXMzeGPvBU9p3R3mXUfIOSE7YYW=
+uffinO36TUdbomwrwikBW7MVT-JXb3nYrbzVkj-4Et3OyYgUVkf5SR_ravwg3jH3HlTT5vELTPK=
+aLIWFOXeojtZ993hZOD2SCQ4tDGdd5VkyGgjiiRxS9Tr2A3Rjwf8H6lAXXkfs-tH7vkiixjx3Lt=
+uzR50YAb42_GTHvz7Svp_pGiMcWvQPmILhTdVxAScBDjpjXMRqSCuAomzswSzJSnSTUZM-2izu5=
+CtlrExtsK-Tay8lLvWm--jPoJ8jVWwex0TsxVf5xGMnWk9tJk0kgKlhC7KL96iKJFAXp5Vr0e1u=
+52ZOgdFClY1ovSMzdmjzy89prxOi8ZbOk23gRAuOYypMcPFE4IkKVHZs8wsJk3G2Gab50NPoX28=
+N6XHmkl7oAvUSfR3n9RFktXNqqo72j5hnG7A2Y7xNoNmG8WoH9RgNzFAqNktfbLwcWsl7N0fMKh=
+OHsfA54fh4njnh31Z6uoJjt6f4bNkLZ2jLjbDYlwY85"=20target=3D"_blank"=20style=3D=
+"width:220px;display:=20block;text-decoration:=20none;border:0;text-align:=
+=20center;font-size:=2016px;line-height:18px;font-family:=20'Montserrat',=
+=20Arial,=20sans-serif;color:=20#ffffff;font-weight:400;background:=20#009A=
+DF;padding:4px=206px;">Consultez=20notre=20page=20RSE</a>=0A=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20</td>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20</tr>=0A=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<tr>=0A=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20<td=20height=3D"10"=20width=3D"100%"=20style=3D"font-s=
+ize:=2010px;=20line-height:=2010px;">&nbsp;=0A=0A=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20</td>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20</tr>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20</table>=0A=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20</td>=0A=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20</tr>=0A=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20</table>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20</td>=0A=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+</tr>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20</tbody>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20</table>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=0A<table=20border=3D"0"=20cellpadding=3D"0"=20cell=
+spacing=3D"0"=20width=3D"100%"=20style=3D"border-spacing:0;background-color=
+:=20#009ADF;border-radius:0px=20!important;"=20bgcolor=3D"#009ADF">=0A=20=
+=20<tr>=0A=20=09=09<td=20height=3D"30"=20width=3D"100%"=20style=3D"font-siz=
+e:=2030px;=20line-height:=2030px;=20border-radius:0px=20!important;">=0A=09=
+=09&nbsp;=0A=09=09</td>=0A=20=09</tr>=0A</table>=0A=0A=0A=0A=09=0A=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=0A=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20</td>=0A=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20<td=20class=3D"marg-mob2"=20width=3D"40=
+"></td>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20</tr>=0A=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20</table>=20=20=20=20=20=20=20=0A=20=20=0A<!--=20=3D=
+=3D=3D=3D=3D=3D=3D=20END=20RSE=20=3D=3D=3D=3D=3D=3D=3D=20-->=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=0A=0A=0A=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=0A<!--=20=3D=3D=3D=3D=3D=3D=3D=20START=20FOOTER=20=3D=3D=3D=3D=3D=3D=
+=3D=20-->=0A=0A=0A=0A<table=20border=3D"0"=20cellpadding=3D"0"=20cellspacin=
+g=3D"0"=20width=3D"100%"=20style=3D"border-spacing:0;background-color:=20#F=
+6F6F6;border-radius:0px=20!important;"=20bgcolor=3D"#F6F6F6">=0A=20=20<tr>=
+=0A=20=09=09<td=20height=3D"40"=20width=3D"100%"=20style=3D"font-size:=2040=
+px;=20line-height:=2040px;=20border-radius:0px=20!important;">=0A=09=09&nbs=
+p;=0A=09=09</td>=0A=20=09</tr>=0A</table>=0A=0A=0A=0A=09=0A=0A<table=20clas=
+s=3D"one-column"=20border=3D"0"=20cellpadding=3D"0"=20cellspacing=3D"0"=20w=
+idth=3D"100%"=0A=20=20=20=20style=3D"border-spacing:0;background-color:=20#=
+f6f6f6;font-family:=20'Montserrat',=20Arial,=20sans-serif;"=20bgcolor=3D"#f=
+6f6f6">=0A=20=20=20=20<tr>=0A=20=20=20=20=20=20=20=20<td=20width=3D"20"></t=
+d>=0A=20=20=20=20=20=20=20=20<td=0A=20=20=20=20=20=20=20=20=20=20=20=20styl=
+e=3D"font-family:=20'Montserrat',=20Arial,=20sans-serif;font-size:11px;colo=
+r:#808285;line-height:12px;text-align:=20center;font-weight:500;">=0A=0A=20=
+=20=20=20=20=20=20=20=20=20=20=20<text>=0A=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20Pri&#232;re=20de=20ne=20pas=20r&#233;pondre=20&#224;=20ce=20=
+message=2E<br=20/><br=20/>=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20&#169;=20Chronopost=202026<br=20/>Chronopost=20SAS=20capital=20de=2032=
+=20632=20000=20&#8364;,=203=20Boulevard=0A=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20Romain=20Rolland=2075014=20Paris=20-=20RCS=20Paris=20383=209=
+60=20135=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20<br=20/><br=20/>=
+=20=0AChronopost=20traite=20les=20donn=C3=A9es=20recueillies=20pour=20g=C3=
+=A9rer=20l'acheminement=20de=20votre=20colis=20et=20votre=20preuve=20de=20d=
+=C3=A9p=C3=B4t=2E<br=20/>=0ACliquez=20ici=20pour=20en=20savoir=20plus=20sur=
+=20la=20<a=20href=3D"https://tracking=2Enetwork1=2Epickup=2Efr/tracking/1/c=
+lick/cv8Q3TgBsmna5JWc49itK6Rp6RJCfv387_MnvV24xNp6Ercu3ynYFcPr8Y6ElQTXSGrvz0=
+R5m0QjUCUxXW-9P_fQiO1BsA04NL-X9iorgsb89NvII6ZPMxscpvSZHL7blJ6GMjgbVnUG7yrnR=
+b9uGm00veZO9oMyTG5gryQLS-o1AR7HUJJd5LnNVFVgBuWFLPL_gG_7XLODsv46RvWQyy9pVCLz=
+iMcrxVBj87sTjK9LER307uz623BdhNhzdzIrlfnsFmaQ3cHK-50gL_hFFr-LSgA3NsFeBnVNKic=
+hLcpfS3-JZwwaSm0KyGvvp8qthR2NOLroHaHje_qMcI95AnTDiQjDwGpz2reIPABGG6AkfsI098=
+D5vXwTGKxvTgYCf3KmGumN-mlklcBdf9bDeCjq3WucgyfU-OmxIXs8sC5O21hHE4aUsSMCKa0-s=
+MlwgnYvj_61RPYFLuGaPc2hYUQlf6g7YIj8xi3hSjq9Vy3DxT_UF2RNW6koLxEI6i7D0n6By5pK=
+3_CYbQZCnlFCfl7_MY3Da-k7pQmiYb1H6sJZ78qwt10P5H9cEpZJmCqN7nR198E_Bb2bRiElwqr=
+1kl3B8_PjgBcKrCSIlwNKpkFTZA-solIvqlCTqlCBMJAh"=20target=3D"_blank">gestion=
+=20de=20vos=20donn=C3=A9es</a>=20et=20<a=20href=3D"https://tracking=2Enetwo=
+rk1=2Epickup=2Efr/tracking/1/click/fmdwGyJW9-XsWDfJFEKUPwbwIWqI7uhN9_Wn6GaL=
+Wjsa5j23kH4_f1G8M1MyCRfYVRqynfkThv8Nng5Xbuaw84bQ3AEPJbX2osBst2cPO2HCyLuW8qu=
+dmpclbihe23McI97zJzRAfnlBaB7KgG_O9WOLZc-2HUD-m65B6U9FHzyeX-A56ke7Mus9FImB7m=
+2KrhXlY9ShkYPbiyPohDwgLOHGx9Bt7sA3G8T1lT2pZKnVMSXgB_33P1kGYMXsQVk345JBF9p1O=
+C_gC1zuizN0o8FcQmMxMEggm9lxQtQAcBNB4xDpo9Kza6wHcXqqSH60H1EbPE6iKBIPlw3p1jVB=
+oHOZ9K5FJnFCoH-2jJnXLSj_f7Z3tR-XkOWM9tUDMz5TpY7bqqO1sv3ITnjR7-8WdbCWiQ7e97A=
+-83pweAUfzI3YhsTU95squIDfP3MENcLEZU874PnifZi70pLpUhPLEYIPT5I1kgcO_4IN_6itD9=
+6_8KOP1IG3jnDgI1GAsiabsRhGSVAkcAeFRJ5r1hXPF8uxtIEFL_qCdVDwtvPSJeF341s2cJ-8_=
+LLS75d2394hN6dT7w04PjArErDp0_Ums4Yao40G98IOqyuyECiwYzJAefV-aHshdm5h-ToYVLid=
+7dmWVxu-RVxFEKQh0owwyQ=3D=3D"=20target=3D"_blank">vos=20droits</a>=2E=0A=20=
+=20=20=20=20=20=20=20=20=20=09=09<br=20/><br=20/><br=20/>=0A=20=20=20=20=20=
+=20=20=20=20=20PICKUP=20SERVICES,=20soci=C3=A9t=C3=A9=20par=20actions=20sim=
+plifi=C3=A9e,=20au=20capital=20social=20de=20373=2E240=20euros,=20dont=20le=
+=20si=C3=A8ge=20social=20est=20situ=C3=A9=2066-68=20rue=20des=20Rosiers=20=
+=E2=80=93=2093400=20Saint-Ouen,=20immatricul=C3=A9e=20au=20Registre=20du=20=
+Commerce=20et=20des=20Soci=C3=A9t=C3=A9s=20de=20BOBIGNY=20sous=20le=20num=
+=C3=A9ro=20432=20938=20710=2E<br/><br/>=20Pour=20plus=20d=E2=80=99informati=
+on=20sur=20notre=20Politique=20de=20protection=20des=20donn=C3=A9es,=20veui=
+llez=20cliquer=20sur=20le=20lien=20suivant=C2=A0:=20<a=20target=3D"_blank"=
+=20href=3D"https://tracking=2Enetwork1=2Epickup=2Efr/tracking/1/click/fmdwG=
+yJW9-XsWDfJFEKUP0HoK_UJ8goO5dho7GoA_9PZ-AMIShQBN66DvtXDCTDhsmAbysoby1jbwX0Z=
+ha7E2yFTo2aYX5EI7f3TdDdGjgZx5XyjpZP-MPJUPGyYg-BoBF7grfux1ev7NltcMImR7l8U-Zy=
+_Z1nGgU7QjJBMH7o6GCBr2pOzQDx4i_17a2MpNLAle_w3s2i0yksmsIq638Ip6nGCBYwtZWF1fB=
+KLjdh9norUFugs9fYGKXgu7PmThp1O1Mq5IhWihYX0ifqOG6Gtl1nFE6lqVciHYYiTvTm62e2zj=
+4jllxie86uAbBS6Y06h4e0HVhju0BN7jLzWXCQzBt8XpU8pN2lsDXWQfq3tfEVSZzjOGGFXYPqf=
+TQadX5E3joJHT3qbnvyZBiVi_9kCm9B9IRtJfZk2Q1D4Cche4szO988eHoDxJvw2b--m2YTiEzp=
+zCL2LfK_jW0OE6f0sNiFfnxgM32OFzSF0MK5jAVcEjQSg1kqucL3CPqSH45ZewGwnXaod7bJeqh=
+Sj8wDMWfuXqHxf4GKI-iUr7dWhkzoFkk-NPELkpvBCpnnljToKcaAhb0mxodoe5M2BcIrtdoTGn=
+90iCL3p2tfH09IsAfSVA4KiFr5Cal0T1LBd">https://www=2Epickup=2Efr/politique-de=
+-confidentialite</a>=0A=0A=20=20=20=20=20=20=20=20=20=20=20=20</text>=0A=0A=
+=20=20=20=20=20=20=20=20</td>=0A=20=20=20=20=20=20=20=20<td=20width=3D"20">=
+</td>=0A=20=20=20=20</tr>=0A</table>=0A=0A=0A<table=20border=3D"0"=20cellpa=
+dding=3D"0"=20cellspacing=3D"0"=20width=3D"100%"=20style=3D"border-spacing:=
+0;background-color:=20#F6F6F6;border-radius:0px=20!important;"=20bgcolor=3D=
+"#F6F6F6">=0A=20=20<tr>=0A=20=09=09<td=20height=3D"40"=20width=3D"100%"=20s=
+tyle=3D"font-size:=2040px;=20line-height:=2040px;=20border-radius:0px=20!im=
+portant;">=0A=09=09&nbsp;=0A=09=09</td>=0A=20=09</tr>=0A</table>=0A=0A=0A=
+=0A=09=0A=20=20=0A<!--=20=3D=3D=3D=3D=3D=3D=3D=20END=20FOOTER=20=3D=3D=3D=
+=3D=3D=3D=3D=20-->=20=0A=0A=0A=0A<!--=20=3D=3D=3D=3D=3D=3D=3D=20START=20CLO=
+SING=20HTML=20=3D=3D=3D=3D=3D=3D=3D=20-->=0A=0A</td>=0A</tr>=0A</table>=0A<=
+!--[if=20(gte=20mso=209)|(IE)]>=0A=09=09=09=09=09</td>=0A=09=09=09=09</tr>=
+=0A=09=09=09</table>=0A=09=09=09<![endif]-->=0A</div>=0A</td>=0A</tr>=0A</t=
+able>=0A</center>=0A=0A</body>=0A=0A</html>=0A=0A<!--=20=3D=3D=3D=3D=3D=3D=
+=3D=20END=20CLOSING=20HTML=20=3D=3D=3D=3D=3D=3D=3D=20-->
+--=--115948498_1768223042686_19749932--
+

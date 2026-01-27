@@ -21,12 +21,12 @@ This document provides the complete epic and story breakdown for Parcel-Flow, de
 
 FR1: Ingestion Intelligente (The "Pull" Strategy)
 - FR1.1: Le système doit se connecter à l'API Gmail via OAuth2 (Scope Readonly restreint).
-- FR1.2: Le système doit interroger périodiquement (Job planifié) les emails correspondant à une requête stricte (ex: `subject:(colis OR livraison) is:unread`).
+- FR1.2: Le système doit interroger périodiquement (Job planifié) Gmail avec des requêtes ciblées par provider (ex: `from:chronopost subject:disponible`).
 - FR1.3: Le système doit marquer les emails comme "traités" (ou lus) pour éviter les doublons.
 
-FR2: Extraction par IA (Le Cœur du Système)
-- FR2.2 - Prompting Contextuel: Le système utilise un prompt générique pour extraire : Code de retrait, Transporteur, Date limite, Lieu.
-- FR2.3 - Gestion d'Erreur: Si le score de confiance de l'IA est bas, le colis est créé avec un statut "A vérifier" et un lien vers l'email.
+FR2: Extraction Déterministe (Le Cœur du Système)
+- FR2.2 - Stratégie Multi-Provider: Le système utilise des expressions régulières (Regex) spécifiques à chaque transporteur (Chronopost, Mondial Relay, Vinted) pour extraire les données.
+- FR2.3 - Gestion d'Erreur: Si le format de l'email ne correspond pas à la Regex attendue, le colis est marqué "A vérifier".
 
 FR3: Consultation Mobile "Zéro Stress"
 - FR3.1: Liste triée par Urgence (Date limite la plus proche en premier).
@@ -98,8 +98,8 @@ NFR3.2: Epic 3 - Performance lancement
 Mettre en place l'infrastructure technique (Monorepo, CI/CD, Architecture Hexagonale) et permettre au système de se connecter à Gmail de manière sécurisée pour identifier les emails de colis.
 **FRs covered:** FR1.1, FR1.2, FR1.3, NFR1.3, NFR2.1, NFR2.2
 
-### Epic 2: Le Cœur d'Extraction IA & Protection de la Vie Privée
-Implémenter la logique d'extraction des données par Gemini en garantissant l'anonymisation stricte des données sensibles avant traitement.
+### Epic 2: Le Cœur d'Extraction (Regex) & Protection de la Vie Privée
+Implémenter la logique d'extraction des données par Regex (Stratégie par Provider) en garantissant l'anonymisation stricte des données sensibles avant traitement.
 **FRs covered:** FR2.2, FR2.3, NFR1.1
 
 ### Epic 3: Le Dashboard Mobile & Consultation "Zéro Stress"
@@ -188,35 +188,36 @@ so that new delivery emails are automatically processed without manual intervent
 - Spring @Scheduled task runs at configurable interval.
 - Job calls MailSourcePort and markAsRead after processing.
 
-## Epic 2: Le Cœur d'Extraction IA & Protection de la Vie Privée
+## Epic 2: Le Cœur d'Extraction (Regex) & Protection de la Vie Privée
 
-Implémenter la logique d'extraction des données par Gemini en garantissant l'anonymisation stricte des données sensibles avant traitement.
+Implémenter la logique d'extraction des données par Regex (Stratégie par Provider) en garantissant l'anonymisation stricte des données sensibles avant traitement.
 
-### Story 2.2: Extraction de Métadonnées avec Gemini
+### Story 2.2: Extraction de Métadonnées (Regex Strategies)
 
 As a User,
-I want the system to extract the tracking code, carrier, and expiration date from the sanitized email,
-So that structured parcel information is created automatically.
+I want the system to extract tracking details using specific rules for Chronopost, Mondial Relay, and Vinted,
+So that I get reliable data without AI hallucinations.
 
 **Acceptance Criteria:**
 
-**Given** a sanitized email text
-**When** sent to the Gemini Adapter via Spring AI
-**Then** a structured `ParcelMetadata` object is returned (Code, Carrier, Date, Location).
-**And** a new Parcel is created in the system with this extracted data.
+**Given** a raw email from a known provider (e.g., Chronopost)
+**When** passed to the `RegexParserAdapter`
+**Then** the specific strategy for that provider is selected.
+**And** the Regex extracts: Pickup Code, Deadline, and Location.
+**And** a new Parcel is created with these details.
 
-### Story 2.3: Gestion d'Erreur & Fallback Extraction
+### Story 2.3: Gestion d'Echec de Parsing (Fallback)
 
 As a User,
-I want the system to flag parcels that couldn't be fully extracted,
-So that I don't miss a delivery due to an AI error.
+I want the system to flag parcels where the email format has changed,
+So that I can manually check them instead of having missing info.
 
 **Acceptance Criteria:**
 
-**Given** an email with low AI extraction confidence
+**Given** an email where the Regex does not match (format change)
 **When** the parcel is created
 **Then** its status is set to "TO_VERIFY".
-**And** the parcel record includes a reference/link to the original email for manual check.
+**And** the parcel record includes a reference/link to the original email.
 
 ## Epic 3: Le Dashboard Mobile & Consultation "Zéro Stress"
 

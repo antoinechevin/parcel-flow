@@ -1,15 +1,16 @@
 #!/bin/bash
+set -e
+
+# Fix permissions for persisted Gemini config and gcloud config
+sudo mkdir -p /home/vscode/.gemini /home/vscode/.npm /home/vscode/.m2 /home/vscode/.config/gcloud
+sudo chown -R vscode:vscode /home/vscode/.gemini /home/vscode/.npm /home/vscode/.m2 /home/vscode/.config/gcloud
 
 # Installer Gemini CLI
 npm install -g @google/gemini-cli
 
-# Fix permissions for persisted Gemini config
-sudo mkdir -p /home/vscode/.gemini
-sudo chown -R vscode:vscode /home/vscode/.gemini
-
 # Install Git LFS
 sudo apt-get update && sudo apt-get install -y git-lfs
-git lfs install
+git lfs install --force
 
 # Installation des dépendances Backend (sans lancer les tests pour aller vite)
 echo "Installing Backend dependencies..."

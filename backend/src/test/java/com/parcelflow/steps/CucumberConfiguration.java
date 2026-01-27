@@ -3,6 +3,7 @@ package com.parcelflow.steps;
 import com.parcelflow.infrastructure.config.ApplicationConfig;
 import com.parcelflow.infrastructure.persistence.InMemoryParcelRepository;
 import com.parcelflow.domain.ports.MailSourcePort;
+import com.parcelflow.domain.ports.ParcelExtractionPort;
 import io.cucumber.spring.CucumberContextConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,12 @@ public class CucumberConfiguration {
         @Primary
         public MailSourcePort mailSourcePort() {
             return mock(MailSourcePort.class);
+        }
+
+        @Bean
+        @Primary
+        public ParcelExtractionPort parcelExtractionPort() {
+            return mock(ParcelExtractionPort.class);
         }
     }
 }

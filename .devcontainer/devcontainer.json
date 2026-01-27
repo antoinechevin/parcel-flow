@@ -7,12 +7,18 @@
       "installMaven": "true"
     },
     "ghcr.io/devcontainers/features/node:1": {
-      "version": "22"
+      "version": "22",
+      "installYarnUsingApt": false
     },
     "ghcr.io/devcontainers/features/docker-in-docker:1": {
       "version": "latest"
     },
-    "ghcr.io/devcontainers/features/github-cli:1": {}
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/dhoeric/features/google-cloud-cli:1": {}
+  },
+  "remoteEnv": {
+    "GCLOUD_PROJECT": "${localEnv:GCLOUD_PROJECT}",
+    "GCLOUD_REGION": "${localEnv:GCLOUD_REGION}"
   },
   "customizations": {
     "vscode": {
@@ -29,6 +35,7 @@
   "remoteUser": "vscode",
   "mounts": [
     "source=parcel-flow-gemini-config,target=/home/vscode/.gemini,type=volume",
+    "source=parcel-flow-gcloud-config,target=/home/vscode/.config/gcloud,type=volume",
     "source=parcel-flow-maven-repo,target=/home/vscode/.m2,type=volume",
     "source=parcel-flow-npm-cache,target=/home/vscode/.npm,type=volume"
   ],

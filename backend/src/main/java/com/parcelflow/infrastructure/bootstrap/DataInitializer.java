@@ -28,17 +28,10 @@ public class DataInitializer {
             PickupPoint pp2 = new PickupPoint("pp-2", "Point Relay", "45 Avenue de la République, Lyon", "09:00-20:00");
 
             List<Parcel> sampleParcels = List.of(
-                // HIGH Urgency (Red) - Expire demain
-                new Parcel(ParcelId.random(), "TRACK-URGENT-1", LocalDate.now().plusDays(1), ParcelStatus.AVAILABLE, pp1),
-                
-                // MEDIUM Urgency (Orange) - Expire dans 3 jours
-                new Parcel(ParcelId.random(), "TRACK-SOON-1", LocalDate.now().plusDays(3), ParcelStatus.AVAILABLE, pp1),
-                
-                // LOW Urgency (Blue) - Expire dans 7 jours
-                new Parcel(ParcelId.random(), "TRACK-SAFE-1", LocalDate.now().plusDays(7), ParcelStatus.AVAILABLE, pp2),
-                
-                // Déjà récupéré - Gris
-                new Parcel(ParcelId.random(), "TRACK-DONE-1", LocalDate.now().minusDays(2), ParcelStatus.PICKED_UP, pp2)
+            new Parcel(ParcelId.random(), "TRACK-URGENT-1", "DHL", LocalDate.now().plusDays(1), ParcelStatus.AVAILABLE, pp1),
+            new Parcel(ParcelId.random(), "TRACK-SOON-1", "UPS", LocalDate.now().plusDays(3), ParcelStatus.AVAILABLE, pp1),
+            new Parcel(ParcelId.random(), "TRACK-SAFE-1", "La Poste", LocalDate.now().plusDays(7), ParcelStatus.AVAILABLE, pp2),
+            new Parcel(ParcelId.random(), "TRACK-DONE-1", "Chronopost", LocalDate.now().minusDays(2), ParcelStatus.PICKED_UP, pp2)
             );
 
             repository.saveAll(sampleParcels);
