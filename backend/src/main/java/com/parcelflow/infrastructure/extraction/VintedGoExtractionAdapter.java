@@ -43,16 +43,7 @@ public class VintedGoExtractionAdapter implements ParcelExtractionPort {
         try {
             // 1. Extraction Code
             String pickupCode = extractPickupCode(emailContent);
-            if (pickupCode == null) {
-                // AC3: Fallback for format changes
-                return Optional.of(new ParcelMetadata(
-                    "UNKNOWN-" + System.currentTimeMillis(), // Temporary ID
-                    null,
-                    "Vinted Go (A vérifier)",
-                    null,
-                    "Format inconnu - voir email"
-                ));
-            }
+            if (pickupCode == null) return Optional.empty(); // Essential
 
             Document doc = Jsoup.parse(emailContent);
             String text = doc.text(); // Clean text
@@ -68,7 +59,6 @@ public class VintedGoExtractionAdapter implements ParcelExtractionPort {
 
             return Optional.of(new ParcelMetadata(
                 trackingNumber != null ? trackingNumber : "UNKNOWN",
-                pickupCode,
                 "Vinted Go",
                 deadline,
                 location

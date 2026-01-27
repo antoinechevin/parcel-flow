@@ -11,7 +11,6 @@ class ParcelMetadataTest {
         LocalDate tomorrow = LocalDate.now().plusDays(1);
         ParcelMetadata metadata = new ParcelMetadata(
             "1Z999",
-            null, // pickupCode
             "UPS",
             tomorrow,
             "Relais Colis"

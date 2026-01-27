@@ -28,7 +28,6 @@ class DomainModelingTest {
         Parcel parcel = new Parcel(
             ParcelId.random(),
             "TRACK-1",
-            null,
             "UPS",
             LocalDate.now().plusDays(2),
             ParcelStatus.AVAILABLE,
@@ -43,7 +42,6 @@ class DomainModelingTest {
         Parcel parcel = new Parcel(
             ParcelId.random(),
             "TRACK-1",
-            null,
             "UPS",
             LocalDate.now().plusDays(2),
             ParcelStatus.AVAILABLE,

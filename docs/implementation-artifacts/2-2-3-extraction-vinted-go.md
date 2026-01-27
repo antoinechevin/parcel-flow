@@ -92,7 +92,8 @@ Basé sur l'analyse de `mail_vinted_go.eml` :
 
 ### Fix Log (Code Review 2026-01-27)
 - Fixed Regex quadruple backslash issue in `VintedGoExtractionAdapter`.
-- Implemented AC3: Return `TO_VERIFY` status when extraction fails critical fields.
-- Added missing Unit Test `VintedGoExtractionAdapterTest`.
-- Added `TO_VERIFY` to `ParcelStatus` enum and handled it in Use Case.
+- Reverted AC3 (TO_VERIFY status) per PR review request (scope reduction).
+- Reverted pickupCode field in Domain Model per PR review request (YAGNI).
+- Removed CompositeParcelExtractionAdapter per PR review request (simplification).
+- Removed redundant Unit Test `VintedGoExtractionAdapterTest` (covered by Cucumber).
 - Fixed `ParcelTest` regression regarding enum values count.

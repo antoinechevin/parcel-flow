@@ -5,7 +5,6 @@ import java.time.LocalDate;
 public record Parcel(
     ParcelId id,
     String trackingNumber,
-    String pickupCode,
     String carrier,
     LocalDate deadline,
     ParcelStatus status,

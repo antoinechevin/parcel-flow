@@ -12,7 +12,6 @@ class ParcelTest {
         Parcel parcel = new Parcel(
             new ParcelId(UUID.randomUUID()),
             "1Z999",
-            null,
             "UPS",
             LocalDate.now(),
             ParcelStatus.AVAILABLE,

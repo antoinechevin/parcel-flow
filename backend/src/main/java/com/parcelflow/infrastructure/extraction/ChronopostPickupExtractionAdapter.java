@@ -53,7 +53,7 @@ public class ChronopostPickupExtractionAdapter implements ParcelExtractionPort {
             }
 
             log.info("Chronopost extraction success: {} at {}", trackingNumber, pickupLocation);
-            return Optional.of(new ParcelMetadata(trackingNumber, null, carrier, expirationDate, pickupLocation));
+            return Optional.of(new ParcelMetadata(trackingNumber, carrier, expirationDate, pickupLocation));
 
         } catch (Exception e) {
             log.warn("Failed to parse Chronopost email", e);
