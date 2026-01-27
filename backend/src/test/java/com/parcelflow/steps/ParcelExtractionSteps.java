@@ -12,11 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 public class ParcelExtractionSteps {
@@ -51,9 +54,9 @@ public class ParcelExtractionSteps {
             );
         }
         
-        when(extractionPort.extract(currentEmailContent)).thenReturn(Optional.ofNullable(metadata));
+        when(extractionPort.extract(eq(currentEmailContent), any(ZonedDateTime.class))).thenReturn(Optional.ofNullable(metadata));
         
-        useCase.execute(currentEmailContent);
+        useCase.execute(currentEmailContent, ZonedDateTime.now());
     }
 
     @Then("un nouveau colis devrait être créé avec les informations suivantes:")

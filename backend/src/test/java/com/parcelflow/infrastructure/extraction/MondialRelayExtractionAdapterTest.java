@@ -12,47 +12,41 @@ import org.springframework.core.io.ClassPathResource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ChronopostPickupExtractionAdapterTest {
+class MondialRelayExtractionAdapterTest {
 
-    private final ChronopostPickupExtractionAdapter adapter = new ChronopostPickupExtractionAdapter();
+    private final MondialRelayExtractionAdapter adapter = new MondialRelayExtractionAdapter();
 
     @Test
-    void shouldExtractMetadataFromRealChronopostEmail() throws IOException, MessagingException {
-        // Load and parse the real sample email using Jakarta Mail to decode it properly
+    void shouldExtractMetadataFromMondialRelayEmail() throws IOException, MessagingException {
         Properties props = new Properties();
         Session session = Session.getDefaultInstance(props, null);
         
         String htmlContent;
-        try (InputStream is = new ClassPathResource("emails/mail_chronopost.eml").getInputStream()) {
+        ZonedDateTime receivedAt = ZonedDateTime.parse("2025-12-05T03:25:49-08:00");
+        
+        try (InputStream is = new ClassPathResource("emails/mail_mondial_relay.eml").getInputStream()) {
             MimeMessage message = new MimeMessage(session, is);
             htmlContent = extractHtml(message);
         }
 
         assertNotNull(htmlContent, "HTML content should not be null");
 
-        Optional<ParcelMetadata> result = adapter.extract(htmlContent, java.time.ZonedDateTime.now());
+        Optional<ParcelMetadata> result = adapter.extract(htmlContent, receivedAt);
 
-        assertTrue(result.isPresent(), "Should extract metadata from Chronopost email");
+        assertTrue(result.isPresent(), "Should extract metadata from Mondial Relay email");
         ParcelMetadata metadata = result.get();
 
-        // Verify Tracking Number
-        assertEquals("XW251575070TS", metadata.trackingCode(), "Tracking code mismatch");
-
-        // Verify Carrier
-        assertTrue(metadata.carrier().contains("VINTED"), "Carrier should be VINTED (Chronopost)");
-
-        // Verify Expiration Date
-        // "lundi 19 janvier 2026" -> 2026-01-19
-        assertEquals(LocalDate.of(2026, 1, 19), metadata.expirationDate(), "Expiration date mismatch");
-
-        // Verify Pickup Location
-        assertNotNull(metadata.pickupLocation());
-        assertTrue(metadata.pickupLocation().contains("Panier Sympa"), "Pickup location should contain 'Panier Sympa'");
+        assertEquals("44795167", metadata.trackingCode());
+        assertEquals("Mondial Relay", metadata.carrier());
+        // 5 days after Dec 5 is Dec 10
+        assertEquals(LocalDate.of(2025, 12, 10), metadata.expirationDate());
+        assertEquals("LOCKER 24/7 LA CERISE BLEUE BESSENAY", metadata.pickupLocation());
     }
 
     private String extractHtml(Part part) throws MessagingException, IOException {

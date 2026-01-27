@@ -27,7 +27,7 @@ public class ChronopostPickupExtractionAdapter implements ParcelExtractionPort {
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy", Locale.FRENCH);
 
     @Override
-    public Optional<ParcelMetadata> extract(String emailContent) {
+    public Optional<ParcelMetadata> extract(String emailContent, java.time.ZonedDateTime receivedAt) {
         if (!emailContent.contains("Chronopost") && !emailContent.contains("Pickup")) {
             return Optional.empty();
         }

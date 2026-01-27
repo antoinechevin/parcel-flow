@@ -51,6 +51,8 @@ development_status:
 
   epic-2: in-progress
   2-2-extraction-de-metadonnees-avec-gemini: done
+  2-2-1-extraction-chronopost-pickup: done
+  2-2-2-extraction-mondial-relay: done
   2-3-gestion-d-erreur-fallback-extraction: backlog
   epic-2-retrospective: optional
 

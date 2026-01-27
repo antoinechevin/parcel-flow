@@ -12,10 +12,13 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 class ExtractParcelUseCaseTest {
@@ -41,9 +44,9 @@ class ExtractParcelUseCaseTest {
             "TRK123", "DHL", LocalDate.now().plusDays(2), "Point Relais"
         );
 
-        when(extractionPort.extract(emailContent)).thenReturn(Optional.of(metadata));
+        when(extractionPort.extract(eq(emailContent), any(ZonedDateTime.class))).thenReturn(Optional.of(metadata));
 
-        useCase.execute(emailContent);
+        useCase.execute(emailContent, ZonedDateTime.now());
 
         ArgumentCaptor<Parcel> parcelCaptor = ArgumentCaptor.forClass(Parcel.class);
         verify(repositoryPort).save(parcelCaptor.capture());
@@ -60,19 +63,19 @@ class ExtractParcelUseCaseTest {
         ParcelMetadata metadata = new ParcelMetadata("DUP123", "DHL", null, null);
         Parcel existingParcel = mock(Parcel.class);
 
-        when(extractionPort.extract(emailContent)).thenReturn(Optional.of(metadata));
+        when(extractionPort.extract(eq(emailContent), any(ZonedDateTime.class))).thenReturn(Optional.of(metadata));
         when(repositoryPort.findByTrackingNumber("DUP123")).thenReturn(Optional.of(existingParcel));
 
-        useCase.execute(emailContent);
+        useCase.execute(emailContent, ZonedDateTime.now());
 
         verify(repositoryPort, never()).save(any());
     }
 
     @Test
     void shouldNotSaveIfExtractionFails() {
-        when(extractionPort.extract(anyString())).thenReturn(Optional.empty());
+        when(extractionPort.extract(anyString(), any(ZonedDateTime.class))).thenReturn(Optional.empty());
 
-        useCase.execute("Invalid");
+        useCase.execute("Invalid", ZonedDateTime.now());
 
         verify(repositoryPort, never()).save(any());
     }
