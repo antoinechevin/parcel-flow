@@ -41,7 +41,10 @@ class ExtractParcelUseCaseTest {
     void shouldExtractAndSaveParcel() {
         String emailContent = "Test content";
         ParcelMetadata metadata = new ParcelMetadata(
-            "TRK123", "DHL", LocalDate.now().plusDays(2), "Point Relais"
+            "TRK123",
+            "DHL",
+            LocalDate.now().plusDays(5),
+            "Pickup Point"
         );
 
         when(extractionPort.extract(eq(emailContent), any(ZonedDateTime.class))).thenReturn(Optional.of(metadata));
