@@ -1,0 +1,712 @@
+Delivered-To: antoine.chevin@gmail.com
+Received: by 2002:a05:6000:b0a:b0:42e:1394:54fb with SMTP id dj10csp6048574wrb;
+        Fri, 5 Dec 2025 03:25:49 -0800 (PST)
+X-Forwarded-Encrypted: i=4; AJvYcCUvsEe3CBSUcPrbxG+MirRH0WQ5bofeld4Zk4TCOBJOmVECWZe+MKk0KrHDc4T1flLKqbO7/HOPcd33cAJ6gA==@gmail.com
+X-Received: by 2002:a17:907:3d8c:b0:b3c:82d5:2119 with SMTP id a640c23a62f3a-b79dbe5a69cmr995476566b.6.1764933949618;
+        Fri, 05 Dec 2025 03:25:49 -0800 (PST)
+ARC-Seal: i=3; a=rsa-sha256; t=1764933949; cv=pass;
+        d=google.com; s=arc-20240605;
+        b=NC8q2AZvMgBAPajbbXjTHHxg6+oCxTZVHN/tb0Dwjbj+7Ot03ZSseL4VKRbjjFZ/cq
+         57+GQh200+dRZs7rjodoaUau8fzEop+/pmxYhYoK2SjbtIDw897QW6oxsxUpEkXExhEB
+         CT4YwfjruOJP7mZJWMZeUw0xjzkWCI1liYRxhiuALCKCCpB7JyvXfNH/Mep0nh51MdVS
+         zb7lUM51gC4JPUBk4OPlJzMnvmDqgu13ZrOHjGj2+jHswImxMRu4/2yEtQO0Z0eTNMkD
+         GDuIyIZLvJyicnyhJQUXkw3/JM1tdzVZoeaqiLbHdjpBzDYqaZNuuR90pKeXvFd7jJOS
+         2pqw==
+ARC-Message-Signature: i=3; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=mime-version:subject:message-id:to:reply-to:sender:from:date
+         :dkim-signature:delivered-to;
+        bh=rGCB2VOLVO16oACaxk9N6KnpDBgAkHRW2HZSTZI05kk=;
+        fh=Js2eXGaW98xRd8cyL9FhnP3aHvnywn8oAswu/eRHvGU=;
+        b=S5ia+Uv30eywSz5o61sDx4SaMks7CQkwe1+1073fwHjXtPP4OQZWIEhlG6dlOlrZey
+         XIj5E1fcAN0ZM2ECpkqI6r5MJUcACXozWgGW5eVlUEhx3S5pAOjzy3YTe0gbKKuOykA2
+         T+WPHHs7Xak7EXeFxkLXHZkR9Ly68VL2h1aVywk75asGdHpkKBu7BzeijhnkUfzn4MIL
+         wKf+PZ7VP8LlmcnOhFt/crSab5/CFWMtHn4AA//qtQAc4Icvm0cKR+GPMzuGJYBzMzIY
+         dplsujHBt57a5RAyAk4twgJAa+KLGPZ4r9aePZdPGR2+ZRvY1vdM5Sn3b8GpwmYEFrjS
+         ccDg==;
+        dara=google.com
+ARC-Authentication-Results: i=3; mx.google.com;
+       dkim=pass header.i=@mondialrelay.fr header.s=mta header.b=lwQF0HnV;
+       arc=pass (i=2 spf=pass spfdomain=mondialrelay.fr dkim=pass dkdomain=mondialrelay.fr dmarc=pass fromdomain=mondialrelay.fr);
+       spf=pass (google.com: domain of anou.chevin+caf_=antoine.chevin=gmail.com@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom="anou.chevin+caf_=antoine.chevin=gmail.com@gmail.com";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=mondialrelay.fr;
+       dara=pass header.i=@gmail.com
+Return-Path: <anou.chevin+caf_=antoine.chevin=gmail.com@gmail.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id a640c23a62f3a-b79f44593absor88777866b.1.2025.12.05.03.25.49
+        for <antoine.chevin@gmail.com>
+        (Google Transport Security);
+        Fri, 05 Dec 2025 03:25:49 -0800 (PST)
+Received-SPF: pass (google.com: domain of anou.chevin+caf_=antoine.chevin=gmail.com@gmail.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@mondialrelay.fr header.s=mta header.b=lwQF0HnV;
+       arc=pass (i=2 spf=pass spfdomain=mondialrelay.fr dkim=pass dkdomain=mondialrelay.fr dmarc=pass fromdomain=mondialrelay.fr);
+       spf=pass (google.com: domain of anou.chevin+caf_=antoine.chevin=gmail.com@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom="anou.chevin+caf_=antoine.chevin=gmail.com@gmail.com";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=mondialrelay.fr;
+       dara=pass header.i=@gmail.com
+ARC-Seal: i=2; a=rsa-sha256; t=1764933949; cv=pass;
+        d=google.com; s=arc-20240605;
+        b=JmL7VqBKfbkSQgB56yblKRT6tKGGpj6rKtvZWu9/VToQAxgfS/Y5/NfbbYSF0wjuk9
+         yWQ0TwX16/mH4BzefmOFybxcAu8UbJ1T7pMF5nLeocg2xhX2FCeKGMeDlG7N5y6OphDE
+         1M/H4B04es7193MF8iFeIHRXwuaK/GLib2p2Mt0o+lXV6oOfPJASE4LT4KMGTVu5C8yi
+         7JWqMNj8F9Rb4ULDU165fOA0zaeFIc0qaMxdA3g90QSGuEo7Jt7qEkGY/4H0N43d9Khx
+         J1OBd/ZTl4NBcoIZXP0yiAQD9jGfe03hcuiHC/zm03OnOkIvf5EeTEfBYLZMTLO8/+2t
+         xcrw==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=mime-version:subject:message-id:to:reply-to:sender:from:date
+         :dkim-signature:delivered-to;
+        bh=rGCB2VOLVO16oACaxk9N6KnpDBgAkHRW2HZSTZI05kk=;
+        fh=Js2eXGaW98xRd8cyL9FhnP3aHvnywn8oAswu/eRHvGU=;
+        b=Y1Q2+4QM61jWVJ884VgzZ4zYqsk+01asktcVPP7Re5pJTdaLW63ZPJz7Wv+kxEP9SN
+         mDKb9C7oH31IgqnO/UTMVnwE5gEV9zaKjVZnlokhZOfFn4P0geURpYCWE764owZ978ET
+         yyZJjoxV96twnWRWYs4W83APkgSS2tphjARR4Iq9c+KWs4QqC8Dco7zITyVEZLbH2s+X
+         qprGKHQ2z8J08/Y1o4ZY1CsZ+pNb81YqZMN2EjFovh4ievYlXl0Ag3bkBEe1WfB/6inb
+         qVucJ3kvM1q3KjZteZR4RLeqLbuTXI2l1KZ9IZo7U4UzDQaqzJud0yFXrhz1eGOdsGrP
+         1TgA==;
+        dara=google.com
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@mondialrelay.fr header.s=mta header.b=lwQF0HnV;
+       spf=pass (google.com: domain of lkxpmse7674tbdcd8ofarf1j9xyzmggwf0alhca@mondialrelay.fr designates 185.8.253.135 as permitted sender) smtp.mailfrom=lKxpMsE7674tBdcD8OfArF1j9XyZMggWf0alhcA@mondialrelay.fr;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=mondialrelay.fr
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764933949; x=1765538749;
+        h=mime-version:subject:message-id:to:reply-to:sender:from:date
+         :dkim-signature:delivered-to:x-forwarded-for:x-forwarded-to
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rGCB2VOLVO16oACaxk9N6KnpDBgAkHRW2HZSTZI05kk=;
+        b=r+q9b2MEPly3vK7YCQpcLucWjJWSfk9GCCEDm0ph70Sx/hyzIORVTBtDhR1EW304wR
+         vvHF+5wCuI5sxnhwBLzSUk4bOzyxwFb3JQwBNUk7EKLq5AtHsSSwbjP1lfI+OS/m2F3V
+         QYaVMy2QbbvVGpXpdoGYNQpOkb8+Dczc5biJICmzkYT43Qps8ysTDIUkGXVS9r69wN+I
+         Y15SkvHM9rUB64nn2WBSGGigGEbuOiBZVJsvnVxP2nzGzlvfrJO8Xeb4WeMyperNRLA+
+         xdsKcZixlo8Oo+tiWjdsxxHIXvx03nwlDasQ0uw4eb1wtPnuv2ZInngAiq75xIBvkVH4
+         1T6Q==
+X-Forwarded-Encrypted: i=2; AJvYcCU0zaKOR3FRpfcmwLsfZc4Rjfupa/PzOLvHa+WhH+rNaqCotsLDMfG00QncUUkZTs1AjuHB1juMkU+JRlbOlg==@gmail.com
+X-Gm-Message-State: AOJu0Yzq8q1QSeCz8EyLx3bcjTMjophML5xwo8Xan9EyH6vSYffPD78Q
+	0DSdkyHzvDj6Re5vEoznuoOURDtbKwl99ccI4oWiDl7PIbs2PfI/PnHa1kGMYG2+MTqkwiRU4B0
+	3V3mVekdLJ3qIPgnGlViu+VAeHLgb1eNzHXbjGOxbqeI6UH1qLpj2L1IUiHEO3g==
+X-Received: by 2002:a17:907:72c3:b0:b79:c460:39a4 with SMTP id a640c23a62f3a-b79dc77df56mr961841866b.56.1764933949023;
+        Fri, 05 Dec 2025 03:25:49 -0800 (PST)
+X-Forwarded-To: noura.chevin@gmail.com, antoine.chevin@gmail.com
+X-Forwarded-For: anou.chevin@gmail.com noura.chevin@gmail.com, antoine.chevin@gmail.com
+Delivered-To: anou.chevin@gmail.com
+Received: by 2002:a05:7208:72c8:b0:f2:f7e4:9c80 with SMTP id l8csp10108816rbn;
+        Fri, 5 Dec 2025 03:25:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEmWd0C9LXPR23HSJtp5J5yPvDmrksQgsEoMC0dOE/1sIOjwrHP1IB65vBDQhWREqQVcwU1
+X-Received: by 2002:a5d:5d85:0:b0:42b:3ed2:c08a with SMTP id ffacd0b85a97d-42f7317cdc5mr9784769f8f.13.1764933947810;
+        Fri, 05 Dec 2025 03:25:47 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1764933947; cv=none;
+        d=google.com; s=arc-20240605;
+        b=CE3fo/u0Aj2wPvmrpTFHX7AYyCgYAPA4lNNs9d8BqMwZi6xczuUVGxby4H7tvbd/sr
+         7xRQD/1odZIiwSyTuUBhY8dvmRsnLzK0NIEJOGdGq58FgxitOLwszDfFUoDph2mVoUp6
+         fty0/d4nUYK2PVzf0DVd68JpCMNAhPww6affKIupoP7t0r4xN7gmiex1vBDp8ShGpB7f
+         ccR5LbE90UePU44e0MfxT4nmSs4woyknFWoMspdpillhKYkEHFwXePIPG2bk0QpRgwmi
+         C1r37rMYwPBuTHw4ppTerJ9oVcP7ejbhPrZ0y9xPwS2pXnNsmgfF4gpdAx9TuCrgnO/I
+         mzWA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=mime-version:subject:message-id:to:reply-to:sender:from:date
+         :dkim-signature;
+        bh=rGCB2VOLVO16oACaxk9N6KnpDBgAkHRW2HZSTZI05kk=;
+        fh=RG5UT/uUlNmLyo4qmLwoSbKpIyt8UgcpHPttg+u8/xs=;
+        b=YuUQmxIIBJYVRq1MwBOyi8dbgEPEoEwahW3OfOAahlEzjP1ujbHZkfAX+C2For8yrJ
+         pMZmPsZ4J7myS2TbmXdbY4eIUuLkNKUyFDT2iI8tKfNncJu9S4ZZz1O5wdP1KYYBP11F
+         IuD1YJlgcg6nr4aFO5SKLsEWbzmatyY4zC9fujp+hSgK/bizsazpT6uC4Ecxf9ga8V0N
+         M4QzEPyW+xyO/EElxBrnbwPdc1Rq38NTTCqFmUx/IWWOtRhts8/SX3jux8zXBHqLRpNL
+         QfKOTWlc5aaREunB7btcFICM8VFl5zWXx8FYq3IHl1JXnGnvzv8teeIofTI4vGRna2pm
+         oZGA==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@mondialrelay.fr header.s=mta header.b=lwQF0HnV;
+       spf=pass (google.com: domain of lkxpmse7674tbdcd8ofarf1j9xyzmggwf0alhca@mondialrelay.fr designates 185.8.253.135 as permitted sender) smtp.mailfrom=lKxpMsE7674tBdcD8OfArF1j9XyZMggWf0alhcA@mondialrelay.fr;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=mondialrelay.fr
+Return-Path: <lKxpMsE7674tBdcD8OfArF1j9XyZMggWf0alhcA@mondialrelay.fr>
+Received: from ip3.tpm03.net (ip3.tpm03.net. [185.8.253.135])
+        by mx.google.com with ESMTPS id ffacd0b85a97d-42f7d49149bsi1929698f8f.1227.2025.12.05.03.25.47
+        for <anou.chevin@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Dec 2025 03:25:47 -0800 (PST)
+Received-SPF: pass (google.com: domain of lkxpmse7674tbdcd8ofarf1j9xyzmggwf0alhca@mondialrelay.fr designates 185.8.253.135 as permitted sender) client-ip=185.8.253.135;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1764933947; s=mta;
+	d=mondialrelay.fr;
+	h=Date:From:Sender:Reply-To:To:Message-ID:Subject:MIME-Version:Content-Type;
+	bh=rGCB2VOLVO16oACaxk9N6KnpDBgAkHRW2HZSTZI05kk=;
+	b=lwQF0HnV8z+OkRlzMcuBtMcdaoLEucHopjUttrnL7z5fwuy/FxFLSAnDUo+Nw1db
+	abmj5X36jXsx74+IG/Fg6mM+MLmNZQmRMJ2TU8XaLMh5oDyqsmDge16jUYmLhyL7lL5
+	n4aONYycLTsy/j4ULjFA1jS/2C7RFLOmZVykuEo8=
+Date: Fri, 5 Dec 2025 12:25:47 +0100 (CET)
+From: Mondial Relay <noreply@mondialrelay.fr>
+Sender: noreply@mondialrelay.fr
+Reply-To: Mondial Relay <no-reply@mondialrelay.fr>
+To: Noura Chevin <anou.chevin@gmail.com>
+Message-ID: <lKxpMsE7674tBdcD8OfArF1j9XyZMggWf0alhcA@mondialrelay.fr>
+Subject: Votre colis 44795167 est disponible !
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_3768928_536110352.1764933947509"
+
+------=_Part_3768928_536110352.1764933947509
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_3768929_1909232275.1764933947509"
+
+------=_Part_3768929_1909232275.1764933947509
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!doctype html>
+<html xmlns=3D"http://www.w3.org/1999/xhtml" xmlns:v=3D"urn:schemas-microso=
+ft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:office">
+ <head>
+  <title>Votre colis 44795167 est disponible !</title>
+  <!--[if !mso]>-->
+  <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+  <!--<![endif]-->
+  <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8">
+  <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D=
+1">
+  <link rel=3D"preconnect" href=3D"https://fonts.googleapis.com">
+  <link rel=3D"preconnect" href=3D"https://fonts.gstatic.com" crossorigin>
+  <link href=3D"https://fonts.googleapis.com/css2?family=3DMontserrat:wght@=
+400;500;600;700&amp;display=3Dswap" rel=3D"stylesheet">
+  <style type=3D"text/css">
+        #outlook a {
+            padding: 0;
+        }
+
+        .ReadMsgBody {
+            width: 100%;
+        }
+
+        .ExternalClass {
+            width: 100%;
+        }
+
+        .ExternalClass * {
+            line-height: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table,
+        td {
+            border-collapse: collapse;
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        img {
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+            -ms-interpolation-mode: bicubic;
+        }
+
+        p {
+            display: block;
+        }
+
+        .centered {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .loader {
+            width: 75%;
+            height: 20px;
+            border-radius: 10px;
+        }
+    </style>
+  <!--[if !mso]><!-->
+  <style type=3D"text/css">
+        @media only screen and (max-width:480px) {
+            @-ms-viewport {
+                width: 320px;
+            }
+
+            @viewport {
+                width: 320px;
+            }
+        }
+    </style>
+  <!--<![endif]-->
+  <!--[if mso]>
+          <xml>
+          <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+          </o:OfficeDocumentSettings>
+          </xml>
+          <![endif]-->
+  <!--[if lte mso 11]>
+          <style type=3D"text/css">
+            .outlook-group-fix { width:100% !important; }
+          </style>
+          <![endif]-->
+  <style type=3D"text/css">
+        @media only screen and (min-width:480px) {
+            .mj-column-per-100 {
+                width: 100% !important;
+                max-width: 100%;
+            }
+
+            .mj-column-per-50 {
+                width: 50% !important;
+                max-width: 50%;
+            }
+        }
+    </style>
+  <style type=3D"text/css">
+        @media only screen and (max-width:480px) {
+            table.full-width-mobile {
+                width: 100% !important;
+            }
+
+            td.full-width-mobile {
+                width: auto !important;
+            }
+        }
+    </style>
+ </head>
+ <body style=3D"background-color:#ffffff;background:#ffffff;">
+  <div style=3D"margin: 0px auto; max-width: 600px; background-color: #ffff=
+ff; background: #ffffff; font-family: 'Montserrat';">
+   <!-- Header -->
+   <!--[if mso | IE]>
+        <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" class=3D"" style=3D"width:600px;" width=3D"600">
+        <tr>
+            <td style=3D"line-height:0px;font-size:0px;mso-line-height-rule=
+:exactly;">
+        <![endif]-->
+   <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ role=3D"prise en charge" width=3D"100%" background-color=3D"#fff" style=3D=
+"background-color:#fff;background:#fff; width: 100%;">
+    <tbody>
+     <tr>
+      <td style=3D"padding:25px"><a href=3D"https://notification.mondialrel=
+ay.fr/c?q=3DlbCTGuAhaCCKjIfGaV3NhzZp2gCzaHR0cHM6Ly93d3cubW9uZGlhbHJlbGF5LmZ=
+yP3V0bV9zb3VyY2U9VHJhbnNhY3Rpb25hbEVtYWlsJnV0bV9tZWRpdW09RW1haWwmdXRtX2Nvbn=
+RlbnQ9Z2VuLWRpc3BvbmlibGVhdXJlbGFpc21peHRlY29uc2lnbmUtbXItZnItcGluMS1jcnQwL=
+XN1YjAtZW52MSZ1dG1fY2FtcGFpZ249Tm90aWZpY2F0aW9uQ29saXOsXWP1fJkyCBZ_RqWFrGky=
+wTvrvi0F1wPw57xub3RpZmljYXRpb24ubW9uZGlhbHJlbGF5LmZy" target=3D"_blank"> <i=
+mg src=3D"https://medias.mondialrelay.com/mailing/assets/mr/mr-logo-header.=
+png" style=3D"border: 0; display: block; outline: none; text-decoration: no=
+ne; height: auto; max-height: 80px; max-width: 120px" align=3D"left"> </a><=
+/td>
+      <td style=3D"padding:25px"><img alt=3D"" src=3D"https://medias.mondia=
+lrelay.com/images/template/logos-client/none.jpg" style=3D"border: 0; displ=
+ay: block; outline: none; text-decoration: none; max-height: 80px; max-widt=
+h: 120px" align=3D"right"></td>
+     </tr>
+    </tbody>
+   </table>
+   <!---->
+   <!--[if mso | IE]>
+            </td>
+          </tr>
+        </table>
+
+        <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" class=3D"" style=3D"width:600px;" width=3D"600">
+          <tr>
+            <td style=3D"line-height:0px;font-size:0px;mso-line-height-rule=
+:exactly;">
+        <![endif]-->
+   <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ role=3D"prise en charge" background-color=3D"#fff" style=3D"background-col=
+or: #fff; font-family: 'Montserrat', Helvetica, Verdana, sans-serif; backgr=
+ound: #fff; max-width: 525px; margin: 0px auto 10px auto; ">
+    <tbody>
+     <tr>
+      <td colspan=3D"2"><img src=3D"https://medias.mondialrelay.com/mailing=
+/assets/png/header-top.png" style=3D"width: 100%; vertical-align: bottom;">=
+</td>
+     </tr>
+     <tr>
+      <td colspan=3D"2" style=3D"background-color: #ff5c84; padding: 10px 2=
+0px; vertical-align: middle;" align=3D"center"><img src=3D"https://medias.m=
+ondialrelay.com/mailing/assets/mr/header-icon-2.png" alt=3D"" height=3D"44"=
+ width=3D"43" style=3D"display: block; margin: 0 auto;">
+       <p style=3D"font-weight: 400; font-size: 22px; text-align: center; c=
+olor: #fff; margin: 18px 1px 18px 1px;">Votre colis <strong>est arriv=C3=A9=
+ dans votre Locker !</strong></p>
+       <!--                     <div style=3D"max-width: fit-content; min-w=
+idth: 180px; border: #fff solid 2px; margin: auto; margin-top: 40px; font-w=
+eight: 700; font-size: 18px;">
+                        <div style=3D"width: 100%; height: 35px; background=
+-color: #fff; color: #FF5C84; text-align: center; display: flex; align-item=
+s: center; justify-content: center;">
+                            Code de retrait
+                        </div>
+                        <div style=3D"text-align: center; color: #fff; heig=
+ht: 35px; display: flex; align-items: center; justify-content: center;">
+                            887498
+                        </div>
+                    </div>
+ --></td>
+     </tr>
+     <tr>
+      <td colspan=3D"2"><img src=3D"https://medias.mondialrelay.com/mailing=
+/assets/png/header-bottom.png" style=3D"width: 100%; vertical-align: bottom=
+;"></td>
+     </tr>
+    </tbody>
+   </table>
+   <h4 style=3D"color: #96154A; text-align: center; margin-top: 30px; paddi=
+ng: 0px 20px; font-weight: 600; font-size: 14px; line-height: 14.63px; font=
+-family: 'Montserrat', Helvetica, Verdana, sans-serif;">Retirez votre colis
+    <br>
+    avec votre code de retrait</h4>
+   <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ role=3D"prise en charge" background-color=3D"#fff" style=3D"background-col=
+or: #fff; background: #fff; max-width: 525px; margin: 0px auto 10px auto; f=
+ont-family: 'Montserrat', Helvetica, Verdana, sans-serif;">
+    <tbody>
+     <tr>
+      <td style=3D"font-family: 'Montserrat', Helvetica, Verdana, sans-seri=
+f;">
+       <div style=3D"max-width: fit-content; min-width: 180px; margin: auto=
+; font-weight: 700; font-size: 48px;">
+        <div style=3D"text-align: center; color: #96154A;display: flex; ali=
+gn-items: center; justify-content: center; margin-bottom: 20px;">887498</di=
+v>
+       </div>
+      </td>
+     </tr>
+    </tbody>
+   </table>
+   <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ role=3D"prise en charge" width=3D"100%" background-color=3D"#fff" style=3D=
+"display: flex; justify-content: center;background-color: #fff; background:=
+ #fff; width: 100%; margin: 0px auto 5px auto; font-family: 'Montserrat', H=
+elvetica, Verdana, sans-serif;">
+    <tbody>
+     <tr style=3D"display: flex; justify-content: center;">
+      <td style=3D"display: flex; justify-content: center;font-family: 'Mon=
+tserrat', Helvetica, Verdana, sans-serif;">
+       <h3 style=3D"display: flex; justify-content: center; text-align: cen=
+ter; color: #4C4C4C; font-size: 20px; font-weight:700; line-height: 22px;">=
+Bonjour Noura Chevin</h3>
+      </td>
+     </tr>
+     <tr>
+      <td style=3D"font-family: 'Montserrat', Helvetica, Verdana, sans-seri=
+f;">
+       <p style=3D"text-align: center; color: #000000; font-size: 12px; mar=
+gin: 0px 20px;">Bonne nouvelle ! Votre colis <span style=3D"color: #FF5C84;=
+ font-weight: bold;"> </span> <strong>44795167</strong> est disponible dans=
+ votre <strong>Locker <span style=3D"color: #FF5C84; font-weight: bold;">LO=
+CKER 24/7 LA CERISE BLEUE BESSENAY .</span></strong>
+        <br>
+        6 Route de Crussillieux 69690 Bessenay.</p>
+      </td>
+     </tr>
+    </tbody>
+   </table>
+   <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ role=3D"prise en charge" background-color=3D"#fff" style=3D"background-col=
+or: #96154a; background: #96154a; max-width: 525px; margin: 30px auto 10px =
+auto; font-family: 'Montserrat'">
+    <tbody>
+     <tr style=3D"position: relative; text-align: center; color: white;">
+      <td style=3D"font-family: 'Montserrat', Helvetica, Verdana, sans-seri=
+f; display: block; margin-top: 50px">
+       <h4 style=3D"font-size: 15px; font-weight: 700; line-height: 17.07px=
+; text-align: center; color: white; padding:0px 30px; margin: 30px 0px 0px;=
+">FAITES VITE, DANS 5 JOURS VOTRE COLIS REPARTIRA !</h4>
+       <img style=3D"padding: 5% 0 15% 0" src=3D"https://medias.mondialrela=
+y.com/mailing/assets/mr/locker.png">
+      </td>
+     </tr>
+    </tbody>
+   </table>
+   <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ role=3D"prise en charge" background-color=3D"#fff" style=3D"background-col=
+or: #96154a; background: #96154a; max-width: 525px; width:100%; margin: 30p=
+x auto 0 auto; font-family: 'Montserrat', Helvetica, Verdana, sans-serif;">
+    <tbody>
+     <tr style=3D"position: relative; text-align: center; color: white;">
+      <td style=3D"display: block; margin: 10% 0px -20px;"><img style=3D"ma=
+rgin-top: 5%; height:50px" src=3D"https://medias.mondialrelay.com/mailing/a=
+ssets/mr/missioner_proche.png"></td>
+     </tr>
+     <tr style=3D"position: relative;">
+      <td style=3D"display: block; margin: 0 0 30px 0; font-family: 'Montse=
+rrat', Helvetica, Verdana, sans-serif;">
+       <h4 style=3D"color: #F6ABB6; text-align: center; margin-bottom: 14px=
+">Un impr=C3=A9vu ?</h4>
+       <p style=3D"margin: auto; color: #FFFFFF; text-align: center; font-s=
+ize: 13px; line-height: 15.86px; padding: 0px 20px;">Un impr=C3=A9vu ? Part=
+agez votre code de retrait =C3=A0 un proche pour qu=E2=80=99il r=C3=A9cup=
+=C3=A8re votre colis.</p>
+      </td>
+     </tr>
+    </tbody>
+   </table>
+   <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ role=3D"prise en charge" background-color=3D"#fff" style=3D"background-col=
+or: #96154a; background: #4DC1BE; max-width: 525px; margin: 0px auto 0 auto=
+; font-family: 'Montserrat', Helvetica, Verdana, sans-serif;">
+    <tbody>
+     <tr style=3D"position: relative; text-align: center; color: white;">
+      <td align=3D"center" style=3D"margin: 50px 0; display: block;"><img s=
+tyle=3D"height:50px" src=3D"https://medias.mondialrelay.com/mailing/assets/=
+mr/icon_ecologie.png"></td>
+     </tr>
+     <tr style=3D"text-align: center; color: white;">
+      <td style=3D"font-family: 'Montserrat', Helvetica, Verdana, sans-seri=
+f;">
+       <p style=3D"margin: auto; color: white; text-align: center; font-siz=
+e: 13px; line-height: 15.86px">R=C3=A9duisons ensemble <strong>l'impact =C3=
+=A9cologique</strong> des livraisons, venez =C3=A0 pied, =C3=A0 v=C3=A9lo, =
+ou en trottinette !</p>
+      </td>
+     </tr>
+     <tr style=3D"text-align: center; color: white; position: relative;">
+      <td style=3D"display: block; margin: 30px 0 50px;"><img style=3D"widt=
+h: 150px;" src=3D"https://medias.mondialrelay.com/mailing/assets/mr/footer-=
+illustration-3.png"></td>
+     </tr>
+    </tbody>
+   </table>
+   <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ role=3D"prise en charge" width=3D"100%" background-color=3D"#fff" style=3D=
+"background-color: #fff; background: #fff; width: 100%; margin: 30px auto 1=
+0px auto; font-family: 'Montserrat'">
+    <tbody style=3D"background-color: #FCE6E9;">
+     <tr style=3D"background-color: #fff;">
+      <td colspan=3D"2" style=3D"font-family: 'Montserrat', Helvetica, Verd=
+ana, sans-serif;">
+       <p style=3D"font-size: 11.2px; text-align: center; margin: 25px 50px=
+ 0px;">Merci de votre confiance et =C3=A0 tr=C3=A8s vite pour d=E2=80=99aut=
+res colis !</p>
+      </td>
+     </tr>
+     <tr style=3D"background-color: #fff;">
+      <td colspan=3D"2" style=3D"font-family: 'Montserrat', Helvetica, Verd=
+ana, sans-serif;">
+       <p style=3D"font-size: 11.2px; text-align: center; margin: 25px 50px=
+ 0px; font-weight: bold;">L=E2=80=99=C3=A9quipe Mondial Relay</p>
+      </td>
+     </tr>
+     <tr style=3D"background-color: #fff; font-family: 'Montserrat', Helvet=
+ica, Verdana, sans-serif;">
+      <td colspan=3D"2" style=3D"font-family: 'Montserrat', Helvetica, Verd=
+ana, sans-serif;">
+       <p style=3D"font-size: 11.2px; text-align: center; margin: 25px 50px=
+ 0px; font-family: 'Montserrat', Helvetica, Verdana, sans-serif;">T=C3=A9l=
+=C3=A9chargez l=E2=80=99application Mondial Relay pour suivre tous vos coli=
+s en temps r=C3=A9el.</p>
+      </td>
+     </tr>
+     <tr style=3D"background-color: #fff;">
+      <td align=3D"right" style=3D"padding: 10px; font-family: 'Montserrat'=
+, Helvetica, Verdana, sans-serif;"><a href=3D"https://notification.mondialr=
+elay.fr/c?q=3DlbDqp4vjDg4HYH2_kidaerLj2gDdaHR0cHM6Ly9wbGF5Lmdvb2dsZS5jb20vc=
+3RvcmUvYXBwcy9kZXRhaWxzP2lkPWNvbS5tb25kaWFscmVsYXkubW9iaWxlJnV0bV9zb3VyY2U9=
+VHJhbnNhY3Rpb25hbEVtYWlsJnV0bV9tZWRpdW09RW1haWwmdXRtX2NvbnRlbnQ9Z2VuLWRpc3B=
+vbmlibGVhdXJlbGFpc21peHRlY29uc2lnbmUtbXItZnItcGluMS1jcnQwLXN1YjAtZW52MSZ1dG=
+1fY2FtcGFpZ249Tm90aWZpY2F0aW9uQ29saXOsXWP1fJkyCBZ_RqWFrGkywTvrvi0F1wPw57xub=
+3RpZmljYXRpb24ubW9uZGlhbHJlbGF5LmZy"> <img style=3D"width: 100px; height: 3=
+0px;" src=3D"https://medias.mondialrelay.com/mailing/assets/mr/logo-android=
+store.png" alt=3D""> </a></td>
+      <td align=3D"left" style=3D"padding: 10px; font-family: 'Montserrat',=
+ Helvetica, Verdana, sans-serif;"><a href=3D"https://notification.mondialre=
+lay.fr/c?q=3DlbCfZWWyiQ0tPv3Zo0crxwGp2gDQaHR0cHM6Ly9hcHBzLmFwcGxlLmNvbS9mci=
+9hcHAvbW9uZGlhbC1yZWxheS9pZDE2MzMwNjA1OTk_dXRtX3NvdXJjZT1UcmFuc2FjdGlvbmFsR=
+W1haWwmdXRtX21lZGl1bT1FbWFpbCZ1dG1fY29udGVudD1nZW4tZGlzcG9uaWJsZWF1cmVsYWlz=
+bWl4dGVjb25zaWduZS1tci1mci1waW4xLWNydDAtc3ViMC1lbnYxJnV0bV9jYW1wYWlnbj1Ob3R=
+pZmljYXRpb25Db2xpc6xdY_V8mTIIFn9GpYWsaTLBO-u-LQXXA_DnvG5vdGlmaWNhdGlvbi5tb2=
+5kaWFscmVsYXkuZnI"> <img style=3D"width: 100px; height: 30px;" src=3D"https=
+://medias.mondialrelay.com/mailing/assets/mr/logo-appstore.png" alt=3D""> <=
+/a></td>
+     </tr>
+     <tr style=3D"background-color: #fff;">
+      <td colspan=3D"2" align=3D"center" style=3D"margin: 0px; padding: 20p=
+x 0px 0px 0px;"><img src=3D"https://medias.mondialrelay.com/mailing/assets/=
+mr/mr-logo-footer.png" alt=3D"" style=3D"display: block; margin: auto; heig=
+ht: 33px; padding: 5px 0px 0px 0px;"></td>
+     </tr>
+     <tr style=3D"background-color: #fff;">
+      <td colspan=3D"2" style=3D"font-family: 'Montserrat', Helvetica, Verd=
+ana, sans-serif;">
+       <p style=3D"text-align: center; font-weight: 700; font-size: 11px; c=
+olor: #96154A;">Un sourire =C3=A0 chaque coin de rue</p>
+      </td>
+     </tr>
+     <tr>
+      <td colspan=3D"2" align=3D"center" style=3D"background-color: #fff; f=
+ont-family: 'Montserrat', Helvetica, Verdana, sans-serif;"><a href=3D"https=
+://notification.mondialrelay.fr/c?q=3DlbCTGuAhaCCKjIfGaV3NhzZp2gCzaHR0cHM6L=
+y93d3cubW9uZGlhbHJlbGF5LmZyP3V0bV9zb3VyY2U9VHJhbnNhY3Rpb25hbEVtYWlsJnV0bV9t=
+ZWRpdW09RW1haWwmdXRtX2NvbnRlbnQ9Z2VuLWRpc3BvbmlibGVhdXJlbGFpc21peHRlY29uc2l=
+nbmUtbXItZnItcGluMS1jcnQwLXN1YjAtZW52MSZ1dG1fY2FtcGFpZ249Tm90aWZpY2F0aW9uQ2=
+9saXOsXWP1fJkyCBZ_RqWFrGkywTvrvi0F1wPw57xub3RpZmljYXRpb24ubW9uZGlhbHJlbGF5L=
+mZy" style=3D" padding: 0px 0px 25px 0px; background-color: #fff; text-alig=
+n: center; font-weight: 400; font-size: 10px; margin: auto; display: block;=
+ color: #96154A;"> www.mondialrelay.fr </a></td>
+     </tr>
+    </tbody>
+   </table>
+   <script type=3D"application/ld+json">
+    {
+    "@context": "http://schema.org",
+    "@type": "ParcelDelivery",
+    "deliveryAddress": {
+    "@type": "PostalAddress",
+    "name": "LOCKER 24/7 LA CERISE BLEUE BESSENAY .",
+    "streetAddress": "6 Route de Crussillieux",
+    "addressLocality": "Bessenay",
+    "addressRegion": "",
+    "addressCountry": "FR",
+    "postalCode": "69690"
+    },
+    "originAddress": {
+    "@type": "PostalAddress",
+    "name": "",
+    },
+    "expectedArrivalFrom": "2025-12-05T12:22:00+02:00",
+    "expectedArrivalUntil": "2025-12-05T12:22:00+02:00",
+    "carrier": {
+    "@type": "Organization",
+    "name": "Mondial Relay",
+    "url": "https://www.mondialrelay.fr"
+    },
+    "trackingNumber": "RelaisCodePays",
+    "trackingUrl": "https://www.mondialrelay.com/public/permanent/notificat=
+ion.aspx?ens&#x3D;V1VINTBE&amp;exp&#x3D;44795167&amp;pays&#x3D;FR&amp;langu=
+age&#x3D;fr",
+    "potentialAction": {
+    "@type": "TrackAction",
+    "url": "https://www.mondialrelay.com/public/permanent/notification.aspx=
+?ens&#x3D;V1VINTBE&amp;exp&#x3D;44795167&amp;pays&#x3D;FR&amp;language&#x3D=
+;fr"
+    },
+    "hasDeliveryMethod": {
+    "@type": "ParcelService",
+    "name": "http://schema.org/ParcelService"
+    },
+    "partOfOrder": {
+    "@type": "Order",
+    "orderNumber": "",
+    "merchant": {
+    "@type": "Organization",
+    "name": "",
+    "sameAs": "http://www.freebase.com/m/0fhkx"
+    },
+    "orderStatus": "https://schema.org/OrderPickupAvailable"
+    }
+    }
+</script>
+   <!-- Footer -->
+   <!--[if mso | IE]>
+            </td>
+            </tr>
+        </table>
+
+        <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" class=3D"" style=3D"width:600px;" width=3D"600">
+            <tr>
+            <td style=3D"line-height:0px;font-size:0px;mso-line-height-rule=
+:exactly;">
+        <![endif]-->
+   <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ role=3D"prise en charge" width=3D"100%" background-color=3D"#fff" style=3D=
+"background-color: #fff; background: #fff; width: 100%; font-family: 'Monts=
+errat', Helvetica, Verdana, sans-serif;">
+    <tbody>
+     <tr style=3D"background-color: #FCE6E9;">
+      <td style=3D"padding: 20px 0px 0px;" colspan=3D"2" align=3D"center"><=
+a href=3D"https://notification.mondialrelay.fr/c?q=3DlbDf8dPXOwUFMngN1qaWDv=
+Ap2gC-aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL01vbmRpYWxSZWxheS8_dXRtX3NvdXJjZT1Uc=
+mFuc2FjdGlvbmFsRW1haWwmdXRtX21lZGl1bT1FbWFpbCZ1dG1fY29udGVudD1nZW4tZGlzcG9u=
+aWJsZWF1cmVsYWlzbWl4dGVjb25zaWduZS1tci1mci1waW4xLWNydDAtc3ViMC1lbnYxJnV0bV9=
+jYW1wYWlnbj1Ob3RpZmljYXRpb25Db2xpc6xdY_V8mTIIFn9GpYWsaTLBO-u-LQXXA_DnvG5vdG=
+lmaWNhdGlvbi5tb25kaWFscmVsYXkuZnI" style=3D"Margin: 10px 0px ;  Margin-righ=
+t: 25px;"><img src=3D"https://medias.mondialrelay.com/mailing/assets/mr/fac=
+ebook-footer.png" width=3D"23" height=3D"23" alt=3D""></a> <a href=3D"https=
+://notification.mondialrelay.fr/c?q=3DlbB2CjWOOAo66kSZ-0aJ0nFp2gC-aHR0cHM6L=
+y93d3cudGlrdG9rLmNvbS9AbW9uZGlhbHJlbGF5ZnI_dXRtX3NvdXJjZT1UcmFuc2FjdGlvbmFs=
+RW1haWwmdXRtX21lZGl1bT1FbWFpbCZ1dG1fY29udGVudD1nZW4tZGlzcG9uaWJsZWF1cmVsYWl=
+zbWl4dGVjb25zaWduZS1tci1mci1waW4xLWNydDAtc3ViMC1lbnYxJnV0bV9jYW1wYWlnbj1Ob3=
+RpZmljYXRpb25Db2xpc6xdY_V8mTIIFn9GpYWsaTLBO-u-LQXXA_DnvG5vdGlmaWNhdGlvbi5tb=
+25kaWFscmVsYXkuZnI" style=3D"margin: 10px 0px ; margin-right: 25px;"><img s=
+rc=3D"https://medias.mondialrelay.com/mailing/assets/mr/tiktok.png" width=
+=3D"27px" height=3D"27px" alt=3D""></a> <a href=3D"https://notification.mon=
+dialrelay.fr/c?q=3DlbAZBE5XeN9w5yRqQ71v4IYA2gDBaHR0cHM6Ly93d3cuaW5zdGFncmFt=
+LmNvbS9tb25kaWFscmVsYXlmci8_dXRtX3NvdXJjZT1UcmFuc2FjdGlvbmFsRW1haWwmdXRtX21=
+lZGl1bT1FbWFpbCZ1dG1fY29udGVudD1nZW4tZGlzcG9uaWJsZWF1cmVsYWlzbWl4dGVjb25zaW=
+duZS1tci1mci1waW4xLWNydDAtc3ViMC1lbnYxJnV0bV9jYW1wYWlnbj1Ob3RpZmljYXRpb25Db=
+2xpc6xdY_V8mTIIFn9GpYWsaTLBO-u-LQXXA_DnvG5vdGlmaWNhdGlvbi5tb25kaWFscmVsYXku=
+ZnI" style=3D"margin: 10px 0px ; margin-right: 25px;"><img src=3D"https://m=
+edias.mondialrelay.com/mailing/assets/mr/instagram.png" width=3D"27px" heig=
+ht=3D"27px" alt=3D""></a> <a href=3D"https://notification.mondialrelay.fr/c=
+?q=3DlbBxMJ9L7YPi8mdeBJ1CtgPu2gC4aHR0cHM6Ly90d2l0dGVyLmNvbS9tb25kaWFscmVsYX=
+k_dXRtX3NvdXJjZT1UcmFuc2FjdGlvbmFsRW1haWwmdXRtX21lZGl1bT1FbWFpbCZ1dG1fY29ud=
+GVudD1nZW4tZGlzcG9uaWJsZWF1cmVsYWlzbWl4dGVjb25zaWduZS1tci1mci1waW4xLWNydDAt=
+c3ViMC1lbnYxJnV0bV9jYW1wYWlnbj1Ob3RpZmljYXRpb25Db2xpc6xdY_V8mTIIFn9GpYWsaTL=
+BO-u-LQXXA_DnvG5vdGlmaWNhdGlvbi5tb25kaWFscmVsYXkuZnI" style=3D"margin: 10px=
+ 0px ;margin-right: 25px; "><img src=3D"https://medias.mondialrelay.com/mai=
+ling/assets/mr/twitter.png" width=3D"27px" height=3D"27px" alt=3D""></a> <a=
+ href=3D"https://notification.mondialrelay.fr/c?q=3DlbBG4UfmDc2Fo3TWameOoIY=
+n2gDFaHR0cHM6Ly9mci5saW5rZWRpbi5jb20vY29tcGFueS9tb25kaWFsLXJlbGF5P3V0bV9zb3=
+VyY2U9VHJhbnNhY3Rpb25hbEVtYWlsJnV0bV9tZWRpdW09RW1haWwmdXRtX2NvbnRlbnQ9Z2VuL=
+WRpc3BvbmlibGVhdXJlbGFpc21peHRlY29uc2lnbmUtbXItZnItcGluMS1jcnQwLXN1YjAtZW52=
+MSZ1dG1fY2FtcGFpZ249Tm90aWZpY2F0aW9uQ29saXOsXWP1fJkyCBZ_RqWFrGkywTvrvi0F1wP=
+w57xub3RpZmljYXRpb24ubW9uZGlhbHJlbGF5LmZy" style=3D"margin: 10px 0px ; "><i=
+mg src=3D"https://medias.mondialrelay.com/mailing/assets/mr/linkedin.png" w=
+idth=3D"27px" height=3D"27px" alt=3D""></a></td>
+     </tr>
+     <!--NE PAS OUBLIER D'AJOUTER LOGOS : tikotk / ig / linkedin -->
+     <tr style=3D"background-color: #FCE6E9;">
+      <td colspan=3D"2" align=3D"center"><a href=3D"https://notification.mo=
+ndialrelay.fr/c?q=3DlbDi0kJQFq2NFhlwfd1U_Vsk2gDSaHR0cHM6Ly93d3cuYXZpcy12ZXJ=
+pZmllcy5jb20vYXZpcy1jbGllbnRzL21vbmRpYWxyZWxheS5mcj91dG1fc291cmNlPVRyYW5zYW=
+N0aW9uYWxFbWFpbCZ1dG1fbWVkaXVtPUVtYWlsJnV0bV9jb250ZW50PWdlbi1kaXNwb25pYmxlY=
+XVyZWxhaXNtaXh0ZWNvbnNpZ25lLW1yLWZyLXBpbjEtY3J0MC1zdWIwLWVudjEmdXRtX2NhbXBh=
+aWduPU5vdGlmaWNhdGlvbkNvbGlzrF1j9XyZMggWf0alhaxpMsE7674tBdcD8Oe8bm90aWZpY2F=
+0aW9uLm1vbmRpYWxyZWxheS5mcg"> <img src=3D"https://medias.mondialrelay.com/i=
+mages/template/avisVerifies-logo.png" alt=3D"" style=3D"display: block; mar=
+gin : 10px auto" width=3D"100"> </a></td>
+     </tr>
+     <tr style=3D"background-color: #FCE6E9;">
+      <td colspan=3D"2" style=3D"padding: 12px 15px; font-size: 10px; text-=
+align: justify; font-weight:400; padding-bottom: 35px;">
+       <p>MONDIAL RELAY est responsable du traitement de vos donn=C3=A9es =
+=C3=A0 caract=C3=A8re personnel.
+        <br>
+        Vous recevez ce mail car nous collectons vos donn=C3=A9es dans le c=
+adre du transport, de la gestion et du suivi de la livraison de votre colis=
+. Conform=C3=A9ment =C3=A0 la r=C3=A9glementation nationale et europ=C3=A9e=
+nne en vigueur, vous disposez d=E2=80=99un droit d=E2=80=99acc=C3=A8s, de r=
+ectification, de portabilit=C3=A9 et de suppression de vos donn=C3=A9es =C3=
+=A0 caract=C3=A8re personnel, et d=E2=80=99un droit de limitation et d=E2=
+=80=99opposition aux traitements de celles-ci, en nous contactant par mail =
+=C3=A0 dpo@mondialrelay.fr ou par courrier =C3=A0 Mondial Relay - Direction=
+ Juridique =E2=80=93 1 avenue de l=E2=80=99Horizon 59650 Villeneuve d=E2=80=
+=99Ascq. Pour en savoir plus, consultez notre politique de confidentialit=
+=C3=A9 <a href=3D"https://notification.mondialrelay.fr/c?q=3DlbCeC1F50VstDB=
+_T3a06Y69U2gDFaHR0cHM6Ly9tb25kaWFscmVsYXkuZnIvZG9ubmVlcy1wZXJzb25uZWxsZXMvP=
+3V0bV9zb3VyY2U9VHJhbnNhY3Rpb25hbEVtYWlsJnV0bV9tZWRpdW09RW1haWwmdXRtX2NvbnRl=
+bnQ9Z2VuLWRpc3BvbmlibGVhdXJlbGFpc21peHRlY29uc2lnbmUtbXItZnItcGluMS1jcnQwLXN=
+1YjAtZW52MSZ1dG1fY2FtcGFpZ249Tm90aWZpY2F0aW9uQ29saXOsXWP1fJkyCBZ_RqWFrGkywT=
+vrvi0F1wPw57xub3RpZmljYXRpb24ubW9uZGlhbHJlbGF5LmZy" style=3D"color: #96154A=
+">mondialrelay.fr</a> .</p>
+      </td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+  <img src=3D"https://notification.mondialrelay.fr/o?q=3DkqxdY_V8mTIIFn9GpY=
+WsaTLBO-u-LQXXA_Dn" alt=3D"" width=3D"1" height=3D"1">
+ </body>
+</html>
+------=_Part_3768929_1909232275.1764933947509--
+
+------=_Part_3768928_536110352.1764933947509--
