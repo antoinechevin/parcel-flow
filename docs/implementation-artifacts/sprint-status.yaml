@@ -54,6 +54,7 @@ development_status:
   2-2-1-extraction-chronopost-pickup: done
   2-2-2-extraction-mondial-relay: done
   2-2-3-extraction-vinted-go: done
+  2-2-4-orchestration-par-requetes-ciblees: done
   2-3-gestion-d-erreur-fallback-extraction: backlog
   epic-2-retrospective: optional
 

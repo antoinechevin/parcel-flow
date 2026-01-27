@@ -219,6 +219,19 @@ So that I can manually check them instead of having missing info.
 **Then** its status is set to "TO_VERIFY".
 **And** the parcel record includes a reference/link to the original email.
 
+### Story 2.2.4: Orchestration par Requêtes Ciblées (Targeted Polling)
+
+As a Developer,
+I want to configure specific Gmail queries for each provider and map them to their dedicated extractors,
+So that the system only fetches relevant emails and applies the strictly correct parsing logic without ambiguity.
+
+**Acceptance Criteria:**
+
+- **Provider Configuration:** Define a structure (Enum or Bean Registry) linking a `Gmail Query` (e.g., `from:vinted...`) to a specific `ParcelExtractionPort` bean.
+- **MailSourcePort Update:** The interface must accept a `query` parameter (e.g., `fetchEmails(String query)`).
+- **Polling Logic:** The scheduled job iterates through all configured providers, executes their specific query, and passes the results ONLY to the mapped extractor.
+- **Efficiency:** Generic/broad email fetching is removed to optimize quotas and relevance.
+
 ## Epic 3: Le Dashboard Mobile & Consultation "Zéro Stress"
 
 Créer l'interface mobile pour afficher la liste des colis triée par urgence, avec une gestion performante et un accès hors ligne.

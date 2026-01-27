@@ -25,9 +25,13 @@ public class ExtractParcelUseCase {
     }
 
     public void execute(String emailContent, ZonedDateTime receivedAt) {
-        log.info("Executing parcel extraction use case...");
+        execute(emailContent, receivedAt, this.extractionPort);
+    }
+
+    public void execute(String emailContent, ZonedDateTime receivedAt, ParcelExtractionPort specificAdapter) {
+        log.info("Executing parcel extraction use case with specific adapter...");
         
-        Optional<ParcelMetadata> metadataOpt = extractionPort.extract(emailContent, receivedAt);
+        Optional<ParcelMetadata> metadataOpt = specificAdapter.extract(emailContent, receivedAt);
         
         metadataOpt.ifPresentOrElse(
             metadata -> {

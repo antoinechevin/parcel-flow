@@ -37,85 +37,31 @@ import java.time.Clock;
 
 
 @Configuration
-
-
-
 public class ApplicationConfig {
 
-
-
-
-
-
-
     @Bean
-
-
-
     public Clock clock() {
-
-
-
         return Clock.systemDefaultZone();
-
-
-
     }
 
-
-
-
-
-
-
     @Bean
-
-
-
     public UrgencyCalculator urgencyCalculator(Clock clock) {
-
-
-
         return new UrgencyCalculator(clock);
-
-
-
     }
 
-
-
-
-
-
-
-
-
-
-
     @Bean
-
-
-
     public RetrieveDashboardUseCase retrieveDashboardUseCase(ParcelRepositoryPort parcelRepositoryPort, UrgencyCalculator urgencyCalculator) {
-
-
-
         return new RetrieveDashboardUseCase(parcelRepositoryPort, urgencyCalculator);
-
-
-
     }
-
-
 
     @Bean
-
-    public ExtractParcelUseCase extractParcelUseCase(ParcelExtractionPort extractionPort, ParcelRepositoryPort repositoryPort) {
-
-        return new ExtractParcelUseCase(extractionPort, repositoryPort);
-
+    public ExtractParcelUseCase extractParcelUseCase(java.util.List<ParcelExtractionPort> extractionPorts, ParcelRepositoryPort repositoryPort) {
+        ParcelExtractionPort defaultAdapter = extractionPorts.stream()
+                .filter(p -> p instanceof com.parcelflow.infrastructure.extraction.ChronopostPickupExtractionAdapter)
+                .findFirst()
+                .orElse(extractionPorts.get(0));
+        return new ExtractParcelUseCase(defaultAdapter, repositoryPort);
     }
-
 }
 
 

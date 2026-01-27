@@ -27,54 +27,56 @@ public class MailScanController {
     private static final Logger log = LoggerFactory.getLogger(MailScanController.class);
 
     private final MailSourcePort mailSourcePort;
-    private final ParcelExtractionPort extractionPort;
+    private final com.parcelflow.infrastructure.extraction.ProviderRegistry providerRegistry;
+    private final com.parcelflow.application.usecases.ExtractParcelUseCase extractParcelUseCase;
 
     public MailScanController(MailSourcePort mailSourcePort, 
-                              ParcelExtractionPort extractionPort) {
+                              com.parcelflow.infrastructure.extraction.ProviderRegistry providerRegistry,
+                              com.parcelflow.application.usecases.ExtractParcelUseCase extractParcelUseCase) {
         this.mailSourcePort = mailSourcePort;
-        this.extractionPort = extractionPort;
+        this.providerRegistry = providerRegistry;
+        this.extractParcelUseCase = extractParcelUseCase;
     }
 
     @GetMapping("/scan")
     public Map<String, Object> scanEmails(@RequestParam(defaultValue = "7") int days) {
-        log.info("Starting manual email scan for last {} days...", days);
+        log.info("Starting targeted debug email scan for last {} days...", days);
         
         ZonedDateTime since = ZonedDateTime.now(ZoneId.of("UTC")).minusDays(days);
-        
-        // 1. Fetch Emails
-        MailFetchResult result = mailSourcePort.fetchEmails(since, null); // uses default query
-        List<InboundEmail> emails = result.emails();
-        
-        log.info("Fetched {} emails.", emails.size());
+        List<Map<String, Object>> globalResults = new ArrayList<>();
+        int totalEmailsFound = 0;
 
-        List<Map<String, Object>> extractionResults = new ArrayList<>();
+        for (var provider : providerRegistry.getAllProviders()) {
+            log.info("Scanning for provider: {} with query: {}", provider.name(), provider.query());
+            
+            MailFetchResult result = mailSourcePort.fetchEmails(since, provider.query());
+            List<InboundEmail> emails = result.emails();
+            totalEmailsFound += emails.size();
 
-        // 2. Process Extraction & Capture Details
-        for (InboundEmail email : emails) {
-            String contentToAnalyze = "Subject: " + email.subject() + "\n\n" + email.body();
-            
-            Optional<ParcelMetadata> metadataOpt = extractionPort.extract(contentToAnalyze, email.receivedAt());
-            
-            Map<String, Object> emailResult = new HashMap<>();
-            emailResult.put("subject", email.subject());
-            emailResult.put("receivedAt", email.receivedAt());
-            emailResult.put("sender", email.sender());
-            
-            if (metadataOpt.isPresent()) {
-                emailResult.put("status", "EXTRACTED");
-                emailResult.put("metadata", metadataOpt.get());
-            } else {
-                emailResult.put("status", "IGNORED_OR_FAILED");
-                emailResult.put("reason", "No critical metadata found by AI");
+            for (InboundEmail email : emails) {
+                Map<String, Object> emailResult = new HashMap<>();
+                emailResult.put("provider", provider.name());
+                emailResult.put("subject", email.subject());
+                emailResult.put("receivedAt", email.receivedAt());
+                
+                try {
+                    String contentToAnalyze = "Subject: " + email.subject() + "\n\n" + email.body();
+                    // On utilise le useCase qui sauvegarde en DB si l'extraction réussit
+                    extractParcelUseCase.execute(contentToAnalyze, email.receivedAt(), provider.adapter());
+                    emailResult.put("status", "PROCESSED");
+                } catch (Exception e) {
+                    log.error("Failed to process email {} for provider {}", email.id(), provider.name(), e);
+                    emailResult.put("status", "ERROR");
+                    emailResult.put("error", e.getMessage());
+                }
+                globalResults.add(emailResult);
             }
-            
-            extractionResults.add(emailResult);
         }
 
         Map<String, Object> report = new HashMap<>();
         report.put("scannedDays", days);
-        report.put("emailsFound", emails.size());
-        report.put("results", extractionResults);
+        report.put("totalEmailsFound", totalEmailsFound);
+        report.put("results", globalResults);
 
         return report;
     }

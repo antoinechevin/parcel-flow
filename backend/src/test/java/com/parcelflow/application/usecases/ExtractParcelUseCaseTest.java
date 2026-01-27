@@ -82,4 +82,28 @@ class ExtractParcelUseCaseTest {
 
         verify(repositoryPort, never()).save(any());
     }
+
+    @Test
+    void shouldExecuteWithSpecificAdapter() {
+        String emailContent = "Specific Content";
+        ZonedDateTime receivedAt = ZonedDateTime.now();
+        ParcelExtractionPort specificAdapter = mock(ParcelExtractionPort.class);
+        ParcelMetadata metadata = new ParcelMetadata(
+            "SPECIFIC123",
+            "SpecificCarrier",
+            LocalDate.now().plusDays(3),
+            "Specific Point"
+        );
+
+        when(specificAdapter.extract(emailContent, receivedAt)).thenReturn(Optional.of(metadata));
+
+        useCase.execute(emailContent, receivedAt, specificAdapter);
+
+        verify(specificAdapter).extract(emailContent, receivedAt);
+        verify(extractionPort, never()).extract(any(), any()); // Ensure default adapter is NOT used
+        
+        ArgumentCaptor<Parcel> parcelCaptor = ArgumentCaptor.forClass(Parcel.class);
+        verify(repositoryPort).save(parcelCaptor.capture());
+        assertEquals("SPECIFIC123", parcelCaptor.getValue().trackingNumber());
+    }
 }
