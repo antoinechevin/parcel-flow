@@ -56,7 +56,7 @@ graph TD
     subgraph "Infrastructure (Adapters)"
         API[REST Adapter]
         MailAdapter[Gmail Inbound Adapter]
-        AIAdapter[Gemini 3 Flash Adapter]
+        Parser[Regex Strategy Provider]
         DBAdapter[PostgreSQL Adapter]
     end
 
@@ -75,7 +75,7 @@ graph TD
     Gmail -->|Poll| MailAdapter
     MailAdapter --> UC_Process
     
-    UC_Process --> AIAdapter
+    UC_Process --> Parser
     UC_Process --> DBAdapter
     UC_Process --> Domain
 ```
@@ -90,8 +90,8 @@ Cette configuration est impérative pour garantir la compatibilité des agents I
 | :--- | :--- | :--- | :--- |
 | **Backend Lang** | **Java** | **21 (LTS)** | Records, Pattern Matching, Virtual Threads. |
 | **Framework** | **Spring Boot** | **3.3+** | Configuration simplifiée, écosystème mature. |
-| **AI Orchestration** | **Spring AI** | **1.1.x** | Abstraction LLM. Supporte Gemini, OpenAI, Ollama. |
-| **LLM Model** | **Gemini 3 Flash** | **Preview** | Extraction ultra-rapide et économique. |
+| **Parsing Engine** | **Java Regex** | **Native** | Extraction déterministe par Provider (Strategy Pattern). |
+| **HTML Parser** | **Jsoup** | **1.17+** | Nettoyage et traversée du DOM avant Regex (si nécessaire). |
 | **Architecture** | **ArchUnit** | **1.0+** | "Linter d'Architecture" bloquant les violations dans la CI. |
 | **Database** | **PostgreSQL** | **16** | Stockage relationnel + JSONB (Métadonnées). |
 | **Frontend** | **React Native (Expo)** | **SDK 52+** | Framework mobile. Router v3. |
@@ -171,8 +171,8 @@ Ces interfaces définissent ce que l'application **PEUT FAIRE**.
 ### 4.3 Ports Secondaires (Driven Interfaces)
 Ces interfaces définissent ce dont l'application **A BESOIN**.
 
-* `InformationExtractorPort` : `ExtractionResult extract(String rawText)`
-    * *Implémentation :* `GeminiFlashAdapter` (Infrastructure).
+* `InformationExtractorPort` : `ExtractionResult extract(String rawText, ProviderType provider)`
+    * *Implémentation :* `RegexParserAdapter` (Infrastructure) qui sélectionne la bonne stratégie (Chronopost, Mondial Relay, Vinted).
 * `ParcelRepositoryPort` : CRUD operations.
     * *Implémentation :* `PostgresJpaAdapter` (Infrastructure).
 

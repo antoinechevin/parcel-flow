@@ -37,7 +37,7 @@ public class MailAdapterSteps {
             row.get("id"),
             row.get("subject"),
             "Body of " + row.get("subject"),
-            "sender@example.com",
+            row.getOrDefault("sender", "sender@example.com"),
             ZonedDateTime.parse(row.get("receivedAt"))
         )).toList();
     }
@@ -50,8 +50,10 @@ public class MailAdapterSteps {
     @When("I fetch delivery emails")
     public void i_fetch_delivery_emails() {
         // Prepare the mock behavior based on availableEmails and lastWatermark
+        // Filter by date AND by the new mandatory sender
         List<InboundEmail> filteredEmails = availableEmails.stream()
             .filter(e -> e.receivedAt().isAfter(lastWatermark))
+            .filter(e -> e.sender().equals("chronopost@network1.pickup.fr"))
             .toList();
         
         ZonedDateTime newWatermark = filteredEmails.stream()
@@ -62,7 +64,7 @@ public class MailAdapterSteps {
         when(mailSourcePort.fetchEmails(any(ZonedDateTime.class), anyString()))
             .thenReturn(new MailFetchResult(filteredEmails, newWatermark));
 
-        fetchResult = mailSourcePort.fetchEmails(lastWatermark, "subject:(colis OR livraison)");
+        fetchResult = mailSourcePort.fetchEmails(lastWatermark, "from:chronopost@network1.pickup.fr");
     }
 
     @Then("I should receive {int} emails")

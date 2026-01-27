@@ -36,15 +36,27 @@ public class GmailConfig {
 
     @Bean
     public Gmail gmailService(JsonFactory jsonFactory) throws GeneralSecurityException, IOException {
-        validateConfig();
         HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         
-        Credential credential = new GoogleCredential.Builder()
+        Credential credential;
+        
+        if (refreshToken != null && !refreshToken.isBlank() && clientId != null && !clientId.isBlank()) {
+             // Use explicit OAuth configuration
+             credential = new GoogleCredential.Builder()
                 .setTransport(httpTransport)
                 .setJsonFactory(jsonFactory)
                 .setClientSecrets(clientId, clientSecret)
                 .build()
                 .setRefreshToken(refreshToken);
+        } else {
+            // Fallback to Application Default Credentials (ADC)
+            GoogleCredential adc = GoogleCredential.getApplicationDefault();
+            if (adc.createScopedRequired()) {
+                credential = adc.createScoped(java.util.Collections.singletonList("https://www.googleapis.com/auth/gmail.readonly"));
+            } else {
+                credential = adc;
+            }
+        }
 
         return new Gmail.Builder(httpTransport, jsonFactory, credential)
                 .setApplicationName("Parcel-Flow")
@@ -52,8 +64,6 @@ public class GmailConfig {
     }
 
     private void validateConfig() {
-        if (clientId == null || clientId.isBlank()) throw new IllegalStateException("gmail.clientId is missing");
-        if (clientSecret == null || clientSecret.isBlank()) throw new IllegalStateException("gmail.clientSecret is missing");
-        if (refreshToken == null || refreshToken.isBlank()) throw new IllegalStateException("gmail.refreshToken is missing");
+        // Validation relaxed to allow ADC fallback
     }
 }

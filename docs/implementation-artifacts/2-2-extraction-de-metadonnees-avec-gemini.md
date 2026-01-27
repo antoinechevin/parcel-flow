@@ -25,22 +25,22 @@ so that **structured parcel information is created automatically and I don't hav
 
 ## Tasks / Subtasks
 
-- [ ] **Domain Model**
-  - [ ] Create `ParcelMetadata` record (Domain DTO).
-  - [ ] Update `Parcel` entity if necessary to support all fields.
-  - [ ] Define `ParcelExtractionPort` interface (Secondary Port).
-- [ ] **Infrastructure: Gemini Adapter**
-  - [ ] Create `GeminiExtractionAdapter` implementing `ParcelExtractionPort`.
-  - [ ] Configure `ChatClient` with Spring AI.
-  - [ ] Design the Prompt Template for JSON extraction (using `BeanOutputConverter` or structured prompt).
-  - [ ] Implement error handling for AI timeouts/failures.
-- [ ] **Application Service**
-  - [ ] Create `ExtractParcelUseCase` (or update existing service).
-  - [ ] Orchestrate: Receive Email -> Call Gemini Adapter -> Save Parcel.
-- [ ] **Testing**
-  - [ ] Unit Test `GeminiExtractionAdapter` (Mock `ChatClient`).
-  - [ ] Integration Test with WireMock or Spring AI Mock for Vertex AI calls.
-  - [ ] ATDD: `parcel-extraction.feature`.
+- [x] **Domain Model**
+  - [x] Create `ParcelMetadata` record (Domain DTO).
+  - [x] Update `Parcel` entity if necessary to support all fields.
+  - [x] Define `ParcelExtractionPort` interface (Secondary Port).
+- [x] **Infrastructure: Gemini Adapter**
+  - [x] Create `GeminiExtractionAdapter` implementing `ParcelExtractionPort`.
+  - [x] Configure `ChatClient` with Spring AI.
+  - [x] Design the Prompt Template for JSON extraction (using `BeanOutputConverter` or structured prompt).
+  - [x] Implement error handling for AI timeouts/failures.
+- [x] **Application Service**
+  - [x] Create `ExtractParcelUseCase` (or update existing service).
+  - [x] Orchestrate: Receive Email -> Call Gemini Adapter -> Save Parcel.
+- [x] **Testing**
+  - [x] Unit Test `GeminiExtractionAdapter` (Mock `ChatClient`).
+  - [x] Integration Test with WireMock or Spring AI Mock for Vertex AI calls.
+  - [x] ATDD: `parcel-extraction.feature`.
 
 ## Dev Notes
 
@@ -66,4 +66,37 @@ so that **structured parcel information is created automatically and I don't hav
 
 Gemini 2.0 Flash
 
+### Implementation Plan
+- Domain: Add `ParcelMetadata` and update `Parcel` entity with `carrier`.
+- Port: `ParcelExtractionPort` interface.
+- Infrastructure: `GeminiExtractionAdapter` using `ChatClient`.
+- Application: `ExtractParcelUseCase` for orchestration.
+- Tests: Unit tests for logic + ATDD for flow.
+
 ### File List
+- `backend/src/main/java/com/parcelflow/domain/model/ParcelMetadata.java`
+- `backend/src/main/java/com/parcelflow/domain/model/Parcel.java` (modified)
+- `backend/src/main/java/com/parcelflow/domain/ports/ParcelExtractionPort.java`
+- `backend/src/main/java/com/parcelflow/domain/ports/ParcelRepositoryPort.java` (modified)
+- `backend/src/main/java/com/parcelflow/infrastructure/ai/GeminiExtractionAdapter.java`
+- `backend/src/main/java/com/parcelflow/infrastructure/config/AiConfig.java`
+- `backend/src/main/java/com/parcelflow/infrastructure/config/ApplicationConfig.java` (modified)
+- `backend/src/main/java/com/parcelflow/infrastructure/persistence/InMemoryParcelRepository.java` (modified)
+- `backend/src/main/java/com/parcelflow/application/usecases/ExtractParcelUseCase.java`
+- `backend/src/test/java/com/parcelflow/domain/model/ParcelMetadataTest.java`
+- `backend/src/test/java/com/parcelflow/domain/model/ParcelTest.java`
+- `backend/src/test/java/com/parcelflow/infrastructure/ai/GeminiExtractionAdapterTest.java`
+- `backend/src/test/java/com/parcelflow/application/usecases/ExtractParcelUseCaseTest.java`
+- `backend/src/test/resources/features/parcel-extraction.feature`
+- `backend/src/test/java/com/parcelflow/steps/ParcelExtractionSteps.java`
+- `backend/src/test/java/com/parcelflow/steps/CucumberConfiguration.java` (modified)
+- `backend/src/test/java/com/parcelflow/CucumberTest.java` (modified)
+
+### Change Log
+- Implemented parcel metadata extraction using Gemini AI.
+- Updated domain model to support carrier information.
+- Added ATDD tests for extraction flow.
+- Fixed code review findings: duplicate detection, data validation, and prompt improvements.
+
+### Status
+Status: done

@@ -32,11 +32,20 @@ public class InMemoryParcelRepository implements ParcelRepositoryPort {
 
 
     @Override
+    public java.util.Optional<Parcel> findByTrackingNumber(String trackingNumber) {
+        return parcels.stream()
+            .filter(p -> p.trackingNumber().equals(trackingNumber))
+            .findFirst();
+    }
 
+    @Override
+    public void save(Parcel parcel) {
+        this.parcels.add(parcel);
+    }
+
+    @Override
     public void saveAll(List<Parcel> newParcels) {
-
         this.parcels.addAll(newParcels);
-
     }
 
 

@@ -30,11 +30,11 @@ class RetrieveDashboardUseCaseTest {
     void shouldReturnGroupedParcelsFromRepository() {
         RetrieveDashboardUseCase useCase = new RetrieveDashboardUseCase(repository, new UrgencyCalculator(java.time.Clock.systemDefaultZone()));
         PickupPoint pp1 = new PickupPoint("pp-1", "Relais 1", "Addr 1", "08:00-19:00");
-        PickupPoint pp2 = new PickupPoint("pp-2", "Relais 2", "Addr 2", "09:00-18:00");
-        
-        Parcel p1 = new Parcel(ParcelId.random(), "T1", LocalDate.now(), ParcelStatus.AVAILABLE, pp1);
-        Parcel p2 = new Parcel(ParcelId.random(), "T2", LocalDate.now(), ParcelStatus.AVAILABLE, pp1);
-        Parcel p3 = new Parcel(ParcelId.random(), "T3", LocalDate.now(), ParcelStatus.AVAILABLE, pp2);
+        PickupPoint pp2 = new PickupPoint("P2", "Relais 2", "Addr 2", "08-19");
+
+        Parcel p1 = new Parcel(ParcelId.random(), "T1", "DHL", LocalDate.now(), ParcelStatus.AVAILABLE, pp1);
+        Parcel p2 = new Parcel(ParcelId.random(), "T2", "UPS", LocalDate.now(), ParcelStatus.AVAILABLE, pp1);
+        Parcel p3 = new Parcel(ParcelId.random(), "T3", "La Poste", LocalDate.now(), ParcelStatus.AVAILABLE, pp2);
 
         when(repository.findAll()).thenReturn(List.of(p1, p2, p3));
 

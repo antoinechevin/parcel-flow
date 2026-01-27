@@ -20,7 +20,7 @@ class ParcelTest {
         ParcelStatus status = ParcelStatus.AVAILABLE;
         PickupPoint pickupPoint = new PickupPoint("pp-1", "Relais", "Address", "08:00-19:00");
 
-        Parcel parcel = new Parcel(id, trackingNumber, deadline, status, pickupPoint);
+        Parcel parcel = new Parcel(id, trackingNumber, "UPS", deadline, status, pickupPoint);
 
         assertNotNull(parcel);
         assertEquals(id, parcel.id());

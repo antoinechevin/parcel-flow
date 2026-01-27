@@ -27,8 +27,9 @@ class DomainModelingTest {
         PickupPoint pickupPoint = new PickupPoint("pp-1", "Relais Colis", "12 rue de la Paix", "08:00-19:00");
         Parcel parcel = new Parcel(
             ParcelId.random(),
-            "TRACK123",
-            LocalDate.now().plusDays(5),
+            "TRACK-1",
+            "UPS",
+            LocalDate.now().plusDays(2),
             ParcelStatus.AVAILABLE,
             pickupPoint
         );
@@ -40,8 +41,9 @@ class DomainModelingTest {
         PickupPoint pickupPoint = new PickupPoint("pp-1", "Relais Colis", "12 rue de la Paix", "08:00-19:00");
         Parcel parcel = new Parcel(
             ParcelId.random(),
-            "TRACK123",
-            LocalDate.now().plusDays(5),
+            "TRACK-1",
+            "UPS",
+            LocalDate.now().plusDays(2),
             ParcelStatus.AVAILABLE,
             pickupPoint
         );
