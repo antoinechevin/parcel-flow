@@ -100,7 +100,7 @@ public class GmailInboundAdapter implements MailSourcePort {
     }
 
     private String findPart(MessagePart part, String mimeType) {
-        if (part.getMimeType().equalsIgnoreCase(mimeType) && part.getBody() != null && part.getBody().getData() != null) {
+        if (part.getMimeType() != null && part.getMimeType().equalsIgnoreCase(mimeType) && part.getBody() != null && part.getBody().getData() != null) {
             return new String(Base64.getUrlDecoder().decode(part.getBody().getData()), StandardCharsets.UTF_8);
         }
         if (part.getParts() != null) {
