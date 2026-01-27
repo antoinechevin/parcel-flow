@@ -62,8 +62,20 @@ public class MailScanController {
                 try {
                     String contentToAnalyze = "Subject: " + email.subject() + "\n\n" + email.body();
                     // On utilise le useCase qui sauvegarde en DB si l'extraction réussit
-                    extractParcelUseCase.execute(contentToAnalyze, email.receivedAt(), provider.adapter());
-                    emailResult.put("status", "PROCESSED");
+                    Optional<ParcelMetadata> metadataOpt = extractParcelUseCase.execute(contentToAnalyze, email.receivedAt(), provider.adapter());
+                    
+                    if (metadataOpt.isPresent()) {
+                        emailResult.put("status", "PROCESSED");
+                        ParcelMetadata meta = metadataOpt.get();
+                        Map<String, Object> metaMap = new HashMap<>();
+                        metaMap.put("trackingNumber", meta.trackingCode());
+                        metaMap.put("carrier", meta.carrier());
+                        metaMap.put("expirationDate", meta.expirationDate());
+                        metaMap.put("pickupLocation", meta.pickupLocation());
+                        emailResult.put("metadata", metaMap);
+                    } else {
+                        emailResult.put("status", "NO_MATCH");
+                    }
                 } catch (Exception e) {
                     log.error("Failed to process email {} for provider {}", email.id(), provider.name(), e);
                     emailResult.put("status", "ERROR");

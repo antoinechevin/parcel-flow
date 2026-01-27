@@ -24,11 +24,11 @@ public class ExtractParcelUseCase {
         this.repositoryPort = repositoryPort;
     }
 
-    public void execute(String emailContent, ZonedDateTime receivedAt) {
-        execute(emailContent, receivedAt, this.extractionPort);
+    public Optional<ParcelMetadata> execute(String emailContent, ZonedDateTime receivedAt) {
+        return execute(emailContent, receivedAt, this.extractionPort);
     }
 
-    public void execute(String emailContent, ZonedDateTime receivedAt, ParcelExtractionPort specificAdapter) {
+    public Optional<ParcelMetadata> execute(String emailContent, ZonedDateTime receivedAt, ParcelExtractionPort specificAdapter) {
         log.info("Executing parcel extraction use case with specific adapter...");
         
         Optional<ParcelMetadata> metadataOpt = specificAdapter.extract(emailContent, receivedAt);
@@ -66,5 +66,7 @@ public class ExtractParcelUseCase {
             },
             () -> log.warn("No metadata extracted from email content.")
         );
+
+        return metadataOpt;
     }
 }
