@@ -27,7 +27,7 @@ public class DebugExtractionController {
     public Map<String, Object> debugExtract(@RequestBody String emailContent) {
         int before = repository.findAll().size();
         
-        useCase.execute(emailContent);
+        useCase.execute(emailContent, java.time.ZonedDateTime.now());
         
         List<Parcel> allParcels = repository.findAll();
         int after = allParcels.size();

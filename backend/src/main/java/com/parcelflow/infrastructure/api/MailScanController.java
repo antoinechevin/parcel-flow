@@ -53,7 +53,7 @@ public class MailScanController {
         for (InboundEmail email : emails) {
             String contentToAnalyze = "Subject: " + email.subject() + "\n\n" + email.body();
             
-            Optional<ParcelMetadata> metadataOpt = extractionPort.extract(contentToAnalyze);
+            Optional<ParcelMetadata> metadataOpt = extractionPort.extract(contentToAnalyze, email.receivedAt());
             
             Map<String, Object> emailResult = new HashMap<>();
             emailResult.put("subject", email.subject());

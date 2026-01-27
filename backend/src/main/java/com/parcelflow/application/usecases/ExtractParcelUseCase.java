@@ -10,6 +10,7 @@ import com.parcelflow.domain.ports.ParcelRepositoryPort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 public class ExtractParcelUseCase {
@@ -23,10 +24,10 @@ public class ExtractParcelUseCase {
         this.repositoryPort = repositoryPort;
     }
 
-    public void execute(String emailContent) {
+    public void execute(String emailContent, ZonedDateTime receivedAt) {
         log.info("Executing parcel extraction use case...");
         
-        Optional<ParcelMetadata> metadataOpt = extractionPort.extract(emailContent);
+        Optional<ParcelMetadata> metadataOpt = extractionPort.extract(emailContent, receivedAt);
         
         metadataOpt.ifPresentOrElse(
             metadata -> {

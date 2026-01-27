@@ -1,6 +1,6 @@
 # Story 2.2.2: Extraction de Métadonnées Mondial Relay
 
-Status: ready-for-dev
+Status: in-progress
 
 ## Story
 
@@ -22,18 +22,18 @@ so that **structured parcel information is created automatically for this provid
 
 ## Tasks / Subtasks
 
-- [ ] **Architecture Refactoring**
-  - [ ] Update `ParcelExtractionPort.extract()` signature to accept `emailContent` AND `receivedAt` (ZonedDateTime/LocalDate).
-  - [ ] Update `ChronopostPickupExtractionAdapter` to respect the new signature (ignore date if absolute date is in mail).
-  - [ ] Update `ExtractParcelUseCase` to pass the date from `GmailInboundAdapter`.
-- [ ] **Infrastructure: Regex Adapter**
-  - [ ] Create `MondialRelayExtractionAdapter` implementing `ParcelExtractionPort`.
-  - [ ] Use Jsoup to parse the HTML part of the email.
-  - [ ] Implement Regex extraction for tracking number, pin code, and pickup point.
-- [ ] **Testing**
-  - [ ] Create `MondialRelayExtractionAdapterTest`.
-  - [ ] Verify extraction with the provided `mail_mondial_relay.eml`.
-  - [ ] Ensure existing Chronopost tests still pass.
+- [x] **Architecture Refactoring**
+  - [x] Update `ParcelExtractionPort.extract()` signature to accept `emailContent` AND `receivedAt` (ZonedDateTime/LocalDate).
+  - [x] Update `ChronopostPickupExtractionAdapter` to respect the new signature (ignore date if absolute date is in mail).
+  - [x] Update `ExtractParcelUseCase` to pass the date from `GmailInboundAdapter`.
+- [x] **Infrastructure: Regex Adapter**
+  - [x] Create `MondialRelayExtractionAdapter` implementing `ParcelExtractionPort`.
+  - [x] Use Jsoup to parse the HTML part of the email.
+  - [x] Implement Regex extraction for tracking number, pin code, and pickup point.
+- [x] **Testing**
+  - [x] Create `MondialRelayExtractionAdapterTest`.
+  - [x] Verify extraction with the provided `mail_mondial_relay.eml`.
+  - [x] Ensure existing Chronopost tests still pass.
 
 ## Dev Notes
 
@@ -44,4 +44,33 @@ so that **structured parcel information is created automatically for this provid
 - **Deadline**: "DANS (\d+) JOURS VOTRE COLIS REPARTIRA" -> Use this relative value added to `receivedAt`.
 
 ### Status
-Status: ready-for-dev
+Status: done
+
+## Dev Agent Record
+
+### Completion Notes
+- Refactored `ParcelExtractionPort` to include `receivedAt` date for relative date calculation.
+- Implemented `MondialRelayExtractionAdapter` using Jsoup and Regex.
+- Handled potential encoding issues with Regex by using `sed` injection during file creation.
+- Verified implementation with `MondialRelayExtractionAdapterTest` using a real email sample.
+- Ensured regression testing passed for `ChronopostPickupExtractionAdapter` and `ExtractParcelUseCase`.
+
+### Code Review (2026-01-27)
+- **Reviewer**: AI Senior Developer
+- **Outcome**: 3 Medium issues found and fixed.
+- **Fixes Applied**:
+    - **Safety**: Added bounds check (0-365) and `Long` parsing for expiration days to prevent overflow/exceptions.
+    - **Maintainability**: Extracted "Mondial Relay Point" fallback to constant.
+    - **Accuracy**: Implemented explicit timezone conversion to `Europe/Paris` for day calculation to avoid UTC offset errors.
+
+### File List
+- `backend/src/main/java/com/parcelflow/domain/ports/ParcelExtractionPort.java`
+- `backend/src/main/java/com/parcelflow/infrastructure/extraction/ChronopostPickupExtractionAdapter.java`
+- `backend/src/main/java/com/parcelflow/infrastructure/extraction/MondialRelayExtractionAdapter.java`
+- `backend/src/main/java/com/parcelflow/application/usecases/ExtractParcelUseCase.java`
+- `backend/src/main/java/com/parcelflow/infrastructure/api/DebugExtractionController.java`
+- `backend/src/main/java/com/parcelflow/infrastructure/api/MailScanController.java`
+- `backend/src/test/java/com/parcelflow/infrastructure/extraction/MondialRelayExtractionAdapterTest.java`
+- `backend/src/test/java/com/parcelflow/infrastructure/extraction/ChronopostPickupExtractionAdapterTest.java`
+- `backend/src/test/java/com/parcelflow/application/usecases/ExtractParcelUseCaseTest.java`
+- `backend/src/test/java/com/parcelflow/steps/ParcelExtractionSteps.java`
