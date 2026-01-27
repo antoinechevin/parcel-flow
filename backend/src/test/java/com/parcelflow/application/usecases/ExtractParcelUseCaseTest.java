@@ -41,7 +41,11 @@ class ExtractParcelUseCaseTest {
     void shouldExtractAndSaveParcel() {
         String emailContent = "Test content";
         ParcelMetadata metadata = new ParcelMetadata(
-            "TRK123", "DHL", LocalDate.now().plusDays(2), "Point Relais"
+            "TRK123",
+            null,
+            "DHL",
+            LocalDate.now().plusDays(5),
+            "Pickup Point"
         );
 
         when(extractionPort.extract(eq(emailContent), any(ZonedDateTime.class))).thenReturn(Optional.of(metadata));
@@ -60,7 +64,7 @@ class ExtractParcelUseCaseTest {
     @Test
     void shouldNotSaveIfParcelAlreadyExists() {
         String emailContent = "Duplicate";
-        ParcelMetadata metadata = new ParcelMetadata("DUP123", "DHL", null, null);
+        ParcelMetadata metadata = new ParcelMetadata("DUP123", null, "DHL", null, null);
         Parcel existingParcel = mock(Parcel.class);
 
         when(extractionPort.extract(eq(emailContent), any(ZonedDateTime.class))).thenReturn(Optional.of(metadata));

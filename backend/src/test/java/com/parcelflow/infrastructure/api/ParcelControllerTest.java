@@ -36,7 +36,7 @@ class ParcelControllerTest {
         PickupPoint pp = new PickupPoint("pp-1", "Relais", "Address", "08:00-19:00");
         when(useCase.retrieve()).thenReturn(List.of(
             new LocationGroup(pp, List.of(
-                new Parcel(id, "123", "DHL", LocalDate.now(), ParcelStatus.AVAILABLE, pp)
+                new Parcel(id, "123", null, "DHL", LocalDate.now(), ParcelStatus.AVAILABLE, pp)
             ), UrgencyLevel.LOW, 0)
         ));
 

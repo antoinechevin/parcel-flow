@@ -53,7 +53,7 @@ public class MondialRelayExtractionAdapter implements ParcelExtractionPort {
             String carrier = "Mondial Relay";
 
             log.info("Mondial Relay extraction success: {} at {}", trackingNumber, pickupLocation);
-            return Optional.of(new ParcelMetadata(trackingNumber, carrier, expirationDate, pickupLocation));
+            return Optional.of(new ParcelMetadata(trackingNumber, null, carrier, expirationDate, pickupLocation));
 
         } catch (Exception e) {
             log.warn("Failed to parse Mondial Relay email", e);

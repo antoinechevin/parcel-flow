@@ -48,12 +48,18 @@ public class ExtractParcelUseCase {
                     );
                 }
 
+                ParcelStatus status = ParcelStatus.AVAILABLE;
+                if (metadata.carrier().contains("A vérifier")) {
+                    status = ParcelStatus.TO_VERIFY;
+                }
+
                 Parcel parcel = new Parcel(
                     ParcelId.random(),
                     metadata.trackingCode(),
+                    metadata.pickupCode(),
                     metadata.carrier(),
                     metadata.expirationDate(),
-                    ParcelStatus.AVAILABLE,
+                    status,
                     pickupPoint
                 );
                 

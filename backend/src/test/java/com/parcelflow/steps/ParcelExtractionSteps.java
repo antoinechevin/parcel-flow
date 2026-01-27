@@ -50,7 +50,7 @@ public class ParcelExtractionSteps {
         ParcelMetadata metadata = null;
         if (currentEmailContent.contains("UPS")) {
             metadata = new ParcelMetadata(
-                "1Z12345", "UPS", LocalDate.parse("2026-02-15"), "Relais Colis"
+                "1Z12345", null, "UPS", LocalDate.parse("2026-02-15"), "Relais Colis"
             );
         }
         
