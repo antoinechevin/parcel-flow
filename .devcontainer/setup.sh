@@ -2,11 +2,14 @@
 set -e
 
 # Fix permissions for persisted Gemini config and gcloud config
-sudo mkdir -p /home/vscode/.gemini /home/vscode/.npm /home/vscode/.m2 /home/vscode/.config/gcloud
-sudo chown -R vscode:vscode /home/vscode/.gemini /home/vscode/.npm /home/vscode/.m2 /home/vscode/.config/gcloud
+sudo mkdir -p /home/vscode/.gemini /home/vscode/.npm /home/vscode/.m2 /home/vscode/.config/gcloud /home/vscode/.railway
+sudo chown -R vscode:vscode /home/vscode/.gemini /home/vscode/.npm /home/vscode/.m2 /home/vscode/.config/gcloud /home/vscode/.railway
 
 # Installer Gemini CLI
 npm install -g @google/gemini-cli
+
+# Installer Railway CLI
+npm install -g @railway/cli
 
 # Install Git LFS
 sudo apt-get update && sudo apt-get install -y git-lfs
