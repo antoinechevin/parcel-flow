@@ -1,0 +1,16 @@
+target/
+!.jar
+
+.mvn/
+mvnw
+mvnw.cmd
+
+.git/
+.gitignore
+.devcontainer/
+.vscode/
+.github/
+
+*.md
+LICENSE
+docker-compose.yml
