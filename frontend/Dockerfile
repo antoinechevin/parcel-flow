@@ -10,6 +10,11 @@ RUN npm ci
 # Copy source code
 COPY . .
 
+# Accept the API URL as a build argument
+ARG EXPO_PUBLIC_API_URL
+# Make it available to the build command
+ENV EXPO_PUBLIC_API_URL=${EXPO_PUBLIC_API_URL}
+
 # Build for web
 # npx expo export -p web builds the static files to dist/
 RUN npx expo export -p web
