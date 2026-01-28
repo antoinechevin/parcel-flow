@@ -1,42 +1,23 @@
 package com.parcelflow.infrastructure.config;
 
 import com.parcelflow.application.usecases.ExtractParcelUseCase;
-
 import com.parcelflow.application.usecases.RetrieveDashboardUseCase;
-
-
-
+import com.parcelflow.application.usecases.EmailPollingOrchestrator;
+import com.parcelflow.domain.ports.MailSourcePort;
 import com.parcelflow.domain.ports.ParcelExtractionPort;
-
 import com.parcelflow.domain.ports.ParcelRepositoryPort;
-
-
-
+import com.parcelflow.domain.ports.ProviderRegistryPort;
+import com.parcelflow.domain.ports.WatermarkRepositoryPort;
 import com.parcelflow.domain.service.UrgencyCalculator;
-
-
-
+import com.parcelflow.infrastructure.persistence.InMemoryWatermarkRepository;
 import org.springframework.context.annotation.Bean;
-
-
-
 import org.springframework.context.annotation.Configuration;
-
-
-
-
-
-
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.time.Clock;
 
-
-
-
-
-
-
 @Configuration
+@EnableScheduling
 public class ApplicationConfig {
 
     @Bean
@@ -52,6 +33,20 @@ public class ApplicationConfig {
     @Bean
     public RetrieveDashboardUseCase retrieveDashboardUseCase(ParcelRepositoryPort parcelRepositoryPort, UrgencyCalculator urgencyCalculator) {
         return new RetrieveDashboardUseCase(parcelRepositoryPort, urgencyCalculator);
+    }
+
+    @Bean
+    public WatermarkRepositoryPort watermarkRepositoryPort() {
+        return new InMemoryWatermarkRepository();
+    }
+
+    @Bean
+    public EmailPollingOrchestrator emailPollingOrchestrator(
+            ProviderRegistryPort providerRegistry,
+            MailSourcePort mailSourcePort,
+            WatermarkRepositoryPort watermarkRepositoryPort,
+            ExtractParcelUseCase extractParcelUseCase) {
+        return new EmailPollingOrchestrator(providerRegistry, mailSourcePort, watermarkRepositoryPort, extractParcelUseCase);
     }
 
     @Bean

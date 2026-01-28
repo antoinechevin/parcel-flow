@@ -1,5 +1,6 @@
 package com.parcelflow.infrastructure.extraction;
 
+import com.parcelflow.domain.model.ProviderDefinition;
 import com.parcelflow.domain.ports.ParcelExtractionPort;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,12 @@
 package com.parcelflow.infrastructure.extraction;
 
+import com.parcelflow.domain.model.ProviderDefinition;
+import com.parcelflow.domain.ports.ProviderRegistryPort;
 import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class ProviderRegistry {
+public class ProviderRegistry implements ProviderRegistryPort {
 
     private final List<ProviderDefinition> providers;
 
@@ -30,6 +32,7 @@ public class ProviderRegistry {
         );
     }
 
+    @Override
     public List<ProviderDefinition> getAllProviders() {
         return providers;
     }
