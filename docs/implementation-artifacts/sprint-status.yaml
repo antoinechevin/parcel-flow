@@ -47,6 +47,7 @@ development_status:
   1-2-3-indicateurs-d-urgence: done
   1-3-adapter-gmail-client-d-infrastructure: done
   1-4-polling-job-orchestration: done
+  1-5-continuous-deployment-railway: done
   epic-1-retrospective: optional
 
   epic-2: in-progress
