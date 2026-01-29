@@ -31,7 +31,10 @@ export default function ParcelListScreen() {
       {groups && groups.length > 0 ? (
         <FlatList
           data={groups}
-          renderItem={({ item }) => <LocationGroupCard group={item} />}
+          renderItem={({ item }) => <LocationGroupCard 
+            group={item} 
+            testID={`group-${item.pickupPoint.id}`}
+          />}
           keyExtractor={(item) => item.pickupPoint.id}
           contentContainerStyle={styles.list}
         />

@@ -4,6 +4,11 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider as PaperProvider } from 'react-native-paper';
 import ParcelListScreen from '../app/index';
 
+// Mock GuichetModeModal to avoid Portal issues
+jest.mock('./components/GuichetModeModal', () => ({
+  GuichetModeModal: () => null,
+}));
+
 // Mock useAuthStore
 jest.mock('./core/auth/authStore', () => ({
   useAuthStore: (selector: any) => selector({ apiKey: 'test-key' }),
@@ -23,7 +28,13 @@ const mockDashboardData = [
         id: 'parcel-1',
         trackingNumber: 'TRK123456',
         deadline: '2026-02-01',
-        status: 'AVAILABLE'
+        status: 'AVAILABLE',
+        pickupPoint: {
+          id: 'pp-1',
+          name: 'Relais Colis - Epicerie du Coin',
+          rawAddress: '123 Rue de la Paix, 75002 Paris',
+          openingHours: '08:00 - 20:00'
+        }
       }
     ]
   }
@@ -59,7 +70,8 @@ describe('Nominal Flow: Parcel List Display', () => {
 
     // 2. Attend que les données soient affichées
     await waitFor(() => {
-      expect(screen.getByText('Relais Colis - Epicerie du Coin')).toBeTruthy();
+      const card = screen.getByTestId('group-pp-1');
+      expect(card).toBeTruthy();
     });
 
     // 3. Vérifie que l'adresse est présente

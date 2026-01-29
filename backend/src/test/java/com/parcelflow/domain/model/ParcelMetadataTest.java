@@ -13,12 +13,16 @@ class ParcelMetadataTest {
             "1Z999",
             "UPS",
             tomorrow,
-            "Relais Colis"
+            "Relais Colis",
+            "1234",
+            "http://qr.url"
         );
 
         assertEquals("1Z999", metadata.trackingCode());
         assertEquals("UPS", metadata.carrier());
         assertEquals(tomorrow, metadata.expirationDate());
         assertEquals("Relais Colis", metadata.pickupLocation());
+        assertEquals("1234", metadata.pickupCode());
+        assertEquals("http://qr.url", metadata.qrCodeUrl());
     }
 }

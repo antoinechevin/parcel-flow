@@ -8,7 +8,9 @@ public record Parcel(
     String carrier,
     LocalDate deadline,
     ParcelStatus status,
-    PickupPoint pickupPoint
+    PickupPoint pickupPoint,
+    String pickupCode,
+    String qrCodeUrl
 ) {
     public ParcelStatus effectiveStatus(LocalDate today) {
         if (status == ParcelStatus.AVAILABLE && deadline != null && deadline.isBefore(today)) {

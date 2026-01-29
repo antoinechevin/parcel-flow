@@ -267,7 +267,18 @@ So that I am never blocked at the counter.
 
 Peaufiner l'expérience utilisateur au point de retrait (luminosité max, deep link) et gérer le cycle de vie complet des données (archivage, suppression automatique).
 
-### Story 4.1: Mode Guichet (Luminosité & Zoom Code)
+### Story 4.1.0: Mode Guichet Web (Codes & QR Codes)
+
+As a User (Web App),
+I want to see my withdrawal codes and QR codes for Chronopost, Vinted Go, and Mondial Relay in a dedicated "Counter Mode" view,
+so that I can easily retrieve my parcels tonight even without the mobile app's native features.
+
+**Acceptance Criteria:**
+- Extraction of PIN codes for Chronopost, Vinted Go, and Mondial Relay.
+- Extraction of QR Code image URLs from emails.
+- Large character display and image rendering in the web app.
+
+### Story 4.1: Mode Guichet (Luminosité & Zoom Code) - Mobile Native
 
 As a User,
 I want to tap a parcel and see its tracking code in giant characters with maximum screen brightness,

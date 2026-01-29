@@ -46,19 +46,63 @@ public class ChronopostPickupExtractionAdapter implements ParcelExtractionPort {
             // 3. Extraction Lieu
             String pickupLocation = extractPickupLocation(doc);
 
-            // 4. Transporteur (Fixe pour cet adapter)
+            // 4. Extraction Code PIN et QR Code
+            String qrCodeUrl = extractQrCodeUrl(doc);
+            String pickupCode = extractPickupCode(doc, emailContent);
+
+            // 5. Transporteur (Fixe pour cet adapter)
             String carrier = "Chronopost / Pickup";
             if (emailContent.toUpperCase().contains("VINTED")) {
                 carrier = "Vinted (Chronopost)";
             }
 
             log.info("Chronopost extraction success: {} at {}", trackingNumber, pickupLocation);
-            return Optional.of(new ParcelMetadata(trackingNumber, carrier, expirationDate, pickupLocation));
+            return Optional.of(new ParcelMetadata(trackingNumber, carrier, expirationDate, pickupLocation, pickupCode, qrCodeUrl));
 
         } catch (Exception e) {
             log.warn("Failed to parse Chronopost email", e);
             return Optional.empty();
         }
+    }
+
+    private String extractQrCodeUrl(Document doc) {
+        Element img = doc.select("img[alt*=QR]").first();
+        if (img == null) {
+            img = doc.select("img[src*=barcode]").first();
+        }
+        return img != null ? img.attr("src") : null;
+    }
+
+    private String extractPickupCode(Document doc, String html) {
+        // Strategy 1: Extract from AztecCode URL if present
+        String qrUrl = extractQrCodeUrl(doc);
+        if (qrUrl != null && qrUrl.contains("PICKUPPASS")) {
+            // Pattern: PICKUPPASS:...;611553 (last segment or semicolon delimited)
+            String[] segments = qrUrl.split(";");
+            for (int i = segments.length - 1; i >= 0; i--) {
+                String segment = segments[i].trim();
+                if (segment.matches("\\d{6}")) {
+                    return segment;
+                }
+            }
+        }
+
+        // Strategy 2: Look for PIN code in text
+        String text = doc.text();
+        Pattern pinPattern = Pattern.compile("code de retrait\s*:\s*(\\d{4,8})", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pinPattern.matcher(text);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+
+        // Strategy 3: Specific for Vinted/Chronopost layout
+        Pattern pinLayoutPattern = Pattern.compile("PIN\\s*CODE.*?(\\d{6})", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+        matcher = pinLayoutPattern.matcher(text);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+
+        return null;
     }
 
     private String extractTrackingNumber(Document doc) {

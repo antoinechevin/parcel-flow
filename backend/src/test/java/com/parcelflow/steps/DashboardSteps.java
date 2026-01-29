@@ -53,7 +53,9 @@ public class DashboardSteps {
             "Carrier",
             LocalDate.parse(dateStr),
             ParcelStatus.AVAILABLE,
-            pp
+            pp,
+            null,
+            null
         );
         repository.save(lastParcel);
     }
@@ -92,7 +94,9 @@ public class DashboardSteps {
                 row.get("carrier"),
                 LocalDate.parse(row.get("deadline")),
                 ParcelStatus.valueOf(row.get("status")),
-                pp
+                pp,
+                null,
+                null
             );
         }).collect(Collectors.toList());
         repository.saveAll(parcels);
@@ -112,7 +116,9 @@ public class DashboardSteps {
                 "Carrier",
                 deadline,
                 status,
-                DEFAULT_PP
+                DEFAULT_PP,
+                null,
+                null
             );
         }).collect(Collectors.toList());
         
@@ -161,7 +167,9 @@ public class DashboardSteps {
                 "Carrier",
                 LocalDate.now().plusDays(5),
                 ParcelStatus.AVAILABLE,
-                pp
+                pp,
+                null,
+                null
             );
         }).collect(Collectors.toList());
         
@@ -207,7 +215,9 @@ public class DashboardSteps {
             "Carrier",
             LocalDate.now().plusDays(1),
             ParcelStatus.AVAILABLE,
-            pp
+            pp,
+            null,
+            null
         );
         repository.saveAll(List.of(parcel));
     }
@@ -221,7 +231,9 @@ public class DashboardSteps {
             "Carrier",
             LocalDate.now().plusDays(days),
             ParcelStatus.AVAILABLE,
-            pp
+            pp,
+            null,
+            null
         );
         repository.saveAll(List.of(parcel));
     }
@@ -250,7 +262,9 @@ public class DashboardSteps {
             "Carrier",
             LocalDate.now().plusDays(5),
             ParcelStatus.valueOf(statusStr),
-            DEFAULT_PP
+            DEFAULT_PP,
+            null,
+            null
         );
         repository.save(parcel);
         // Refresh dashboard view for "Then" steps

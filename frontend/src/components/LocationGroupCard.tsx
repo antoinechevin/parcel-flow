@@ -6,6 +6,7 @@ import { ParcelCard } from './ParcelCard';
 
 interface LocationGroupCardProps {
   group: LocationGroup;
+  testID?: string;
 }
 
 const getUrgencyColor = (theme: any, urgency?: UrgencyLevel, isInactive?: boolean) => {
@@ -28,7 +29,7 @@ const getExpirationText = (daysUntil?: number, isInactive?: boolean) => {
   return `Expires in ${daysUntil} days`;
 };
 
-export const LocationGroupCard: React.FC<LocationGroupCardProps> = ({ group }) => {
+export const LocationGroupCard: React.FC<LocationGroupCardProps> = ({ group, testID }) => {
   const theme = useTheme();
   const isInactive = !group.parcels.some(p => p.status === 'AVAILABLE');
   const urgencyColor = getUrgencyColor(theme, group.urgency, isInactive);
@@ -42,6 +43,7 @@ export const LocationGroupCard: React.FC<LocationGroupCardProps> = ({ group }) =
         isInactive && { opacity: 0.8 }
       ]} 
       elevation={2}
+      testID={testID}
     >
       <View style={styles.content}>
         <View style={[styles.header, isInactive && { backgroundColor: theme.colors.surfaceVariant }]}>

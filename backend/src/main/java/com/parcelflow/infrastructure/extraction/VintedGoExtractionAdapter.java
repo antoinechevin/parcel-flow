@@ -57,17 +57,30 @@ public class VintedGoExtractionAdapter implements ParcelExtractionPort {
             // 4. Extraction Lieu
             String location = extractLocation(doc);
 
+            // 5. Extraction QR Code URL
+            String qrCodeUrl = extractQrCodeUrl(doc);
+
             return Optional.of(new ParcelMetadata(
                 trackingNumber != null ? trackingNumber : "UNKNOWN",
                 "Vinted Go",
                 deadline,
-                location
+                location,
+                pickupCode,
+                qrCodeUrl
             ));
 
         } catch (Exception e) {
             log.warn("Failed to extract Vinted Go email", e);
             return Optional.empty();
         }
+    }
+
+    private String extractQrCodeUrl(Document doc) {
+        Element img = doc.select("img[alt*=QR]").first();
+        if (img == null) {
+            img = doc.select("img[src*=qr_codes]").first();
+        }
+        return img != null ? img.attr("src") : null;
     }
 
     private String extractPickupCode(String html) {

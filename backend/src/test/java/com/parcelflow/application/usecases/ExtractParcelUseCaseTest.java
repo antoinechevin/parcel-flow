@@ -44,7 +44,9 @@ class ExtractParcelUseCaseTest {
             "TRK123",
             "DHL",
             LocalDate.now().plusDays(5),
-            "Pickup Point"
+            "Pickup Point",
+            null,
+            null
         );
 
         when(extractionPort.extract(eq(emailContent), any(ZonedDateTime.class))).thenReturn(Optional.of(metadata));
@@ -63,7 +65,7 @@ class ExtractParcelUseCaseTest {
     @Test
     void shouldNotSaveIfParcelAlreadyExists() {
         String emailContent = "Duplicate";
-        ParcelMetadata metadata = new ParcelMetadata("DUP123", "DHL", null, null);
+        ParcelMetadata metadata = new ParcelMetadata("DUP123", "DHL", null, null, null, null);
         Parcel existingParcel = mock(Parcel.class);
 
         when(extractionPort.extract(eq(emailContent), any(ZonedDateTime.class))).thenReturn(Optional.of(metadata));
@@ -92,7 +94,9 @@ class ExtractParcelUseCaseTest {
             "SPECIFIC123",
             "SpecificCarrier",
             LocalDate.now().plusDays(3),
-            "Specific Point"
+            "Specific Point",
+            null,
+            null
         );
 
         when(specificAdapter.extract(emailContent, receivedAt)).thenReturn(Optional.of(metadata));
@@ -111,12 +115,12 @@ class ExtractParcelUseCaseTest {
     void shouldGenerateConsistentPickupPointId() {
         // Parcel 1
         String emailContent1 = "Content 1";
-        ParcelMetadata metadataOfParcel1 = new ParcelMetadata("TRK001", "C1", null, "  My Local Shop  ");
+        ParcelMetadata metadataOfParcel1 = new ParcelMetadata("TRK001", "C1", null, "  My Local Shop  ", null, null);
         when(extractionPort.extract(eq(emailContent1), any())).thenReturn(Optional.of(metadataOfParcel1));
         
         // Parcel 2
         String emailContent2 = "Content 2";
-        ParcelMetadata metadataOfParcel2 = new ParcelMetadata("TRK002", "C2", null, "My LOCAL Shop");
+        ParcelMetadata metadataOfParcel2 = new ParcelMetadata("TRK002", "C2", null, "My LOCAL Shop", null, null);
         when(extractionPort.extract(eq(emailContent2), any())).thenReturn(Optional.of(metadataOfParcel2));
 
         // Execute twice
@@ -144,7 +148,7 @@ class ExtractParcelUseCaseTest {
     void shouldHandleTrackingNumberWithWhitespace() {
         String emailContent = "Content with spaced tracking number";
         // Metadata returns tracking number with spaces
-        ParcelMetadata metadata = new ParcelMetadata("  SPACED-123  ", "Carrier", null, "Loc");
+        ParcelMetadata metadata = new ParcelMetadata("  SPACED-123  ", "Carrier", null, "Loc", null, null);
         when(extractionPort.extract(eq(emailContent), any())).thenReturn(Optional.of(metadata));
         
         // Mock that the CLEANED tracking number already exists

@@ -32,6 +32,7 @@ public class MondialRelayExtractionAdapter implements ParcelExtractionPort {
     private static final Pattern LOCATION_LOCKER_PATTERN = Pattern.compile("Locker\\s+<span[^>]*?>\\s*(.*?)\\s*\\.", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
     private static final Pattern LOCATION_RELAIS_PATTERN = Pattern.compile("Point Relais.*?<span[^>]*?>\\s*(.*?)\\s*</span>", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
     private static final Pattern DEADLINE_PATTERN = Pattern.compile("DANS\\s+(\\d+)\\s+JOURS\\s+VOTRE\\s+COLIS\\s+REPARTIRA", Pattern.CASE_INSENSITIVE);
+    private static final Pattern PIN_PATTERN = Pattern.compile("Code de retrait.*?<div[^>]*?>\\s*(\\d{6})\\s*</div>", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
     @Override
     public Optional<ParcelMetadata> extract(String emailContent, ZonedDateTime receivedAt) {
@@ -54,16 +55,27 @@ public class MondialRelayExtractionAdapter implements ParcelExtractionPort {
             // 3. Extraction Date Limite
             LocalDate expirationDate = extractExpirationDate(text, receivedAt);
 
-            // 4. Transporteur
+            // 4. Extraction Code PIN
+            String pickupCode = extractPickupCode(html);
+
+            // 5. Transporteur
             String carrier = "Mondial Relay";
 
             log.info("Mondial Relay extraction success: {} at {}", trackingNumber, pickupLocation);
-            return Optional.of(new ParcelMetadata(trackingNumber, carrier, expirationDate, pickupLocation));
+            return Optional.of(new ParcelMetadata(trackingNumber, carrier, expirationDate, pickupLocation, pickupCode, null));
 
         } catch (Exception e) {
             log.warn("Failed to parse Mondial Relay email", e);
             return Optional.empty();
         }
+    }
+
+    private String extractPickupCode(String html) {
+        Matcher matcher = PIN_PATTERN.matcher(html);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        return null;
     }
 
     private String extractTrackingNumber(String text, String html) {

@@ -47,6 +47,10 @@ class MondialRelayExtractionAdapterTest {
         // 5 days after Dec 5 is Dec 10
         assertEquals(LocalDate.of(2025, 12, 10), metadata.expirationDate());
         assertEquals("LOCKER 24/7 LA CERISE BLEUE BESSENAY", metadata.pickupLocation());
+        
+        // New field
+        assertEquals("887498", metadata.pickupCode());
+        assertNull(metadata.qrCodeUrl());
     }
 
     @Test

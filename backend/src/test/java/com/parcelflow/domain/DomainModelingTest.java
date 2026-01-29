@@ -31,7 +31,9 @@ class DomainModelingTest {
             "UPS",
             LocalDate.now().plusDays(2),
             ParcelStatus.AVAILABLE,
-            pickupPoint
+            pickupPoint,
+            null,
+            null
         );
         assertEquals(pickupPoint, parcel.pickupPoint());
     }
@@ -45,7 +47,9 @@ class DomainModelingTest {
             "UPS",
             LocalDate.now().plusDays(2),
             ParcelStatus.AVAILABLE,
-            pickupPoint
+            pickupPoint,
+            null,
+            null
         );
         
         LocationGroup group = new LocationGroup(pickupPoint, List.of(parcel), UrgencyLevel.LOW, 5);

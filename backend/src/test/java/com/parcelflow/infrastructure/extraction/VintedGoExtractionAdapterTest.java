@@ -40,5 +40,10 @@ class VintedGoExtractionAdapterTest {
         assertEquals("Vinted Go", metadata.carrier());
         assertEquals(LocalDate.of(2025, 12, 17), metadata.expirationDate());
         assertTrue(metadata.pickupLocation().contains("Les Casiers Des Saveurs"));
+        
+        // New fields
+        assertEquals("E32782", metadata.pickupCode());
+        assertNotNull(metadata.qrCodeUrl());
+        assertTrue(metadata.qrCodeUrl().contains("qr_codes"));
     }
 }

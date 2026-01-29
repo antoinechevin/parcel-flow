@@ -11,6 +11,8 @@ export type Parcel = {
   deadline: string;
   status: 'AVAILABLE' | 'PICKED_UP' | 'EXPIRED';
   pickupPoint: PickupPoint;
+  pickupCode?: string;
+  qrCodeUrl?: string;
 };
 
 export type UrgencyLevel = 'HIGH' | 'MEDIUM' | 'LOW';

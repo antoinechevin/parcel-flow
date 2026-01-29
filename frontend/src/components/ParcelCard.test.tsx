@@ -1,7 +1,13 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
+import { Provider as PaperProvider } from 'react-native-paper';
 import { ParcelCard } from './ParcelCard';
 import { Parcel } from '../types';
+
+// Mock GuichetModeModal to avoid Portal issues in unit tests
+jest.mock('./GuichetModeModal', () => ({
+  GuichetModeModal: () => null,
+}));
 
 describe('ParcelCard', () => {
   const mockParcel: Parcel = {
@@ -18,7 +24,11 @@ describe('ParcelCard', () => {
   };
 
   it('renders parcel details correctly', () => {
-    const { getByText } = render(<ParcelCard parcel={mockParcel} />);
+    const { getByText } = render(
+      <PaperProvider>
+        <ParcelCard parcel={mockParcel} />
+      </PaperProvider>
+    );
     
     expect(getByText('SHOES-123')).toBeTruthy();
     expect(getByText('Deadline: 2026-01-23')).toBeTruthy();
@@ -30,7 +40,11 @@ describe('ParcelCard', () => {
       ...mockParcel,
       status: 'EXPIRED'
     };
-    const { getByText } = render(<ParcelCard parcel={expiredParcel} />);
+    const { getByText } = render(
+      <PaperProvider>
+        <ParcelCard parcel={expiredParcel} />
+      </PaperProvider>
+    );
     
     expect(getByText('EXPIRED')).toBeTruthy();
   });
