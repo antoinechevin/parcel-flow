@@ -49,6 +49,51 @@ class MondialRelayExtractionAdapterTest {
         assertEquals("LOCKER 24/7 LA CERISE BLEUE BESSENAY", metadata.pickupLocation());
     }
 
+    @Test
+    void shouldExtractMetadataFromStandardPickupEmail() throws IOException, MessagingException {
+        Properties props = new Properties();
+        Session session = Session.getDefaultInstance(props, null);
+        
+        String htmlContent;
+        ZonedDateTime receivedAt = ZonedDateTime.parse("2026-01-27T13:23:31Z");
+        
+        try (InputStream is = new ClassPathResource("emails/mail_mondial_relay_2.eml").getInputStream()) {
+            MimeMessage message = new MimeMessage(session, is);
+            htmlContent = extractHtml(message);
+        }
+
+        assertNotNull(htmlContent, "HTML content should not be null");
+
+        Optional<ParcelMetadata> result = adapter.extract(htmlContent, receivedAt);
+
+        assertTrue(result.isPresent(), "Should extract metadata from standard Mondial Relay email");
+        ParcelMetadata metadata = result.get();
+
+        assertEquals("08730269", metadata.trackingCode());
+        assertEquals("Mondial Relay", metadata.carrier());
+        assertEquals(LocalDate.of(2026, 2, 1), metadata.expirationDate());
+        assertEquals("CAMINHOS DE PORTUGAL SAIN-BEL", metadata.pickupLocation());
+    }
+
+    @Test
+    void shouldExtractMetadataUsingRegexFallback() {
+        String htmlContent = "<html><body>" +
+                "Votre colis 99999999 est disponible dans votre Point Relais<sup>®</sup> " +
+                "<span style=\"color: #FF5C84;\"> TEST FALLBACK POINT </span> - Adresse..." +
+                "FAITES VITE, DANS 3 JOURS VOTRE COLIS REPARTIRA !" +
+                "Mondial Relay" +
+                "</body></html>";
+        ZonedDateTime receivedAt = ZonedDateTime.parse("2026-01-20T10:00:00Z");
+
+        Optional<ParcelMetadata> result = adapter.extract(htmlContent, receivedAt);
+
+        assertTrue(result.isPresent());
+        ParcelMetadata metadata = result.get();
+        assertEquals("99999999", metadata.trackingCode());
+        assertEquals("TEST FALLBACK POINT", metadata.pickupLocation());
+        assertEquals(LocalDate.of(2026, 1, 23), metadata.expirationDate());
+    }
+
     private String extractHtml(Part part) throws MessagingException, IOException {
         if (part.isMimeType("text/html")) {
             return (String) part.getContent();
