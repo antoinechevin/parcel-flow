@@ -9,7 +9,7 @@ export type Parcel = {
   id: { value: string } | string;
   trackingNumber: string;
   deadline: string;
-  status: 'AVAILABLE' | 'PICKED_UP';
+  status: 'AVAILABLE' | 'PICKED_UP' | 'EXPIRED';
   pickupPoint: PickupPoint;
 };
 

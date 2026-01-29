@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
+import java.time.Clock;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 
@@ -28,6 +29,12 @@ public class CucumberConfiguration {
 
     @Configuration
     static class TestConfig {
+        @Bean
+        @Primary
+        public Clock clock() {
+            return new TestClock();
+        }
+
         @Bean
         @Primary
         public MailSourcePort mailSourcePort() {

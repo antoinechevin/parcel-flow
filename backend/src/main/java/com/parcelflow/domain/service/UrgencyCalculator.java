@@ -17,15 +17,19 @@ public class UrgencyCalculator {
         this.clock = clock;
     }
 
+    public Clock getClock() {
+        return clock;
+    }
+
     public record Result(UrgencyLevel level, Integer daysUntil) {}
 
-    public Result calculate(List<Parcel> parcels) {
+    public Result calculate(List<Parcel> parcels, LocalDate today) {
         return parcels.stream()
             .filter(p -> p.status() == ParcelStatus.AVAILABLE)
             .map(Parcel::deadline)
             .min(LocalDate::compareTo)
             .map(deadline -> {
-                long daysUntil = ChronoUnit.DAYS.between(LocalDate.now(clock), deadline);
+                long daysUntil = ChronoUnit.DAYS.between(today, deadline);
                 return new Result(mapToLevel(daysUntil), (int) daysUntil);
             })
             .orElse(new Result(UrgencyLevel.LOW, null));
