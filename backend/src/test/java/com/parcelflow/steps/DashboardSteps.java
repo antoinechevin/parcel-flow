@@ -13,6 +13,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.Clock;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -31,12 +32,70 @@ public class DashboardSteps {
 
     @Autowired
     private ParcelRepositoryPort repository;
+
+    @Autowired
+    private Clock clock;
     
     private List<LocationGroup> retrievedGroups;
+    private Parcel lastParcel;
 
     @Before
     public void reset() {
         repository.deleteAll();
+    }
+
+    @Given("a parcel with a deadline on {string}")
+    public void a_parcel_with_a_deadline_on(String dateStr) {
+        PickupPoint pp = new PickupPoint("point-a", "Point A", "Address", "08:00-19:00");
+        lastParcel = new Parcel(
+            ParcelId.random(),
+            "TRK-EXPIRED",
+            "Carrier",
+            LocalDate.parse(dateStr),
+            ParcelStatus.AVAILABLE,
+            pp
+        );
+        repository.save(lastParcel);
+    }
+
+    @Given("today's date is {string}")
+    public void today_s_date_is(String dateStr) {
+        if (clock instanceof TestClock) {
+            ((TestClock) clock).setFixedDate(dateStr);
+        }
+    }
+
+    @When("I check the parcel status")
+    public void i_check_the_parcel_status() {
+        retrievedGroups = useCase.retrieve();
+    }
+
+    @Then("the status should be {string}")
+    public void the_status_should_be(String expectedStatus) {
+        Parcel found = retrievedGroups.stream()
+            .flatMap(g -> g.parcels().stream())
+            .filter(p -> p.id().equals(lastParcel.id()))
+            .findFirst()
+            .orElseThrow();
+        
+        assertEquals(ParcelStatus.valueOf(expectedStatus), found.status());
+    }
+
+    @Given("these parcels are in the system:")
+    public void these_parcels_are_in_the_system(List<Map<String, String>> dataTable) {
+        List<Parcel> parcels = dataTable.stream().map(row -> {
+            String ppName = row.get("pickupPoint");
+            PickupPoint pp = new PickupPoint(ppName.toLowerCase().replace(" ", "-"), ppName, "Address", "08:00-19:00");
+            return new Parcel(
+                ParcelId.random(),
+                row.get("trackingNumber"),
+                row.get("carrier"),
+                LocalDate.parse(row.get("deadline")),
+                ParcelStatus.valueOf(row.get("status")),
+                pp
+            );
+        }).collect(Collectors.toList());
+        repository.saveAll(parcels);
     }
 
     @Given("the following parcels exist:")
@@ -127,6 +186,16 @@ public class DashboardSteps {
             .orElseThrow(() -> new AssertionError("Group not found: " + ppName));
         
         assertEquals(count, group.parcels().size());
+    }
+
+    @Then("the first parcel should be {string}")
+    public void the_first_parcel_should_be(String trackingNumber) {
+        assertEquals(trackingNumber, retrievedGroups.get(0).parcels().get(0).trackingNumber());
+    }
+
+    @Then("the second parcel should be {string}")
+    public void the_second_parcel_should_be(String trackingNumber) {
+        assertEquals(trackingNumber, retrievedGroups.get(0).parcels().get(1).trackingNumber());
     }
 
     @Given("a group {string} has a parcel expiring tomorrow")

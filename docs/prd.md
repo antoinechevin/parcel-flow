@@ -53,6 +53,7 @@ Cela entraîne deux problèmes majeurs :
 * **FR4.1 :** L'utilisateur peut archiver un colis manuellement ("Swipe-to-archive").
 * **FR4.2 :** Une action d'archivage déclenche un Toast "Annuler" (Undo) pendant 3 à 5 secondes.
 * **FR4.3 :** Accès à l'historique des colis archivés.
+* **FR4.4 - Gestion de l'Expiration :** Un colis dont la `deadline` est strictement inférieure à la date du jour est automatiquement considéré comme `EXPIRED`. Son statut passe de `AVAILABLE` à `EXPIRED`.
 
 ---
 
@@ -84,7 +85,7 @@ Interface utilitaire, minimaliste et tactique. Pas de fioritures e-commerce.
 * **Theming :** Utilisation stricte de Design Tokens (Couleurs sémantiques, Typographie échelle) définis dans un fichier `theme.ts` central.
 
 ### Écrans Principaux
-1.  **Dashboard (Liste) :** Composant `FlashList` (Performance). Items avec indicateurs visuels d'urgence (Code couleur Feu Tricolore basé sur le thème). Empty State rassurant.
+1.  **Dashboard (Liste) :** Composant `FlashList` (Performance). Items avec indicateurs visuels d'urgence (Code couleur Feu Tricolore basé sur le thème). Les colis avec le statut `EXPIRED` sont affichés en gris, avec une opacité réduite, et sont systématiquement positionnés à la fin de la liste, après tous les colis actionnables. Empty State rassurant.
 2.  **Mode Guichet (Modal) :** Affichage géant du code. Contrôle luminosité hardware.
 3.  **Historique :** Liste avec opacité réduite.
 

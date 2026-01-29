@@ -23,33 +23,47 @@ class UrgencyCalculatorTest {
 
     @Test
     void should_return_HIGH_when_parcel_expires_tomorrow() {
-        Parcel p = new Parcel(ParcelId.random(), "T1", "DHL", LocalDate.now(fixedClock).plusDays(1), ParcelStatus.AVAILABLE, pp);
-        UrgencyCalculator.Result result = calculator.calculate(List.of(p));
+        LocalDate today = LocalDate.now(fixedClock);
+        Parcel p = new Parcel(ParcelId.random(), "T1", "DHL", today.plusDays(1), ParcelStatus.AVAILABLE, pp);
+        UrgencyCalculator.Result result = calculator.calculate(List.of(p), today);
         assertEquals(UrgencyLevel.HIGH, result.level());
         assertEquals(1, result.daysUntil());
     }
 
     @Test
     void should_return_MEDIUM_when_parcel_expires_in_3_days() {
-        Parcel p = new Parcel(ParcelId.random(), "T1", "DHL", LocalDate.now(fixedClock).plusDays(3), ParcelStatus.AVAILABLE, pp);
-        UrgencyCalculator.Result result = calculator.calculate(List.of(p));
+        LocalDate today = LocalDate.now(fixedClock);
+        Parcel p = new Parcel(ParcelId.random(), "T1", "DHL", today.plusDays(3), ParcelStatus.AVAILABLE, pp);
+        UrgencyCalculator.Result result = calculator.calculate(List.of(p), today);
         assertEquals(UrgencyLevel.MEDIUM, result.level());
         assertEquals(3, result.daysUntil());
     }
 
     @Test
     void should_return_LOW_when_parcel_expires_in_5_days() {
-        Parcel p = new Parcel(ParcelId.random(), "T1", "DHL", LocalDate.now(fixedClock).plusDays(5), ParcelStatus.AVAILABLE, pp);
-        UrgencyCalculator.Result result = calculator.calculate(List.of(p));
+        LocalDate today = LocalDate.now(fixedClock);
+        Parcel p = new Parcel(ParcelId.random(), "T1", "DHL", today.plusDays(5), ParcelStatus.AVAILABLE, pp);
+        UrgencyCalculator.Result result = calculator.calculate(List.of(p), today);
         assertEquals(UrgencyLevel.LOW, result.level());
         assertEquals(5, result.daysUntil());
     }
 
     @Test
     void should_ignore_picked_up_parcels() {
-        Parcel p1 = new Parcel(ParcelId.random(), "T1", "DHL", LocalDate.now(fixedClock).plusDays(1), ParcelStatus.PICKED_UP, pp);
-        Parcel p2 = new Parcel(ParcelId.random(), "T2", "DHL", LocalDate.now(fixedClock).plusDays(5), ParcelStatus.AVAILABLE, pp);
-        UrgencyCalculator.Result result = calculator.calculate(List.of(p1, p2));
+        LocalDate today = LocalDate.now(fixedClock);
+        Parcel p1 = new Parcel(ParcelId.random(), "T1", "DHL", today.plusDays(1), ParcelStatus.PICKED_UP, pp);
+        Parcel p2 = new Parcel(ParcelId.random(), "T2", "DHL", today.plusDays(5), ParcelStatus.AVAILABLE, pp);
+        UrgencyCalculator.Result result = calculator.calculate(List.of(p1, p2), today);
+        assertEquals(UrgencyLevel.LOW, result.level());
+        assertEquals(5, result.daysUntil());
+    }
+
+    @Test
+    void should_ignore_expired_parcels() {
+        LocalDate today = LocalDate.now(fixedClock);
+        Parcel p1 = new Parcel(ParcelId.random(), "T1", "DHL", today.minusDays(1), ParcelStatus.EXPIRED, pp);
+        Parcel p2 = new Parcel(ParcelId.random(), "T2", "DHL", today.plusDays(5), ParcelStatus.AVAILABLE, pp);
+        UrgencyCalculator.Result result = calculator.calculate(List.of(p1, p2), today);
         assertEquals(UrgencyLevel.LOW, result.level());
         assertEquals(5, result.daysUntil());
     }

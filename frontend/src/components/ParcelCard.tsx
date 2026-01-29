@@ -8,7 +8,7 @@ interface ParcelCardProps {
 }
 
 const getUrgencyColor = (theme: any, deadline: string, status: string) => {
-  if (status === 'PICKED_UP') return '#bdc3c7';
+  if (status === 'PICKED_UP' || status === 'EXPIRED') return theme.colors.outline || '#bdc3c7';
   
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -25,16 +25,33 @@ const getUrgencyColor = (theme: any, deadline: string, status: string) => {
 
 export const ParcelCard: React.FC<ParcelCardProps> = ({ parcel }) => {
   const theme = useTheme();
+  const isExpired = parcel.status === 'EXPIRED';
   const urgencyColor = getUrgencyColor(theme, parcel.deadline, parcel.status);
 
   return (
-    <Card style={[styles.card, { borderLeftColor: urgencyColor, borderLeftWidth: 5 }]}>
+    <Card style={[
+      styles.card, 
+      { borderLeftColor: urgencyColor, borderLeftWidth: 5 },
+      isExpired && { backgroundColor: theme.colors.surfaceVariant, opacity: 0.6 }
+    ]}>
       <Card.Content>
         <View style={styles.header}>
-          <Text variant="titleLarge">{parcel.trackingNumber}</Text>
-          <Badge size={24} style={{ backgroundColor: urgencyColor }}>{parcel.status}</Badge>
+          <Text variant="titleLarge" style={isExpired && { color: theme.colors.onSurfaceVariant }}>
+            {parcel.trackingNumber}
+          </Text>
+          <Badge 
+            size={24} 
+            style={{ 
+              backgroundColor: isExpired ? theme.colors.outline : urgencyColor,
+              color: isExpired ? theme.colors.surfaceVariant : undefined 
+            }}
+          >
+            {parcel.status}
+          </Badge>
         </View>
-        <Text variant="bodyMedium">Deadline: {parcel.deadline}</Text>
+        <Text variant="bodyMedium" style={isExpired && { color: theme.colors.onSurfaceVariant }}>
+          Deadline: {parcel.deadline}
+        </Text>
       </Card.Content>
     </Card>
   );

@@ -32,8 +32,9 @@ class ParcelTest {
 
     @Test
     void statusShouldHaveExpectedValues() {
-        assertEquals(2, ParcelStatus.values().length);
+        assertEquals(3, ParcelStatus.values().length);
         assertNotNull(ParcelStatus.valueOf("AVAILABLE"));
         assertNotNull(ParcelStatus.valueOf("PICKED_UP"));
+        assertNotNull(ParcelStatus.valueOf("EXPIRED"));
     }
 }

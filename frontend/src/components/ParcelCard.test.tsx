@@ -24,4 +24,14 @@ describe('ParcelCard', () => {
     expect(getByText('Deadline: 2026-01-23')).toBeTruthy();
     expect(getByText('AVAILABLE')).toBeTruthy();
   });
+
+  it('renders expired parcel with EXPIRED status', () => {
+    const expiredParcel: any = {
+      ...mockParcel,
+      status: 'EXPIRED'
+    };
+    const { getByText } = render(<ParcelCard parcel={expiredParcel} />);
+    
+    expect(getByText('EXPIRED')).toBeTruthy();
+  });
 });
