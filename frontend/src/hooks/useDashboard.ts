@@ -9,6 +9,7 @@ export const useDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const apiKey = useAuthStore((state) => state.apiKey);
+  const logout = useAuthStore((state) => state.logout);
 
   useEffect(() => {
     if (!apiKey) {
@@ -25,7 +26,8 @@ export const useDashboard = () => {
         });
         if (!response.ok) {
           if (response.status === 401) {
-            throw new Error('Clé API invalide. Veuillez vous reconnecter.');
+            logout();
+            throw new Error('Session expirée ou clé invalide.');
           }
           throw new Error('Failed to fetch dashboard data');
         }

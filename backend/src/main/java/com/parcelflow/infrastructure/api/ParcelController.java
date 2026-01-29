@@ -19,8 +19,13 @@ public class ParcelController {
         this.retrieveDashboardUseCase = retrieveDashboardUseCase;
     }
 
-    @GetMapping
+    @GetMapping("/dashboard")
     public List<LocationGroup> getDashboard() {
         return retrieveDashboardUseCase.retrieve();
+    }
+
+    @GetMapping("/auth/verify")
+    public ResponseEntity<Void> verifyApiKey() {
+        return ResponseEntity.ok().build();
     }
 }

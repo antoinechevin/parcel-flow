@@ -1,18 +1,41 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { TextInput, Button, Text, Surface } from 'react-native-paper';
+import { TextInput, Button, Text, Surface, HelperText } from 'react-native-paper';
 import { useRouter } from 'expo-router';
-import { useAuthStore } from '../src/core/auth/authStore';
+import { useAuthStore, HEADER_NAME } from '../src/core/auth/authStore';
+
+const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8080';
 
 export default function LoginScreen() {
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const setApiKey = useAuthStore((state) => state.setApiKey);
   const router = useRouter();
 
-  const handleLogin = () => {
-    if (password.trim()) {
-      setApiKey(password);
-      router.replace('/');
+  const handleLogin = async () => {
+    if (!password.trim()) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(`${API_URL}/api/auth/verify`, {
+        headers: {
+          [HEADER_NAME]: password,
+        },
+      });
+
+      if (response.ok) {
+        setApiKey(password);
+        router.replace('/');
+      } else {
+        setError('Mot de passe incorrect. Veuillez réessayer.');
+      }
+    } catch (err) {
+      setError('Impossible de contacter le serveur.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -24,12 +47,28 @@ export default function LoginScreen() {
         <TextInput
           label="Mot de passe"
           value={password}
-          onChangeText={setPassword}
+          onChangeText={(text) => {
+            setPassword(text);
+            setError(null);
+          }}
           secureTextEntry
           mode="outlined"
           style={styles.input}
+          error={!!error}
+          disabled={loading}
         />
-        <Button mode="contained" onPress={handleLogin} style={styles.button}>
+        {error && (
+          <HelperText type="error" visible={!!error} style={styles.helperText}>
+            {error}
+          </HelperText>
+        )}
+        <Button 
+          mode="contained" 
+          onPress={handleLogin} 
+          style={styles.button}
+          loading={loading}
+          disabled={loading || !password.trim()}
+        >
           Connexion
         </Button>
       </Surface>
@@ -59,7 +98,11 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '100%',
-    marginBottom: 16,
+  },
+  helperText: {
+    width: '100%',
+    textAlign: 'left',
+    marginBottom: 8,
   },
   button: {
     width: '100%',
