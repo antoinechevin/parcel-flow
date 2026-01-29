@@ -30,6 +30,7 @@ services:
       - GMAIL_CLIENT_ID=${GMAIL_CLIENT_ID}
       - GMAIL_CLIENT_SECRET=${GMAIL_CLIENT_SECRET}
       - GMAIL_REFRESH_TOKEN=${GMAIL_REFRESH_TOKEN}
+      - SECURITY_API_KEY=${SECURITY_API_KEY}
 
     depends_on:
       postgres:

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { LocationGroup } from '../types';
+import { useAuthStore, HEADER_NAME } from '../core/auth/authStore';
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8080';
 
@@ -7,12 +8,25 @@ export const useDashboard = () => {
   const [groups, setGroups] = useState<LocationGroup[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const apiKey = useAuthStore((state) => state.apiKey);
 
   useEffect(() => {
+    if (!apiKey) {
+      setLoading(false);
+      return;
+    }
+
     const fetchParcels = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/dashboard`);
+        const response = await fetch(`${API_URL}/api/dashboard`, {
+          headers: {
+            [HEADER_NAME]: apiKey,
+          },
+        });
         if (!response.ok) {
+          if (response.status === 401) {
+            throw new Error('Clé API invalide. Veuillez vous reconnecter.');
+          }
           throw new Error('Failed to fetch dashboard data');
         }
         const data = await response.json();
@@ -25,7 +39,7 @@ export const useDashboard = () => {
     };
 
     fetchParcels();
-  }, []);
+  }, [apiKey]);
 
   return { groups, loading, error };
 };
