@@ -106,4 +106,55 @@ class ExtractParcelUseCaseTest {
         verify(repositoryPort).save(parcelCaptor.capture());
         assertEquals("SPECIFIC123", parcelCaptor.getValue().trackingNumber());
     }
+
+    @Test
+    void shouldGenerateConsistentPickupPointId() {
+        // Parcel 1
+        String emailContent1 = "Content 1";
+        ParcelMetadata metadataOfParcel1 = new ParcelMetadata("TRK001", "C1", null, "  My Local Shop  ");
+        when(extractionPort.extract(eq(emailContent1), any())).thenReturn(Optional.of(metadataOfParcel1));
+        
+        // Parcel 2
+        String emailContent2 = "Content 2";
+        ParcelMetadata metadataOfParcel2 = new ParcelMetadata("TRK002", "C2", null, "My LOCAL Shop");
+        when(extractionPort.extract(eq(emailContent2), any())).thenReturn(Optional.of(metadataOfParcel2));
+
+        // Execute twice
+        useCase.execute(emailContent1, ZonedDateTime.now());
+        useCase.execute(emailContent2, ZonedDateTime.now());
+
+        ArgumentCaptor<Parcel> captor = ArgumentCaptor.forClass(Parcel.class);
+        verify(repositoryPort, times(2)).save(captor.capture());
+
+        Parcel p1 = captor.getAllValues().get(0);
+        Parcel p2 = captor.getAllValues().get(1);
+
+        assertNotNull(p1.pickupPoint());
+        assertNotNull(p2.pickupPoint());
+        
+        // IDs should be identical because names are effectively the same
+        assertEquals(p1.pickupPoint().id(), p2.pickupPoint().id());
+        
+        // But names are preserved as extracted (though trimmed)
+        assertEquals("My Local Shop", p1.pickupPoint().name());
+        assertEquals("My LOCAL Shop", p2.pickupPoint().name());
+    }
+
+    @Test
+    void shouldHandleTrackingNumberWithWhitespace() {
+        String emailContent = "Content with spaced tracking number";
+        // Metadata returns tracking number with spaces
+        ParcelMetadata metadata = new ParcelMetadata("  SPACED-123  ", "Carrier", null, "Loc");
+        when(extractionPort.extract(eq(emailContent), any())).thenReturn(Optional.of(metadata));
+        
+        // Mock that the CLEANED tracking number already exists
+        Parcel existing = mock(Parcel.class);
+        when(repositoryPort.findByTrackingNumber("SPACED-123")).thenReturn(Optional.of(existing));
+
+        useCase.execute(emailContent, ZonedDateTime.now());
+
+        // Should check for "SPACED-123", find it, and NOT save a new one
+        verify(repositoryPort).findByTrackingNumber("SPACED-123");
+        verify(repositoryPort, never()).save(any());
+    }
 }

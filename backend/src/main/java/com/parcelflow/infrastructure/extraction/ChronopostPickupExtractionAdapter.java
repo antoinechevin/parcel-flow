@@ -49,7 +49,7 @@ public class ChronopostPickupExtractionAdapter implements ParcelExtractionPort {
             // 4. Transporteur (Fixe pour cet adapter)
             String carrier = "Chronopost / Pickup";
             if (emailContent.toUpperCase().contains("VINTED")) {
-                carrier = "VINTED (Chronopost)";
+                carrier = "Vinted (Chronopost)";
             }
 
             log.info("Chronopost extraction success: {} at {}", trackingNumber, pickupLocation);
@@ -62,15 +62,23 @@ public class ChronopostPickupExtractionAdapter implements ParcelExtractionPort {
     }
 
     private String extractTrackingNumber(Document doc) {
-        // Stratégie 1: Lien "Votre colis VINTED n° XW..."
-        Elements links = doc.select("a[href*='tracking.network1.pickup.fr']");
-        for (Element link : links) {
-            String text = link.text().trim();
-            if (text.matches("[A-Z0-9]{10,20}")) {
-                return text;
-            }
+        String text = doc.text();
+
+        // Stratégie 1: Recherche par préfixe "n°" (très fréquent dans les mails Chronopost/Vinted)
+        Pattern prefixPattern = Pattern.compile("n°\\s*([A-Z0-9]{10,20})\\b", Pattern.CASE_INSENSITIVE);
+        Matcher prefixMatcher = prefixPattern.matcher(text);
+        if (prefixMatcher.find()) {
+            return prefixMatcher.group(1).trim();
         }
-        return null; // TODO: Ajouter regex fallback sur le body text
+
+        // Stratégie 2: Fallback Regex sur pattern standard XW...TS ou pattern Pickup
+        Pattern fallbackPattern = Pattern.compile("\\b(XW\\d{9}TS|[A-Z]{2}\\d{9}[A-Z]{2})\\b", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = fallbackPattern.matcher(text);
+        if (matcher.find()) {
+            return matcher.group(1).trim();
+        }
+        
+        return null;
     }
 
     private LocalDate extractExpirationDate(Document doc) {

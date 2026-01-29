@@ -16,17 +16,17 @@ public class ProviderRegistry implements ProviderRegistryPort {
         this.providers = List.of(
             new ProviderDefinition(
                 "Chronopost", 
-                "from:chronopost@network1.pickup.fr", 
+                "from:(chronopost@network1.pickup.fr OR chronopost@network2.pickup.fr)", 
                 chronopostAdapter
             ),
             new ProviderDefinition(
                 "Mondial Relay", 
-                "from:noreply@mondialrelay.fr subject:\"disponible\"", 
+                "from:(noreply@mondialrelay.fr OR notifications@shipup.co) subject:\"disponible\"", 
                 mondialRelayAdapter
             ),
             new ProviderDefinition(
                 "Vinted Go", 
-                "from:(noreply@vinted.com | no-reply@vinted.com) subject:(récupère ton colis | récupérer ton colis)", 
+                "from:(noreply@vinted.com OR no-reply@vinted.com) subject:(récupère ton colis OR récupérer ton colis)", 
                 vintedGoAdapter
             )
         );

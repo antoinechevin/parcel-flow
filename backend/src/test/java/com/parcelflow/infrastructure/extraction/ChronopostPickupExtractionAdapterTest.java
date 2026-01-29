@@ -44,7 +44,7 @@ class ChronopostPickupExtractionAdapterTest {
         assertEquals("XW251575070TS", metadata.trackingCode(), "Tracking code mismatch");
 
         // Verify Carrier
-        assertTrue(metadata.carrier().contains("VINTED"), "Carrier should be VINTED (Chronopost)");
+        assertTrue(metadata.carrier().contains("Vinted"), "Carrier should be Vinted (Chronopost)");
 
         // Verify Expiration Date
         // "lundi 19 janvier 2026" -> 2026-01-19
@@ -67,5 +67,14 @@ class ChronopostPickupExtractionAdapterTest {
             }
         }
         return null;
+    }
+
+    @Test
+    void shouldExtractTrackingNumberWithPrefixStrategy() {
+        String html = "<html><body>Votre colis VINTED n° XW277558241TS est disponible dans votre relais Pickup Chronopost !</body></html>";
+        Optional<ParcelMetadata> result = adapter.extract(html, java.time.ZonedDateTime.now());
+        
+        assertTrue(result.isPresent());
+        assertEquals("XW277558241TS", result.get().trackingCode());
     }
 }

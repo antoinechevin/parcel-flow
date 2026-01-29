@@ -22,7 +22,7 @@ import java.util.List;
 @Component
 public class GmailInboundAdapter implements MailSourcePort {
 
-    public static final String DEFAULT_DELIVERY_QUERY = "from:chronopost@network1.pickup.fr";
+    public static final String DEFAULT_DELIVERY_QUERY = "from:(chronopost@network1.pickup.fr OR chronopost@network2.pickup.fr)";
     private final Gmail gmailService;
 
     public GmailInboundAdapter(Gmail gmailService) {
