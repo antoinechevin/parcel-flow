@@ -4,6 +4,11 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider as PaperProvider } from 'react-native-paper';
 import ParcelListScreen from '../app/index';
 
+// Mock useAuthStore
+jest.mock('./core/auth/authStore', () => ({
+  useAuthStore: (selector: any) => selector({ apiKey: 'test-key' }),
+}));
+
 // Mock data
 const mockDashboardData = [
   {
