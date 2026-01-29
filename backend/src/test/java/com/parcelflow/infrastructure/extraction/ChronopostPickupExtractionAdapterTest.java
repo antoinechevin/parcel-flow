@@ -53,6 +53,13 @@ class ChronopostPickupExtractionAdapterTest {
         // Verify Pickup Location
         assertNotNull(metadata.pickupLocation());
         assertTrue(metadata.pickupLocation().contains("Panier Sympa"), "Pickup location should contain 'Panier Sympa'");
+
+        // Verify Pickup Code
+        assertEquals("611553", metadata.pickupCode(), "Pickup code mismatch");
+
+        // Verify QR Code URL
+        assertNotNull(metadata.qrCodeUrl());
+        assertTrue(metadata.qrCodeUrl().contains("AztecCode"), "QR Code URL should contain AztecCode");
     }
 
     private String extractHtml(Part part) throws MessagingException, IOException {

@@ -68,7 +68,9 @@ public class ExtractParcelUseCase {
                     metadata.carrier(),
                     metadata.expirationDate(),
                     ParcelStatus.AVAILABLE,
-                    pickupPoint
+                    pickupPoint,
+                    metadata.pickupCode(),
+                    metadata.qrCodeUrl()
                 );
                 
                 repositoryPort.save(parcel);

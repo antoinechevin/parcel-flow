@@ -15,14 +15,14 @@ class InMemoryParcelRepositoryTest {
     @Test
     void shouldUpsertParcelOnSave() {
         InMemoryParcelRepository repository = new InMemoryParcelRepository();
-        Parcel parcel1 = new Parcel(ParcelId.random(), "TRK123", "DHL", LocalDate.now(), ParcelStatus.AVAILABLE, null);
+        Parcel parcel1 = new Parcel(ParcelId.random(), "TRK123", "DHL", LocalDate.now(), ParcelStatus.AVAILABLE, null, null, null);
         
         // First save
         repository.save(parcel1);
         assertEquals(1, repository.findAll().size());
 
         // Second save with same tracking number (update scenario)
-        Parcel parcel2 = new Parcel(ParcelId.random(), "TRK123", "DHL", LocalDate.now().plusDays(1), ParcelStatus.PICKED_UP, null);
+        Parcel parcel2 = new Parcel(ParcelId.random(), "TRK123", "DHL", LocalDate.now().plusDays(1), ParcelStatus.PICKED_UP, null, null, null);
         repository.save(parcel2);
 
         List<Parcel> all = repository.findAll();

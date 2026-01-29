@@ -43,7 +43,7 @@ class ParcelControllerTest {
         PickupPoint pp = new PickupPoint("pp-1", "Relais", "Address", "08:00-19:00");
         when(useCase.retrieve()).thenReturn(List.of(
             new LocationGroup(pp, List.of(
-                new Parcel(id, "123", "DHL", LocalDate.now(), ParcelStatus.AVAILABLE, pp)
+                new Parcel(id, "123", "DHL", LocalDate.now(), ParcelStatus.AVAILABLE, pp, "CODE-99", "http://qr.url")
             ), UrgencyLevel.LOW, 0)
         ));
 
@@ -53,6 +53,8 @@ class ParcelControllerTest {
             .andExpect(jsonPath("$[0].pickupPoint.id").value("pp-1"))
             .andExpect(jsonPath("$[0].parcels[0].id.value").value(id.value().toString()))
             .andExpect(jsonPath("$[0].parcels[0].trackingNumber").value("123"))
-            .andExpect(jsonPath("$[0].parcels[0].status").value("AVAILABLE"));
+            .andExpect(jsonPath("$[0].parcels[0].status").value("AVAILABLE"))
+            .andExpect(jsonPath("$[0].parcels[0].pickupCode").value("CODE-99"))
+            .andExpect(jsonPath("$[0].parcels[0].qrCodeUrl").value("http://qr.url"));
     }
 }

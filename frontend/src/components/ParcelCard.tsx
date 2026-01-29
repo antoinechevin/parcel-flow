@@ -1,7 +1,8 @@
-import React from 'react';
-import { Card, Text, Badge, useTheme } from 'react-native-paper';
+import React, { useState } from 'react';
+import { Card, Text, Badge, useTheme, Button } from 'react-native-paper';
 import { StyleSheet, View } from 'react-native';
 import { Parcel } from '../types';
+import { GuichetModeModal } from './GuichetModeModal';
 
 interface ParcelCardProps {
   parcel: Parcel;
@@ -25,35 +26,63 @@ const getUrgencyColor = (theme: any, deadline: string, status: string) => {
 
 export const ParcelCard: React.FC<ParcelCardProps> = ({ parcel }) => {
   const theme = useTheme();
+  const [guichetVisible, setGuichetVisible] = useState(false);
+  
   const isExpired = parcel.status === 'EXPIRED';
+  const isAvailable = parcel.status === 'AVAILABLE';
   const urgencyColor = getUrgencyColor(theme, parcel.deadline, parcel.status);
 
   return (
-    <Card style={[
-      styles.card, 
-      { borderLeftColor: urgencyColor, borderLeftWidth: 5 },
-      isExpired && { backgroundColor: theme.colors.surfaceVariant, opacity: 0.6 }
-    ]}>
-      <Card.Content>
-        <View style={styles.header}>
-          <Text variant="titleLarge" style={isExpired && { color: theme.colors.onSurfaceVariant }}>
-            {parcel.trackingNumber}
+    <>
+      <Card style={[
+        styles.card, 
+        { borderLeftColor: urgencyColor, borderLeftWidth: 5 },
+        isExpired && { backgroundColor: theme.colors.surfaceVariant, opacity: 0.6 }
+      ]}>
+        <Card.Content>
+          <View style={styles.header}>
+            <View>
+              <Text variant="titleLarge" style={isExpired && { color: theme.colors.onSurfaceVariant }}>
+                {parcel.trackingNumber}
+              </Text>
+              <Text variant="bodySmall" style={styles.carrierText}>
+                {parcel.pickupPoint.name}
+              </Text>
+            </View>
+            <Badge 
+              size={24} 
+              style={{ 
+                backgroundColor: isExpired ? theme.colors.outline : urgencyColor,
+                color: isExpired ? theme.colors.surfaceVariant : undefined 
+              }}
+            >
+              {parcel.status}
+            </Badge>
+          </View>
+          <Text variant="bodyMedium" style={isExpired && { color: theme.colors.onSurfaceVariant }}>
+            Deadline: {parcel.deadline}
           </Text>
-          <Badge 
-            size={24} 
-            style={{ 
-              backgroundColor: isExpired ? theme.colors.outline : urgencyColor,
-              color: isExpired ? theme.colors.surfaceVariant : undefined 
-            }}
-          >
-            {parcel.status}
-          </Badge>
-        </View>
-        <Text variant="bodyMedium" style={isExpired && { color: theme.colors.onSurfaceVariant }}>
-          Deadline: {parcel.deadline}
-        </Text>
-      </Card.Content>
-    </Card>
+        </Card.Content>
+        {isAvailable && (
+          <Card.Actions>
+            <Button 
+              icon="qrcode-scan" 
+              mode="contained-tonal" 
+              onPress={() => setGuichetVisible(true)}
+              style={styles.guichetButton}
+            >
+              MODE GUICHET
+            </Button>
+          </Card.Actions>
+        )}
+      </Card>
+
+      <GuichetModeModal 
+        visible={guichetVisible}
+        onDismiss={() => setGuichetVisible(false)}
+        parcel={parcel}
+      />
+    </>
   );
 };
 
@@ -69,4 +98,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 8,
   },
+  carrierText: {
+    color: '#666',
+  },
+  guichetButton: {
+    width: '100%',
+  }
 });

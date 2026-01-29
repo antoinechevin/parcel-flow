@@ -15,7 +15,9 @@ class ParcelTest {
             "UPS",
             LocalDate.now(),
             ParcelStatus.AVAILABLE,
-            new PickupPoint("id", "Name", "Address", "Hours")
+            new PickupPoint("id", "Name", "Address", "Hours"),
+            "1234",
+            "http://qr.url"
         );
 
         assertEquals("UPS", parcel.carrier());
