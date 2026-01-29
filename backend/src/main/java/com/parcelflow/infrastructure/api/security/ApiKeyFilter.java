@@ -52,7 +52,7 @@ public class ApiKeyFilter extends OncePerRequestFilter {
         }
 
         // Skip security for healthcheck or non-API paths if any
-        if (path.equals("/api/parcels/health") || path.equals("/health")) {
+        if (path.equals("/api/parcels/health") || path.equals("/api/health") || path.equals("/health")) {
             filterChain.doFilter(request, response);
             return;
         }

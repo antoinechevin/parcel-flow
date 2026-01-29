@@ -40,4 +40,5 @@ Status: done
 ### Change Log
 - 2026-01-29: Initial implementation completed. (Dev Agent)
 - 2026-01-29: Code Review fixes applied (AsyncStorage, RFC 7807, Test reliability, HTTPS check, API URL centralization). (Dev Agent)
+- 2026-01-29: CI Fixes: Resolved 401 failures in ParcelControllerTest by adding missing security headers. (Dev Agent)
 
