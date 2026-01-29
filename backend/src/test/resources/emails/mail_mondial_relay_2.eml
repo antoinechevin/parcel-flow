@@ -1,0 +1,40 @@
+To: ANTOINE CHEVIN <antoine.chevin@gmail.com>
+From: Mondial Relay <noreply@mondialrelay.fr>
+Subject: Votre colis 08730269 est disponible !
+Date: Tue, 27 Jan 2026 13:23:31 +0000
+Content-Type: text/html; charset="utf-8"
+
+<!doctype html>
+<html>
+ <body>
+   <p>Votre colis 08730269 est disponible dans votre Point Relais<sup>®</sup> <span style="color: #FF5C84; font-weight: bold;"> CAMINHOS DE PORTUGAL SAIN-BEL </span> - 2 Allée du Château 69210 Sain-Bel.</p>
+   <h4>FAITES VITE, DANS 5 JOURS VOTRE COLIS REPARTIRA !</h4>
+   <script type="application/ld+json">
+    {
+    " @context": "http://schema.org",
+    " @type": "ParcelDelivery",
+    "deliveryAddress": {
+    " @type": "PostalAddress",
+    "name": "CAMINHOS DE PORTUGAL SAIN-BEL",
+    "streetAddress": "2 All=C3=A9e du Ch=C3=A2teau",
+    "addressLocality": "Sain-Bel",
+    "addressRegion": "",
+    "addressCountry": "FR",
+    "postalCode": "69210"
+    },
+    "originAddress": {
+    " @type": "PostalAddress",
+    "name": "",
+    },
+    "expectedArrivalFrom": "2026-01-27T14:20:00+02:00",
+    "expectedArrivalUntil": "2026-01-27T14:20:00+02:00",
+    "carrier": {
+    " @type": "Organization",
+    "name": "Mondial Relay",
+    "url": "https://www.mondialrelay.fr"
+    },
+    "trackingNumber": "RelaisCodePays"
+    }
+</script>
+ </body>
+</html>

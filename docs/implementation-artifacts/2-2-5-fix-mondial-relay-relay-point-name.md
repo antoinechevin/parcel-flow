@@ -2,7 +2,7 @@
 
 **ID:** 2-2-5-fix-mondial-relay-relay-point-name
 **Epic:** Epic 2 - Le Cœur d'Extraction (Regex) & Protection de la Vie Privée
-**Status:** ready-for-dev
+**Status:** done
 **Priority:** HIGH
 **Type:** BUG
 
@@ -22,7 +22,38 @@ Le nom du point relais Mondial Relay n'est pas correctement extrait dans les nou
 - Fichier à modifier : `backend/src/main/java/com/parcelflow/infrastructure/extraction/MondialRelayExtractionAdapter.java`
 
 ## Tasks
-- [ ] Créer un test unitaire avec le contenu de l'email fourni par Antoine (dans `MondialRelayExtractionAdapterTest`).
-- [ ] Implémenter l'extraction via JSON-LD (prioritaire).
-- [ ] Mettre à jour la Regex de fallback si le JSON-LD est absent.
-- [ ] Valider que tous les tests de `MondialRelayExtractionAdapter` passent.
+- [x] Créer un test unitaire avec le contenu de l'email fourni par Antoine (dans `MondialRelayExtractionAdapterTest`).
+- [x] Implémenter l'extraction via JSON-LD (prioritaire).
+- [x] Mettre à jour la Regex de fallback si le JSON-LD est absent.
+- [x] Valider que tous les tests de `MondialRelayExtractionAdapter` passent.
+
+## Dev Agent Record
+### Implementation Plan
+- Added `mail_mondial_relay_standard.eml` with the content provided by Antoine.
+- Added test case `shouldExtractMetadataFromStandardPickupEmail` to `MondialRelayExtractionAdapterTest`.
+- Implemented `extractFromJsonLd` in `MondialRelayExtractionAdapter` using Jackson.
+- Configured `ObjectMapper` to allow trailing commas (common in Mondial Relay emails).
+- Implemented `cleanLocationName` to strip trailing dots and whitespaces.
+- Updated `extractPickupLocation` to use JSON-LD first, then fallback to updated Regex.
+- Added `shouldExtractMetadataUsingRegexFallback` test case.
+
+### Completion Notes
+- All tests passing, including non-regression on Lockers.
+- Robust extraction via JSON-LD is now the primary strategy for Mondial Relay.
+- Nettoyage automatique des noms de lieux (suppression du point final).
+- Fixed JSON-LD fragility regarding leading spaces in keys (e.g. " @type").
+- Improved `cleanLocationName` to be more robust against formatting artifacts.
+- Removed unused `PIN_PATTERN`.
+
+## File List
+- `backend/src/main/java/com/parcelflow/infrastructure/extraction/MondialRelayExtractionAdapter.java`
+- `backend/src/test/java/com/parcelflow/infrastructure/extraction/MondialRelayExtractionAdapterTest.java`
+- `backend/src/test/resources/emails/mail_mondial_relay_2.eml`
+
+## Change Log
+- Fix extraction of Mondial Relay pickup location name.
+- Add JSON-LD support for parcel extraction with handling of leading spaces in keys.
+- Fix Jackson parsing for invalid JSON with trailing commas.
+- Add unit tests for standard pickup format and fallback mechanism.
+- Refactor: Remove unused patterns and improve string cleaning logic.
+- Addressed code review findings (Date: 2026-01-29).
