@@ -34,15 +34,15 @@ class ProviderRegistryTest {
         assertEquals(3, providers.size());
 
         ProviderDefinition chronopost = findProvider(providers, "Chronopost");
-        assertEquals("from:chronopost@network1.pickup.fr", chronopost.query());
+        assertEquals("from:(chronopost@network1.pickup.fr OR chronopost@network2.pickup.fr)", chronopost.query());
         assertSame(chronopostAdapter, chronopost.adapter());
 
         ProviderDefinition mondialRelay = findProvider(providers, "Mondial Relay");
-        assertEquals("from:noreply@mondialrelay.fr subject:\"disponible\"", mondialRelay.query());
+        assertEquals("from:(noreply@mondialrelay.fr OR notifications@shipup.co) subject:\"disponible\"", mondialRelay.query());
         assertSame(mondialRelayAdapter, mondialRelay.adapter());
 
         ProviderDefinition vintedGo = findProvider(providers, "Vinted Go");
-        assertEquals("from:(noreply@vinted.com | no-reply@vinted.com) subject:(récupère ton colis | récupérer ton colis)", vintedGo.query());
+        assertEquals("from:(noreply@vinted.com OR no-reply@vinted.com) subject:(récupère ton colis OR récupérer ton colis)", vintedGo.query());
         assertSame(vintedGoAdapter, vintedGo.adapter());
     }
 

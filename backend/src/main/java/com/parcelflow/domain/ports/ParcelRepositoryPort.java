@@ -11,7 +11,7 @@ public interface ParcelRepositoryPort {
 
     void save(Parcel parcel);
 
-    void saveAll(List<Parcel> parcels);
+    void saveAll(java.util.List<Parcel> parcels);
 
     void deleteAll();
 

@@ -172,4 +172,19 @@ public class DashboardSteps {
             String.format("Expected %s (index %d) to be before %s (index %d)", 
                 firstPpName, firstIndex, secondPpName, secondIndex));
     }
+
+    @When("I save a parcel with tracking number {string} and status {string}")
+    public void i_save_a_parcel_with_tracking_number_and_status(String trackingNumber, String statusStr) {
+        Parcel parcel = new Parcel(
+            ParcelId.random(),
+            trackingNumber,
+            "Carrier",
+            LocalDate.now().plusDays(5),
+            ParcelStatus.valueOf(statusStr),
+            DEFAULT_PP
+        );
+        repository.save(parcel);
+        // Refresh dashboard view for "Then" steps
+        retrievedGroups = useCase.retrieve();
+    }
 }

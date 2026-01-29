@@ -10,8 +10,10 @@ import com.parcelflow.domain.ports.ParcelRepositoryPort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 public class ExtractParcelUseCase {
 
@@ -35,18 +37,26 @@ public class ExtractParcelUseCase {
         
         metadataOpt.ifPresentOrElse(
             metadata -> {
-                if (repositoryPort.findByTrackingNumber(metadata.trackingCode()).isPresent()) {
-                    log.info("Parcel with tracking number {} already exists. Skipping.", metadata.trackingCode());
+                String cleanTrackingNumber = metadata.trackingCode() != null ? metadata.trackingCode().trim() : null;
+                
+                if (cleanTrackingNumber == null || cleanTrackingNumber.isBlank()) {
+                    log.warn("Extracted tracking number is empty. Skipping.");
                     return;
                 }
 
-                log.info("Metadata extracted: {}. Saving parcel...", metadata.trackingCode());
+                if (repositoryPort.findByTrackingNumber(cleanTrackingNumber).isPresent()) {
+                    log.info("Parcel with tracking number {} already exists. Skipping.", cleanTrackingNumber);
+                    return;
+                }
+
+                log.info("Metadata extracted: {}. Saving parcel...", cleanTrackingNumber);
                 
                 PickupPoint pickupPoint = null;
                 if (metadata.pickupLocation() != null && !metadata.pickupLocation().isBlank()) {
+                    String locationName = metadata.pickupLocation().trim();
                     pickupPoint = new PickupPoint(
-                        "extracted-" + metadata.trackingCode(),
-                        metadata.pickupLocation(),
+                        "loc-" + UUID.nameUUIDFromBytes(locationName.toLowerCase().getBytes(StandardCharsets.UTF_8)).toString(),
+                        locationName,
                         metadata.pickupLocation(),
                         null // Leave opening hours null instead of "Unknown"
                     );
@@ -54,7 +64,7 @@ public class ExtractParcelUseCase {
 
                 Parcel parcel = new Parcel(
                     ParcelId.random(),
-                    metadata.trackingCode(),
+                    cleanTrackingNumber,
                     metadata.carrier(),
                     metadata.expirationDate(),
                     ParcelStatus.AVAILABLE,
