@@ -69,6 +69,11 @@ public class ApiKeyFilter extends OncePerRequestFilter {
         if (effectiveKey != null && !effectiveKey.isEmpty() && effectiveKey.equals(requestApiKey)) {
             filterChain.doFilter(request, response);
         } else {
+            // Add CORS headers manually for error responses to avoid browser blocking
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+            response.setHeader("Access-Control-Allow-Headers", "*");
+
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/problem+json");
             response.getWriter().write("""
