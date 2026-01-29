@@ -43,10 +43,10 @@ public class EmailPollingOrchestrator {
             try {
                 log.info("Polling emails for provider: {}", provider.name());
 
-                // Get last watermark or default to 24h ago
+                // Get last watermark or default to 14 days ago
                 ZonedDateTime watermark = overrideWatermark != null ? overrideWatermark : 
                         watermarkRepositoryPort.getWatermark(provider.name())
-                        .orElse(ZonedDateTime.now().minusDays(1));
+                        .orElse(ZonedDateTime.now().minusDays(14));
 
                 // Fetch emails
                 MailFetchResult result = mailSourcePort.fetchEmails(watermark, provider.query());
