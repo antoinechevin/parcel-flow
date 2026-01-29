@@ -3,8 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { TextInput, Button, Text, Surface, HelperText } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import { useAuthStore, HEADER_NAME } from '../src/core/auth/authStore';
-
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8080';
+import { API_URL } from '../src/core/api/config';
 
 export default function LoginScreen() {
   const [password, setPassword] = useState('');

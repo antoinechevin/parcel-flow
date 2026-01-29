@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { LocationGroup } from '../types';
 import { useAuthStore, HEADER_NAME } from '../core/auth/authStore';
-
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8080';
+import { API_URL } from '../core/api/config';
 
 export const useDashboard = () => {
   const [groups, setGroups] = useState<LocationGroup[]>([]);

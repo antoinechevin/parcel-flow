@@ -21,6 +21,9 @@ public class ApiKeyFilter extends OncePerRequestFilter {
     @Value("${SECURITY_API_KEY:}")
     private String apiKey;
 
+    @Value("${SECURITY_REQUIRE_HTTPS:false}")
+    private boolean requireHttps;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -30,6 +33,21 @@ public class ApiKeyFilter extends OncePerRequestFilter {
         // Allow OPTIONS requests for CORS preflight
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
             filterChain.doFilter(request, response);
+            return;
+        }
+
+        // HTTPS check (X-Forwarded-Proto is standard for cloud proxies like Railway)
+        if (requireHttps && !"https".equalsIgnoreCase(request.getHeader("X-Forwarded-Proto"))) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setContentType("application/problem+json");
+            response.getWriter().write("""
+                {
+                  "type": "https://parcelflow.com/probs/insecure",
+                  "title": "Insecure Connection",
+                  "status": 403,
+                  "detail": "HTTPS is required for API access"
+                }
+                """);
             return;
         }
 
