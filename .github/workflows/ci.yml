@@ -46,8 +46,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install Railway CLI
         run: npm i -g @railway/cli
-      - name: Deploy
-        run: railway up --service backend -d
+      - name: Deploy Backend
+        run: railway up --service parcel-flow-backend --ci
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         working-directory: backend
+      - name: Deploy Frontend
+        run: railway up --service parcel-flow-frontend --ci
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        working-directory: frontend
