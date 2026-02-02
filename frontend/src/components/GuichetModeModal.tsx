@@ -17,6 +17,44 @@ export const GuichetModeModal: React.FC<GuichetModeModalProps> = ({ visible, onD
   const qrValue = parcel.pickupCode || parcel.trackingNumber;
   const [imgError, setImgError] = React.useState(false);
 
+  const renderBarcode = () => {
+    switch (parcel.barcodeType) {
+      case 'AZTEC':
+      case 'QR_CODE':
+        if (parcel.qrCodeUrl && !imgError) {
+          return (
+            <Image 
+              source={{ uri: parcel.qrCodeUrl }} 
+              style={styles.qrImage}
+              resizeMode="contain"
+              onError={() => setImgError(true)}
+            />
+          );
+        }
+        if (imgError) {
+            return <Text style={styles.fallbackLabel}>Code non affichable, utiliser le PIN</Text>;
+        }
+        // Fallback for QR_CODE if no URL
+        if(parcel.barcodeType === 'QR_CODE') {
+            return (
+                <View>
+                    <QRCode
+                    value={qrValue}
+                    size={250}
+                    backgroundColor="white"
+                    color="black"
+                    />
+                    <Text style={styles.fallbackLabel}>Image unavailable, using local QR</Text>
+                </View>
+            );
+        }
+        return <Text style={styles.fallbackLabel}>Code non affichable, utiliser le PIN</Text>;
+      case 'NONE':
+      default:
+        return null;
+    }
+  };
+
   return (
     <Portal>
       <Modal 
@@ -39,27 +77,11 @@ export const GuichetModeModal: React.FC<GuichetModeModalProps> = ({ visible, onD
             {parcel.trackingNumber}
           </Text>
 
-          <View style={styles.qrSection}>
-            {parcel.qrCodeUrl && !imgError ? (
-              <Image 
-                source={{ uri: parcel.qrCodeUrl }} 
-                style={styles.qrImage}
-                resizeMode="contain"
-                onError={() => setImgError(true)}
-              />
-            ) : (
-              <View>
-                <QRCode
-                  value={qrValue}
-                  size={250}
-                  backgroundColor="white"
-                  color="black"
-                />
-                {imgError && (
-                  <Text style={styles.fallbackLabel}>Image unavailable, using local QR</Text>
-                )}
-              </View>
-            )}
+          <View style={[
+            styles.qrSection, 
+            parcel.barcodeType === 'NONE' && { minHeight: 0, padding: 0, borderWidth: 0 }
+          ]}>
+            {renderBarcode()}
           </View>
 
           {parcel.pickupCode && (
@@ -120,13 +142,16 @@ const styles = StyleSheet.create({
     // Add shadow/border for the QR code to stand out
     borderWidth: 1,
     borderColor: '#eee',
+    minHeight: 250,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   qrImage: {
     width: 250,
     height: 250,
   },
   fallbackLabel: {
-    fontSize: 10,
+    fontSize: 14,
     color: '#999',
     textAlign: 'center',
     marginTop: 8,

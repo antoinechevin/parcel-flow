@@ -17,9 +17,11 @@ class ParcelTest {
             ParcelStatus.AVAILABLE,
             new PickupPoint("id", "Name", "Address", "Hours"),
             "1234",
-            "http://qr.url"
+            "http://qr.url",
+            BarcodeType.QR_CODE
         );
 
         assertEquals("UPS", parcel.carrier());
+        assertEquals(BarcodeType.QR_CODE, parcel.barcodeType());
     }
 }

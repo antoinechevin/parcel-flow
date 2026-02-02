@@ -3,6 +3,7 @@ package com.parcelflow.steps;
 import com.parcelflow.application.usecases.RetrieveDashboardUseCase;
 import com.parcelflow.domain.model.LocationGroup;
 import com.parcelflow.domain.model.Parcel;
+import com.parcelflow.domain.model.BarcodeType;
 import com.parcelflow.domain.model.ParcelId;
 import com.parcelflow.domain.model.ParcelStatus;
 import com.parcelflow.domain.model.PickupPoint;
@@ -55,7 +56,8 @@ public class DashboardSteps {
             ParcelStatus.AVAILABLE,
             pp,
             null,
-            null
+            null,
+            BarcodeType.QR_CODE
         );
         repository.save(lastParcel);
     }
@@ -96,7 +98,8 @@ public class DashboardSteps {
                 ParcelStatus.valueOf(row.get("status")),
                 pp,
                 null,
-                null
+                null,
+                BarcodeType.QR_CODE
             );
         }).collect(Collectors.toList());
         repository.saveAll(parcels);
@@ -118,7 +121,8 @@ public class DashboardSteps {
                 status,
                 DEFAULT_PP,
                 null,
-                null
+                null,
+                BarcodeType.QR_CODE
             );
         }).collect(Collectors.toList());
         
@@ -169,7 +173,8 @@ public class DashboardSteps {
                 ParcelStatus.AVAILABLE,
                 pp,
                 null,
-                null
+                null,
+                BarcodeType.QR_CODE
             );
         }).collect(Collectors.toList());
         
@@ -217,7 +222,8 @@ public class DashboardSteps {
             ParcelStatus.AVAILABLE,
             pp,
             null,
-            null
+            null,
+            BarcodeType.QR_CODE
         );
         repository.saveAll(List.of(parcel));
     }
@@ -233,7 +239,8 @@ public class DashboardSteps {
             ParcelStatus.AVAILABLE,
             pp,
             null,
-            null
+            null,
+            BarcodeType.QR_CODE
         );
         repository.saveAll(List.of(parcel));
     }
@@ -264,7 +271,8 @@ public class DashboardSteps {
             ParcelStatus.valueOf(statusStr),
             DEFAULT_PP,
             null,
-            null
+            null,
+            BarcodeType.QR_CODE
         );
         repository.save(parcel);
         // Refresh dashboard view for "Then" steps

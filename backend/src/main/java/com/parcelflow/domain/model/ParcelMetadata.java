@@ -8,6 +8,7 @@ public record ParcelMetadata(
     LocalDate expirationDate,
     String pickupLocation,
     String pickupCode,
-    String qrCodeUrl
+    String qrCodeUrl,
+    BarcodeType barcodeType
 ) {
 }

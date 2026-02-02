@@ -1,6 +1,7 @@
 package com.parcelflow.domain;
 
 import com.parcelflow.domain.model.Parcel;
+import com.parcelflow.domain.model.BarcodeType;
 import com.parcelflow.domain.model.ParcelId;
 import com.parcelflow.domain.model.ParcelStatus;
 import com.parcelflow.domain.model.PickupPoint;
@@ -34,7 +35,7 @@ class DomainModelingTest {
             pickupPoint,
             null,
             null
-        );
+        , BarcodeType.QR_CODE);
         assertEquals(pickupPoint, parcel.pickupPoint());
     }
 
@@ -50,7 +51,7 @@ class DomainModelingTest {
             pickupPoint,
             null,
             null
-        );
+        , BarcodeType.QR_CODE);
         
         LocationGroup group = new LocationGroup(pickupPoint, List.of(parcel), UrgencyLevel.LOW, 5);
         

@@ -1,6 +1,7 @@
 package com.parcelflow.domain.service;
 
 import com.parcelflow.domain.model.Parcel;
+import com.parcelflow.domain.model.BarcodeType;
 import com.parcelflow.domain.model.ParcelId;
 import com.parcelflow.domain.model.ParcelStatus;
 import com.parcelflow.domain.model.PickupPoint;
@@ -24,11 +25,7 @@ class UrgencyCalculatorTest {
     @Test
     void should_return_HIGH_when_parcel_expires_tomorrow() {
         LocalDate today = LocalDate.now(fixedClock);
-        Parcel p = new Parcel(ParcelId.random(), "T1", "DHL", today.plusDays(1),             ParcelStatus.AVAILABLE,
-            pp,
-            null,
-            null
-        );
+        Parcel p = new Parcel(ParcelId.random(), "T1", "DHL", today.plusDays(1), ParcelStatus.AVAILABLE, pp, null, null, BarcodeType.QR_CODE);
         UrgencyCalculator.Result result = calculator.calculate(List.of(p), today);
         assertEquals(UrgencyLevel.HIGH, result.level());
         assertEquals(1, result.daysUntil());
@@ -37,11 +34,7 @@ class UrgencyCalculatorTest {
     @Test
     void should_return_MEDIUM_when_parcel_expires_in_3_days() {
         LocalDate today = LocalDate.now(fixedClock);
-        Parcel p = new Parcel(ParcelId.random(), "T1", "DHL", today.plusDays(3),             ParcelStatus.AVAILABLE,
-            pp,
-            null,
-            null
-        );
+        Parcel p = new Parcel(ParcelId.random(), "T1", "DHL", today.plusDays(3), ParcelStatus.AVAILABLE, pp, null, null, BarcodeType.QR_CODE);
         UrgencyCalculator.Result result = calculator.calculate(List.of(p), today);
         assertEquals(UrgencyLevel.MEDIUM, result.level());
         assertEquals(3, result.daysUntil());
@@ -50,11 +43,7 @@ class UrgencyCalculatorTest {
     @Test
     void should_return_LOW_when_parcel_expires_in_5_days() {
         LocalDate today = LocalDate.now(fixedClock);
-        Parcel p = new Parcel(ParcelId.random(), "T1", "DHL", today.plusDays(5),             ParcelStatus.AVAILABLE,
-            pp,
-            null,
-            null
-        );
+        Parcel p = new Parcel(ParcelId.random(), "T1", "DHL", today.plusDays(5), ParcelStatus.AVAILABLE, pp, null, null, BarcodeType.QR_CODE);
         UrgencyCalculator.Result result = calculator.calculate(List.of(p), today);
         assertEquals(UrgencyLevel.LOW, result.level());
         assertEquals(5, result.daysUntil());
@@ -63,12 +52,8 @@ class UrgencyCalculatorTest {
     @Test
     void should_ignore_picked_up_parcels() {
         LocalDate today = LocalDate.now(fixedClock);
-        Parcel p1 = new Parcel(ParcelId.random(), "T1", "DHL", today.plusDays(1), ParcelStatus.PICKED_UP, pp, null, null);
-        Parcel p2 = new Parcel(ParcelId.random(), "T2", "DHL", today.plusDays(5),             ParcelStatus.AVAILABLE,
-            pp,
-            null,
-            null
-        );
+        Parcel p1 = new Parcel(ParcelId.random(), "T1", "DHL", today.plusDays(1), ParcelStatus.PICKED_UP, pp, null, null, BarcodeType.QR_CODE);
+        Parcel p2 = new Parcel(ParcelId.random(), "T2", "DHL", today.plusDays(5), ParcelStatus.AVAILABLE, pp, null, null, BarcodeType.QR_CODE);
         UrgencyCalculator.Result result = calculator.calculate(List.of(p1, p2), today);
         assertEquals(UrgencyLevel.LOW, result.level());
         assertEquals(5, result.daysUntil());
@@ -77,12 +62,8 @@ class UrgencyCalculatorTest {
     @Test
     void should_ignore_expired_parcels() {
         LocalDate today = LocalDate.now(fixedClock);
-        Parcel p1 = new Parcel(ParcelId.random(), "T1", "DHL", today.minusDays(1), ParcelStatus.EXPIRED, pp, null, null);
-        Parcel p2 = new Parcel(ParcelId.random(), "T2", "DHL", today.plusDays(5),             ParcelStatus.AVAILABLE,
-            pp,
-            null,
-            null
-        );
+        Parcel p1 = new Parcel(ParcelId.random(), "T1", "DHL", today.minusDays(1), ParcelStatus.EXPIRED, pp, null, null, BarcodeType.QR_CODE);
+        Parcel p2 = new Parcel(ParcelId.random(), "T2", "DHL", today.plusDays(5), ParcelStatus.AVAILABLE, pp, null, null, BarcodeType.QR_CODE);
         UrgencyCalculator.Result result = calculator.calculate(List.of(p1, p2), today);
         assertEquals(UrgencyLevel.LOW, result.level());
         assertEquals(5, result.daysUntil());

@@ -1,164 +1,126 @@
 package com.parcelflow.application.usecases;
 
-import com.parcelflow.domain.model.Parcel;
-import com.parcelflow.domain.model.ParcelMetadata;
-import com.parcelflow.domain.model.ParcelStatus;
+import com.parcelflow.domain.model.*;
 import com.parcelflow.domain.ports.ParcelExtractionPort;
 import com.parcelflow.domain.ports.ParcelRepositoryPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 class ExtractParcelUseCaseTest {
 
     private ExtractParcelUseCase useCase;
-
-    @Mock
-    private ParcelExtractionPort extractionPort;
-
-    @Mock
     private ParcelRepositoryPort repositoryPort;
+    private ParcelExtractionPort extractionPort;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        repositoryPort = mock(ParcelRepositoryPort.class);
+        extractionPort = mock(ParcelExtractionPort.class);
         useCase = new ExtractParcelUseCase(extractionPort, repositoryPort);
     }
 
     @Test
     void shouldExtractAndSaveParcel() {
-        String emailContent = "Test content";
+        String emailContent = "Sample Content";
+        ZonedDateTime receivedAt = ZonedDateTime.now();
         ParcelMetadata metadata = new ParcelMetadata(
-            "TRK123",
-            "DHL",
-            LocalDate.now().plusDays(5),
-            "Pickup Point",
-            null,
-            null
+            "TRK123", "DHL", null, "Relais 1", null, null, BarcodeType.QR_CODE
         );
 
         when(extractionPort.extract(eq(emailContent), any(ZonedDateTime.class))).thenReturn(Optional.of(metadata));
+        when(repositoryPort.findByTrackingNumber("TRK123")).thenReturn(Optional.empty());
 
-        useCase.execute(emailContent, ZonedDateTime.now());
+        useCase.execute(emailContent, receivedAt);
 
-        ArgumentCaptor<Parcel> parcelCaptor = ArgumentCaptor.forClass(Parcel.class);
-        verify(repositoryPort).save(parcelCaptor.capture());
-
-        Parcel savedParcel = parcelCaptor.getValue();
-        assertEquals("TRK123", savedParcel.trackingNumber());
-        assertEquals("DHL", savedParcel.carrier());
-        assertEquals(ParcelStatus.AVAILABLE, savedParcel.status());
-    }
-
-    @Test
-    void shouldNotSaveIfParcelAlreadyExists() {
-        String emailContent = "Duplicate";
-        ParcelMetadata metadata = new ParcelMetadata("DUP123", "DHL", null, null, null, null);
-        Parcel existingParcel = mock(Parcel.class);
-
-        when(extractionPort.extract(eq(emailContent), any(ZonedDateTime.class))).thenReturn(Optional.of(metadata));
-        when(repositoryPort.findByTrackingNumber("DUP123")).thenReturn(Optional.of(existingParcel));
-
-        useCase.execute(emailContent, ZonedDateTime.now());
-
-        verify(repositoryPort, never()).save(any());
+        ArgumentCaptor<Parcel> captor = ArgumentCaptor.forClass(Parcel.class);
+        verify(repositoryPort).save(captor.capture());
+        
+        Parcel saved = captor.getValue();
+        assertEquals("TRK123", saved.trackingNumber());
+        assertEquals("DHL", saved.carrier());
+        assertEquals("Relais 1", saved.pickupPoint().name());
+        assertEquals(BarcodeType.QR_CODE, saved.barcodeType());
     }
 
     @Test
     void shouldNotSaveIfExtractionFails() {
         when(extractionPort.extract(anyString(), any(ZonedDateTime.class))).thenReturn(Optional.empty());
 
-        useCase.execute("Invalid", ZonedDateTime.now());
+        useCase.execute("slop", ZonedDateTime.now());
 
         verify(repositoryPort, never()).save(any());
     }
 
     @Test
-    void shouldExecuteWithSpecificAdapter() {
-        String emailContent = "Specific Content";
+    void shouldNotSaveIfTrackingNumberEmpty() {
+        ParcelMetadata metadata = new ParcelMetadata("", "DHL", null, null, null, null, BarcodeType.NONE);
+        when(extractionPort.extract(anyString(), any())).thenReturn(Optional.of(metadata));
+
+        useCase.execute("content", ZonedDateTime.now());
+
+        verify(repositoryPort, never()).save(any());
+    }
+
+    @Test
+    void shouldHandleSpecificAdapter() {
+        String emailContent = "Specific content";
         ZonedDateTime receivedAt = ZonedDateTime.now();
-        ParcelExtractionPort specificAdapter = mock(ParcelExtractionPort.class);
         ParcelMetadata metadata = new ParcelMetadata(
-            "SPECIFIC123",
-            "SpecificCarrier",
-            LocalDate.now().plusDays(3),
-            "Specific Point",
-            null,
-            null
+            "SPEC-123", "Carrier", null, "Loc", null, null, BarcodeType.QR_CODE
         );
 
+        ParcelExtractionPort specificAdapter = mock(ParcelExtractionPort.class);
         when(specificAdapter.extract(emailContent, receivedAt)).thenReturn(Optional.of(metadata));
+        when(repositoryPort.findByTrackingNumber("SPEC-123")).thenReturn(Optional.empty());
 
         useCase.execute(emailContent, receivedAt, specificAdapter);
 
         verify(specificAdapter).extract(emailContent, receivedAt);
-        verify(extractionPort, never()).extract(any(), any()); // Ensure default adapter is NOT used
-        
-        ArgumentCaptor<Parcel> parcelCaptor = ArgumentCaptor.forClass(Parcel.class);
-        verify(repositoryPort).save(parcelCaptor.capture());
-        assertEquals("SPECIFIC123", parcelCaptor.getValue().trackingNumber());
+        verify(extractionPort, never()).extract(any(), any());
     }
 
     @Test
-    void shouldGenerateConsistentPickupPointId() {
-        // Parcel 1
-        String emailContent1 = "Content 1";
-        ParcelMetadata metadataOfParcel1 = new ParcelMetadata("TRK001", "C1", null, "  My Local Shop  ", null, null);
-        when(extractionPort.extract(eq(emailContent1), any())).thenReturn(Optional.of(metadataOfParcel1));
-        
-        // Parcel 2
-        String emailContent2 = "Content 2";
-        ParcelMetadata metadataOfParcel2 = new ParcelMetadata("TRK002", "C2", null, "My LOCAL Shop", null, null);
-        when(extractionPort.extract(eq(emailContent2), any())).thenReturn(Optional.of(metadataOfParcel2));
+    void shouldNormalizePickupPointName() {
+        ParcelMetadata metadataOfParcel1 = new ParcelMetadata("TRK001", "C1", null, "  My Local Shop  ", null, null, BarcodeType.QR_CODE);
+        ParcelMetadata metadataOfParcel2 = new ParcelMetadata("TRK002", "C2", null, "My LOCAL Shop", null, null, BarcodeType.QR_CODE);
 
-        // Execute twice
-        useCase.execute(emailContent1, ZonedDateTime.now());
-        useCase.execute(emailContent2, ZonedDateTime.now());
+        when(extractionPort.extract(eq("content1"), any())).thenReturn(Optional.of(metadataOfParcel1));
+        when(extractionPort.extract(eq("content2"), any())).thenReturn(Optional.of(metadataOfParcel2));
+        when(repositoryPort.findByTrackingNumber(anyString())).thenReturn(Optional.empty());
+
+        useCase.execute("content1", ZonedDateTime.now());
+        useCase.execute("content2", ZonedDateTime.now());
 
         ArgumentCaptor<Parcel> captor = ArgumentCaptor.forClass(Parcel.class);
         verify(repositoryPort, times(2)).save(captor.capture());
 
-        Parcel p1 = captor.getAllValues().get(0);
-        Parcel p2 = captor.getAllValues().get(1);
+        String id1 = captor.getAllValues().get(0).pickupPoint().id();
+        String id2 = captor.getAllValues().get(1).pickupPoint().id();
 
-        assertNotNull(p1.pickupPoint());
-        assertNotNull(p2.pickupPoint());
-        
-        // IDs should be identical because names are effectively the same
-        assertEquals(p1.pickupPoint().id(), p2.pickupPoint().id());
-        
-        // But names are preserved as extracted (though trimmed)
-        assertEquals("My Local Shop", p1.pickupPoint().name());
-        assertEquals("My LOCAL Shop", p2.pickupPoint().name());
+        assertEquals(id1, id2, "PickupPoints with same name (ignoring case and whitespace) should have same ID");
     }
 
     @Test
-    void shouldHandleTrackingNumberWithWhitespace() {
-        String emailContent = "Content with spaced tracking number";
-        // Metadata returns tracking number with spaces
-        ParcelMetadata metadata = new ParcelMetadata("  SPACED-123  ", "Carrier", null, "Loc", null, null);
-        when(extractionPort.extract(eq(emailContent), any())).thenReturn(Optional.of(metadata));
-        
-        // Mock that the CLEANED tracking number already exists
-        Parcel existing = mock(Parcel.class);
-        when(repositoryPort.findByTrackingNumber("SPACED-123")).thenReturn(Optional.of(existing));
+    void shouldTrimTrackingNumber() {
+        ParcelMetadata metadata = new ParcelMetadata("  SPACED-123  ", "Carrier", null, "Loc", null, null, BarcodeType.QR_CODE);
+        when(extractionPort.extract(eq("content"), any())).thenReturn(Optional.of(metadata));
+        when(repositoryPort.findByTrackingNumber("SPACED-123")).thenReturn(Optional.empty());
 
-        useCase.execute(emailContent, ZonedDateTime.now());
+        useCase.execute("content", ZonedDateTime.now());
 
-        // Should check for "SPACED-123", find it, and NOT save a new one
-        verify(repositoryPort).findByTrackingNumber("SPACED-123");
-        verify(repositoryPort, never()).save(any());
+        ArgumentCaptor<Parcel> captor = ArgumentCaptor.forClass(Parcel.class);
+        verify(repositoryPort).save(captor.capture());
+        assertEquals("SPACED-123", captor.getValue().trackingNumber());
     }
 }

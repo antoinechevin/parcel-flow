@@ -57,6 +57,7 @@ development_status:
   2-2-3-extraction-vinted-go: done
   2-2-4-orchestration-par-requetes-ciblees: done
   2-2-5-fix-mondial-relay-relay-point-name: done
+  fix-barcode-rendering: done
   2-3-gestion-d-erreur-fallback-extraction: backlog
   epic-2-retrospective: optional
 

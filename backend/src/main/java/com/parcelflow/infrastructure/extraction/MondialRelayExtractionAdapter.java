@@ -2,6 +2,7 @@ package com.parcelflow.infrastructure.extraction;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.parcelflow.domain.model.BarcodeType;
 import com.parcelflow.domain.model.ParcelMetadata;
 import com.parcelflow.domain.ports.ParcelExtractionPort;
 import org.jsoup.Jsoup;
@@ -62,7 +63,7 @@ public class MondialRelayExtractionAdapter implements ParcelExtractionPort {
             String carrier = "Mondial Relay";
 
             log.info("Mondial Relay extraction success: {} at {}", trackingNumber, pickupLocation);
-            return Optional.of(new ParcelMetadata(trackingNumber, carrier, expirationDate, pickupLocation, pickupCode, null));
+            return Optional.of(new ParcelMetadata(trackingNumber, carrier, expirationDate, pickupLocation, pickupCode, null, BarcodeType.NONE));
 
         } catch (Exception e) {
             log.warn("Failed to parse Mondial Relay email", e);

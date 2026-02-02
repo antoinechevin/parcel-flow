@@ -5,6 +5,8 @@ export type PickupPoint = {
   openingHours: string;
 };
 
+export type BarcodeType = 'QR_CODE' | 'AZTEC' | 'CODE_128' | 'NONE';
+
 export type Parcel = {
   id: { value: string } | string;
   trackingNumber: string;
@@ -13,6 +15,7 @@ export type Parcel = {
   pickupPoint: PickupPoint;
   pickupCode?: string;
   qrCodeUrl?: string;
+  barcodeType?: BarcodeType;
 };
 
 export type UrgencyLevel = 'HIGH' | 'MEDIUM' | 'LOW';

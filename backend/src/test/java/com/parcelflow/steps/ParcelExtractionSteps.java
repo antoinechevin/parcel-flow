@@ -3,6 +3,7 @@ package com.parcelflow.steps;
 import com.parcelflow.application.usecases.ExtractParcelUseCase;
 import com.parcelflow.domain.model.Parcel;
 import com.parcelflow.domain.model.ParcelMetadata;
+import com.parcelflow.domain.model.BarcodeType;
 import com.parcelflow.domain.ports.ParcelExtractionPort;
 import com.parcelflow.domain.ports.ParcelRepositoryPort;
 import io.cucumber.java.en.Given;
@@ -50,7 +51,7 @@ public class ParcelExtractionSteps {
         ParcelMetadata metadata = null;
         if (currentEmailContent.contains("UPS")) {
             metadata = new ParcelMetadata(
-                "1Z12345", "UPS", LocalDate.parse("2026-02-15"), "Relais Colis", null, null
+                "1Z12345", "UPS", LocalDate.parse("2026-02-15"), "Relais Colis", null, null, BarcodeType.QR_CODE
             );
         }
         

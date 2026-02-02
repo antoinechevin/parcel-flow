@@ -15,7 +15,8 @@ class ParcelMetadataTest {
             tomorrow,
             "Relais Colis",
             "1234",
-            "http://qr.url"
+            "http://qr.url",
+            BarcodeType.QR_CODE
         );
 
         assertEquals("1Z999", metadata.trackingCode());
@@ -24,5 +25,6 @@ class ParcelMetadataTest {
         assertEquals("Relais Colis", metadata.pickupLocation());
         assertEquals("1234", metadata.pickupCode());
         assertEquals("http://qr.url", metadata.qrCodeUrl());
+        assertEquals(BarcodeType.QR_CODE, metadata.barcodeType());
     }
 }

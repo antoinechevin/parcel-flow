@@ -70,7 +70,8 @@ public class ExtractParcelUseCase {
                     ParcelStatus.AVAILABLE,
                     pickupPoint,
                     metadata.pickupCode(),
-                    metadata.qrCodeUrl()
+                    metadata.qrCodeUrl(),
+                    metadata.barcodeType()
                 );
                 
                 repositoryPort.save(parcel);
