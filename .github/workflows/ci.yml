@@ -47,12 +47,12 @@ jobs:
       - name: Install Railway CLI
         run: npm i -g @railway/cli
       - name: Deploy Backend
-        run: railway up --service parcel-flow-backend --ci
+        run: railway up --service parcel-flow-backend --ci --detach
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         working-directory: backend
       - name: Deploy Frontend
-        run: railway up --service parcel-flow-frontend --ci
+        run: railway up --service parcel-flow-frontend --ci --detach
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         working-directory: frontend
