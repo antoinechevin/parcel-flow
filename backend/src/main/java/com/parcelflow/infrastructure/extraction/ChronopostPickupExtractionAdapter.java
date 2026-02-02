@@ -1,5 +1,6 @@
 package com.parcelflow.infrastructure.extraction;
 
+import com.parcelflow.domain.model.BarcodeType;
 import com.parcelflow.domain.model.ParcelMetadata;
 import com.parcelflow.domain.ports.ParcelExtractionPort;
 import org.jsoup.Jsoup;
@@ -56,8 +57,10 @@ public class ChronopostPickupExtractionAdapter implements ParcelExtractionPort {
                 carrier = "Vinted (Chronopost)";
             }
 
+            BarcodeType barcodeType = qrCodeUrl != null ? BarcodeType.AZTEC : BarcodeType.NONE;
+
             log.info("Chronopost extraction success: {} at {}", trackingNumber, pickupLocation);
-            return Optional.of(new ParcelMetadata(trackingNumber, carrier, expirationDate, pickupLocation, pickupCode, qrCodeUrl));
+            return Optional.of(new ParcelMetadata(trackingNumber, carrier, expirationDate, pickupLocation, pickupCode, qrCodeUrl, barcodeType));
 
         } catch (Exception e) {
             log.warn("Failed to parse Chronopost email", e);

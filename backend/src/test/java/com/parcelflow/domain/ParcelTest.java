@@ -1,6 +1,7 @@
 package com.parcelflow.domain;
 
 import com.parcelflow.domain.model.Parcel;
+import com.parcelflow.domain.model.BarcodeType;
 import com.parcelflow.domain.model.ParcelId;
 import com.parcelflow.domain.model.ParcelStatus;
 import com.parcelflow.domain.model.PickupPoint;
@@ -20,7 +21,7 @@ class ParcelTest {
         ParcelStatus status = ParcelStatus.AVAILABLE;
         PickupPoint pickupPoint = new PickupPoint("pp-1", "Relais", "Address", "08:00-19:00");
 
-        Parcel parcel = new Parcel(id, trackingNumber, "UPS", deadline, status, pickupPoint, "1234", "http://qr.url");
+        Parcel parcel = new Parcel(id, trackingNumber, "UPS", deadline, status, pickupPoint, "1234", "http://qr.url", BarcodeType.QR_CODE);
 
         assertNotNull(parcel);
         assertEquals(id, parcel.id());
@@ -28,6 +29,7 @@ class ParcelTest {
         assertEquals(deadline, parcel.deadline());
         assertEquals(status, parcel.status());
         assertEquals(pickupPoint, parcel.pickupPoint());
+        assertEquals(BarcodeType.QR_CODE, parcel.barcodeType());
     }
 
     @Test

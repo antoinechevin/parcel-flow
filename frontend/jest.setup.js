@@ -36,7 +36,13 @@ jest.mock('expo-linking', () => ({
 
 // Mock react-native-qrcode-svg
 
+
+
 jest.mock('react-native-qrcode-svg', () => {
+
+
+
+
 
   const React = require('react');
 

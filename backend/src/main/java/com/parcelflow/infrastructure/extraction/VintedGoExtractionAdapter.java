@@ -1,5 +1,6 @@
 package com.parcelflow.infrastructure.extraction;
 
+import com.parcelflow.domain.model.BarcodeType;
 import com.parcelflow.domain.model.ParcelMetadata;
 import com.parcelflow.domain.ports.ParcelExtractionPort;
 import org.jsoup.Jsoup;
@@ -59,6 +60,7 @@ public class VintedGoExtractionAdapter implements ParcelExtractionPort {
 
             // 5. Extraction QR Code URL
             String qrCodeUrl = extractQrCodeUrl(doc);
+            BarcodeType barcodeType = qrCodeUrl != null ? BarcodeType.QR_CODE : BarcodeType.NONE;
 
             return Optional.of(new ParcelMetadata(
                 trackingNumber != null ? trackingNumber : "UNKNOWN",
@@ -66,7 +68,8 @@ public class VintedGoExtractionAdapter implements ParcelExtractionPort {
                 deadline,
                 location,
                 pickupCode,
-                qrCodeUrl
+                qrCodeUrl,
+                barcodeType
             ));
 
         } catch (Exception e) {

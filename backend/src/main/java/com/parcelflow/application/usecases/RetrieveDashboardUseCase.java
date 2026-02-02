@@ -36,7 +36,7 @@ public class RetrieveDashboardUseCase {
 
                     if (effective != p.status()) {
 
-                        return new Parcel(p.id(), p.trackingNumber(), p.carrier(), p.deadline(), effective, p.pickupPoint(), p.pickupCode(), p.qrCodeUrl());
+                        return new Parcel(p.id(), p.trackingNumber(), p.carrier(), p.deadline(), effective, p.pickupPoint(), p.pickupCode(), p.qrCodeUrl(), p.barcodeType());
 
                     }
 

@@ -1,5 +1,6 @@
 package com.parcelflow.infrastructure.bootstrap;
 
+import com.parcelflow.domain.model.BarcodeType;
 import com.parcelflow.domain.model.Parcel;
 import com.parcelflow.domain.model.ParcelId;
 import com.parcelflow.domain.model.ParcelStatus;
@@ -30,10 +31,10 @@ public class DataInitializer {
             PickupPoint pp2 = new PickupPoint("pp-2", "Point Relay", "45 Avenue de la République, Lyon", "09:00-20:00");
 
             List<Parcel> sampleParcels = List.of(
-            new Parcel(ParcelId.random(), "TRACK-URGENT-1", "DHL", LocalDate.now().plusDays(1), ParcelStatus.AVAILABLE, pp1, null, null),
-            new Parcel(ParcelId.random(), "TRACK-SOON-1", "UPS", LocalDate.now().plusDays(3), ParcelStatus.AVAILABLE, pp1, null, null),
-            new Parcel(ParcelId.random(), "TRACK-SAFE-1", "La Poste", LocalDate.now().plusDays(7), ParcelStatus.AVAILABLE, pp2, null, null),
-            new Parcel(ParcelId.random(), "TRACK-DONE-1", "Chronopost", LocalDate.now().minusDays(2), ParcelStatus.PICKED_UP, pp2, null, null)
+            new Parcel(ParcelId.random(), "TRACK-URGENT-1", "DHL", LocalDate.now().plusDays(1), ParcelStatus.AVAILABLE, pp1, null, null, BarcodeType.QR_CODE),
+            new Parcel(ParcelId.random(), "TRACK-SOON-1", "UPS", LocalDate.now().plusDays(3), ParcelStatus.AVAILABLE, pp1, null, null, BarcodeType.QR_CODE),
+            new Parcel(ParcelId.random(), "TRACK-SAFE-1", "La Poste", LocalDate.now().plusDays(7), ParcelStatus.AVAILABLE, pp2, null, null, BarcodeType.QR_CODE),
+            new Parcel(ParcelId.random(), "TRACK-DONE-1", "Chronopost", LocalDate.now().minusDays(2), ParcelStatus.PICKED_UP, pp2, null, null, BarcodeType.AZTEC)
             );
 
             repository.saveAll(sampleParcels);
