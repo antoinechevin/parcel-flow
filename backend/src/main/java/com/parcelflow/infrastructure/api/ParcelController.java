@@ -1,11 +1,10 @@
 package com.parcelflow.infrastructure.api;
 
+import com.parcelflow.application.usecases.ArchiveParcelUseCase;
 import com.parcelflow.application.usecases.RetrieveDashboardUseCase;
 import com.parcelflow.domain.model.LocationGroup;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,14 +13,22 @@ import java.util.List;
 public class ParcelController {
 
     private final RetrieveDashboardUseCase retrieveDashboardUseCase;
+    private final ArchiveParcelUseCase archiveParcelUseCase;
 
-    public ParcelController(RetrieveDashboardUseCase retrieveDashboardUseCase) {
+    public ParcelController(RetrieveDashboardUseCase retrieveDashboardUseCase, ArchiveParcelUseCase archiveParcelUseCase) {
         this.retrieveDashboardUseCase = retrieveDashboardUseCase;
+        this.archiveParcelUseCase = archiveParcelUseCase;
     }
 
     @GetMapping("/dashboard")
     public List<LocationGroup> getDashboard() {
         return retrieveDashboardUseCase.retrieve();
+    }
+
+    @PostMapping("/parcels/{trackingNumber}/archive")
+    public ResponseEntity<Void> archiveParcel(@PathVariable String trackingNumber) {
+        archiveParcelUseCase.archive(trackingNumber);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/auth/verify")

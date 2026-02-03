@@ -6,16 +6,17 @@ import { GuichetModeModal } from './GuichetModeModal';
 
 interface ParcelCardProps {
   parcel: Parcel;
+  onArchive?: (trackingNumber: string) => void;
 }
 
 const getUrgencyColor = (theme: any, deadline: string, status: string) => {
-  if (status === 'PICKED_UP' || status === 'EXPIRED') return theme.colors.outline || '#bdc3c7';
-  
+  if (status === 'PICKED_UP' || status === 'EXPIRED' || status === 'ARCHIVED') return theme.colors.outline || '#bdc3c7';
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const deadlineDate = new Date(deadline);
   deadlineDate.setHours(0, 0, 0, 0);
-  
+
   const diffTime = deadlineDate.getTime() - today.getTime();
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
@@ -24,12 +25,13 @@ const getUrgencyColor = (theme: any, deadline: string, status: string) => {
   return theme.colors.info || '#2196F3';
 };
 
-export const ParcelCard: React.FC<ParcelCardProps> = ({ parcel }) => {
+export const ParcelCard: React.FC<ParcelCardProps> = ({ parcel, onArchive }) => {
   const theme = useTheme();
   const [guichetVisible, setGuichetVisible] = useState(false);
-  
+
   const isExpired = parcel.status === 'EXPIRED';
   const isAvailable = parcel.status === 'AVAILABLE';
+  const canArchive = parcel.status !== 'ARCHIVED';
   const urgencyColor = getUrgencyColor(theme, parcel.deadline, parcel.status);
 
   return (
@@ -63,18 +65,28 @@ export const ParcelCard: React.FC<ParcelCardProps> = ({ parcel }) => {
             Deadline: {parcel.deadline}
           </Text>
         </Card.Content>
-        {isAvailable && (
-          <Card.Actions>
+        <Card.Actions>
+          {isAvailable && (
             <Button 
               icon="qrcode-scan" 
               mode="contained-tonal" 
               onPress={() => setGuichetVisible(true)}
-              style={styles.guichetButton}
+              style={styles.actionButton}
             >
-              MODE GUICHET
+              GUICHET
             </Button>
-          </Card.Actions>
-        )}
+          )}
+          {canArchive && onArchive && (
+            <Button 
+              icon="archive-outline" 
+              mode={isAvailable ? "outlined" : "contained-tonal"} 
+              onPress={() => onArchive(parcel.trackingNumber)}
+              style={styles.actionButton}
+            >
+              ARCHIVER
+            </Button>
+          )}
+        </Card.Actions>
       </Card>
 
       <GuichetModeModal 
@@ -101,7 +113,7 @@ const styles = StyleSheet.create({
   carrierText: {
     color: '#666',
   },
-  guichetButton: {
-    width: '100%',
+  actionButton: {
+    flex: 1,
   }
 });
