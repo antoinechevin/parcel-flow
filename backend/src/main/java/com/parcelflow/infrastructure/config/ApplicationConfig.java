@@ -1,5 +1,6 @@
 package com.parcelflow.infrastructure.config;
 
+import com.parcelflow.application.usecases.ArchiveParcelUseCase;
 import com.parcelflow.application.usecases.ExtractParcelUseCase;
 import com.parcelflow.application.usecases.RetrieveDashboardUseCase;
 import com.parcelflow.application.usecases.EmailPollingOrchestrator;
@@ -35,6 +36,11 @@ public class ApplicationConfig {
     @Bean
     public RetrieveDashboardUseCase retrieveDashboardUseCase(ParcelRepositoryPort parcelRepositoryPort, UrgencyCalculator urgencyCalculator) {
         return new RetrieveDashboardUseCase(parcelRepositoryPort, urgencyCalculator);
+    }
+
+    @Bean
+    public ArchiveParcelUseCase archiveParcelUseCase(ParcelRepositoryPort parcelRepositoryPort) {
+        return new ArchiveParcelUseCase(parcelRepositoryPort);
     }
 
     @Bean

@@ -6,6 +6,7 @@ import { ParcelCard } from './ParcelCard';
 
 interface LocationGroupCardProps {
   group: LocationGroup;
+  onArchive?: (trackingNumber: string) => void;
   testID?: string;
 }
 
@@ -29,7 +30,7 @@ const getExpirationText = (daysUntil?: number, isInactive?: boolean) => {
   return `Expires in ${daysUntil} days`;
 };
 
-export const LocationGroupCard: React.FC<LocationGroupCardProps> = ({ group, testID }) => {
+export const LocationGroupCard: React.FC<LocationGroupCardProps> = ({ group, onArchive, testID }) => {
   const theme = useTheme();
   const isInactive = !group.parcels.some(p => p.status === 'AVAILABLE');
   const urgencyColor = getUrgencyColor(theme, group.urgency, isInactive);
@@ -75,7 +76,11 @@ export const LocationGroupCard: React.FC<LocationGroupCardProps> = ({ group, tes
         </View>
         <View style={styles.parcelList}>
           {group.parcels.map((parcel) => (
-            <ParcelCard key={typeof parcel.id === 'string' ? parcel.id : parcel.id.value} parcel={parcel} />
+            <ParcelCard 
+              key={typeof parcel.id === 'string' ? parcel.id : parcel.id.value} 
+              parcel={parcel} 
+              onArchive={onArchive}
+            />
           ))}
         </View>
       </View>

@@ -22,84 +22,47 @@ public class RetrieveDashboardUseCase {
         this.urgencyCalculator = urgencyCalculator;
     }
 
-        public List<LocationGroup> retrieve() {
+    public List<LocationGroup> retrieve() {
+        LocalDate today = LocalDate.now(urgencyCalculator.getClock());
 
-            LocalDate today = LocalDate.now(urgencyCalculator.getClock());
-
-            
-
-            return repository.findAll().stream()
-
+        return repository.findAll().stream()
+                .filter(p -> p.status() != ParcelStatus.ARCHIVED)
                 .map(p -> {
-
                     ParcelStatus effective = p.effectiveStatus(today);
-
                     if (effective != p.status()) {
-
                         return new Parcel(p.id(), p.trackingNumber(), p.carrier(), p.deadline(), effective, p.pickupPoint(), p.pickupCode(), p.qrCodeUrl(), p.barcodeType());
-
                     }
-
                     return p;
-
                 })
-
                 .collect(Collectors.groupingBy(Parcel::pickupPoint))
-
                 .entrySet().stream()
-
                 .map(entry -> {
-
                     List<Parcel> parcels = entry.getValue();
-
                     UrgencyCalculator.Result result = urgencyCalculator.calculate(parcels, today);
 
-                    
-
                     List<Parcel> sortedParcels = parcels.stream()
-
-                        .sorted(Comparator.comparing(this::getParcelPriority).thenComparing(Parcel::deadline))
-
-                        .collect(Collectors.toList());
-
-    
+                            .sorted(Comparator.comparing(this::getParcelPriority).thenComparing(Parcel::deadline))
+                            .collect(Collectors.toList());
 
                     return new LocationGroup(entry.getKey(), sortedParcels, result.level(), result.daysUntil());
-
                 })
-
                 .sorted(Comparator.comparing(this::getGroupPriority).thenComparing(g -> g.urgency()).thenComparing(g -> g.pickupPoint().name()))
-
                 .collect(Collectors.toList());
-
-        }
-
-    
-
-        private int getParcelPriority(Parcel p) {
-
-            return switch (p.status()) {
-
-                case AVAILABLE -> 0;
-
-                case EXPIRED -> 1;
-
-                case PICKED_UP -> 2;
-
-            };
-
-        }
-
-    
-
-        private int getGroupPriority(LocationGroup g) {
-
-            boolean hasAvailable = g.parcels().stream().anyMatch(p -> p.status() == ParcelStatus.AVAILABLE);
-
-            return hasAvailable ? 0 : 1;
-
-        }
-
     }
+
+    private int getParcelPriority(Parcel p) {
+        return switch (p.status()) {
+            case AVAILABLE -> 0;
+            case EXPIRED -> 1;
+            case PICKED_UP -> 2;
+            case ARCHIVED -> 3;
+        };
+    }
+
+    private int getGroupPriority(LocationGroup g) {
+        boolean hasAvailable = g.parcels().stream().anyMatch(p -> p.status() == ParcelStatus.AVAILABLE);
+        return hasAvailable ? 0 : 1;
+    }
+}
 
     

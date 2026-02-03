@@ -6,7 +6,7 @@ import { useDashboard } from '../src/hooks/useDashboard';
 import { LocationGroupCard } from '../src/components/LocationGroupCard';
 
 export default function ParcelListScreen() {
-  const { groups, loading, error } = useDashboard();
+  const { groups, loading, error, archiveParcel } = useDashboard();
 
   if (loading) {
     return (
@@ -33,6 +33,7 @@ export default function ParcelListScreen() {
           data={groups}
           renderItem={({ item }) => <LocationGroupCard 
             group={item} 
+            onArchive={archiveParcel}
             testID={`group-${item.pickupPoint.id}`}
           />}
           keyExtractor={(item) => item.pickupPoint.id}

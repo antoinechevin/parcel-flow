@@ -29,6 +29,9 @@ class ParcelControllerTest {
     @MockBean
     private RetrieveDashboardUseCase retrieveDashboardUseCase;
 
+    @MockBean
+    private com.parcelflow.application.usecases.ArchiveParcelUseCase archiveParcelUseCase;
+
     @BeforeEach
     void setupSecurity() {
         ApiKeyFilter.TEST_KEY_OVERRIDE = "test-key";

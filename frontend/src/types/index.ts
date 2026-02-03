@@ -11,7 +11,7 @@ export type Parcel = {
   id: { value: string } | string;
   trackingNumber: string;
   deadline: string;
-  status: 'AVAILABLE' | 'PICKED_UP' | 'EXPIRED';
+  status: 'AVAILABLE' | 'PICKED_UP' | 'EXPIRED' | 'ARCHIVED';
   pickupPoint: PickupPoint;
   pickupCode?: string;
   qrCodeUrl?: string;
