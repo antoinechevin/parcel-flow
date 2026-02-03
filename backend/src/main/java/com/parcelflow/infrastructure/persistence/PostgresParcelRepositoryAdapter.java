@@ -36,7 +36,10 @@ public class PostgresParcelRepositoryAdapter implements ParcelRepositoryPort {
 
     @Override
     public void save(Parcel parcel) {
-        repository.save(toEntity(parcel));
+        Optional<ParcelEntity> existing = repository.findByTrackingNumber(parcel.trackingNumber());
+        ParcelEntity entity = toEntity(parcel);
+        existing.ifPresent(e -> entity.setId(e.getId()));
+        repository.save(entity);
     }
 
     @Override
