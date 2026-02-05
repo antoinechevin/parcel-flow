@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Card, Text, Badge, useTheme, Button } from 'react-native-paper';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Animated, Platform } from 'react-native';
+import { Swipeable, RectButton } from 'react-native-gesture-handler';
+import * as Haptics from 'expo-haptics';
+import { AppTheme } from '../theme';
 import { Parcel } from '../types';
 import { GuichetModeModal } from './GuichetModeModal';
 
@@ -31,63 +34,99 @@ export const ParcelCard: React.FC<ParcelCardProps> = ({ parcel, onArchive }) => 
 
   const isExpired = parcel.status === 'EXPIRED';
   const isAvailable = parcel.status === 'AVAILABLE';
-  const canArchive = parcel.status !== 'ARCHIVED';
   const urgencyColor = getUrgencyColor(theme, parcel.deadline, parcel.status);
+
+  const renderLeftActions = (
+    progress: Animated.AnimatedInterpolation<number>,
+    dragX: Animated.AnimatedInterpolation<number>
+  ) => {
+    const trans = dragX.interpolate({
+      inputRange: [0, 100],
+      outputRange: [0, 1],
+      extrapolate: 'clamp',
+    });
+    return (
+      <RectButton style={styles.leftAction} onPress={() => onArchive?.(parcel.trackingNumber)}>
+        <Animated.Text
+          style={[
+            styles.actionText,
+            {
+              transform: [{ translateX: trans }],
+            },
+          ]}>
+          ARCHIVER
+        </Animated.Text>
+      </RectButton>
+    );
+  };
+
+  const handleSwipeOpen = () => {
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    onArchive?.(parcel.trackingNumber);
+  };
 
   return (
     <>
-      <Card style={[
-        styles.card, 
-        { borderLeftColor: urgencyColor, borderLeftWidth: 5 },
-        isExpired && { backgroundColor: theme.colors.surfaceVariant, opacity: 0.6 }
-      ]}>
-        <Card.Content>
-          <View style={styles.header}>
-            <View>
-              <Text variant="titleLarge" style={isExpired && { color: theme.colors.onSurfaceVariant }}>
-                {parcel.trackingNumber}
-              </Text>
-              <Text variant="bodySmall" style={styles.carrierText}>
-                {parcel.pickupPoint.name}
-              </Text>
+      <Swipeable
+        renderLeftActions={renderLeftActions}
+        onSwipeableOpen={handleSwipeOpen}
+        friction={2}
+        leftThreshold={30}
+        rightThreshold={40}
+      >
+        <Card style={[
+          styles.card, 
+          { borderLeftColor: urgencyColor, borderLeftWidth: 5 },
+          isExpired && { backgroundColor: theme.colors.surfaceVariant, opacity: 0.6 }
+        ]}>
+          <Card.Content>
+            <View style={styles.header}>
+              <View>
+                <Text variant="titleLarge" style={isExpired && { color: theme.colors.onSurfaceVariant }}>
+                  {parcel.trackingNumber}
+                </Text>
+                <Text variant="bodySmall" style={styles.carrierText}>
+                  {parcel.pickupPoint.name}
+                </Text>
+              </View>
+              <Badge 
+                size={24} 
+                style={{ 
+                  backgroundColor: isExpired ? theme.colors.outline : urgencyColor,
+                  color: isExpired ? theme.colors.surfaceVariant : undefined 
+                }}
+              >
+                {parcel.status}
+              </Badge>
             </View>
-            <Badge 
-              size={24} 
-              style={{ 
-                backgroundColor: isExpired ? theme.colors.outline : urgencyColor,
-                color: isExpired ? theme.colors.surfaceVariant : undefined 
-              }}
-            >
-              {parcel.status}
-            </Badge>
-          </View>
-          <Text variant="bodyMedium" style={isExpired && { color: theme.colors.onSurfaceVariant }}>
-            Deadline: {parcel.deadline}
-          </Text>
-        </Card.Content>
-        <Card.Actions>
-          {isAvailable && (
-            <Button 
-              icon="qrcode-scan" 
-              mode="contained-tonal" 
-              onPress={() => setGuichetVisible(true)}
-              style={styles.actionButton}
-            >
-              GUICHET
-            </Button>
-          )}
-          {canArchive && onArchive && (
-            <Button 
-              icon="archive-outline" 
-              mode={isAvailable ? "outlined" : "contained-tonal"} 
-              onPress={() => onArchive(parcel.trackingNumber)}
-              style={styles.actionButton}
-            >
-              ARCHIVER
-            </Button>
-          )}
-        </Card.Actions>
-      </Card>
+            <Text variant="bodyMedium" style={isExpired && { color: theme.colors.onSurfaceVariant }}>
+              Deadline: {parcel.deadline}
+            </Text>
+          </Card.Content>
+          <Card.Actions>
+            {isAvailable && (
+              <Button 
+                icon="qrcode-scan" 
+                mode="contained-tonal" 
+                onPress={() => setGuichetVisible(true)}
+                style={styles.actionButton}
+              >
+                GUICHET
+              </Button>
+            )}
+            {(Platform.OS === 'web' || !isAvailable) && onArchive && (
+              <Button 
+                icon="archive-outline" 
+                mode={isAvailable ? "outlined" : "contained-tonal"} 
+                onPress={() => onArchive(parcel.trackingNumber)}
+                style={styles.actionButton}
+              >
+                ARCHIVER
+              </Button>
+            )}
+          </Card.Actions>
+        </Card>
+      </Swipeable>
 
       <GuichetModeModal 
         visible={guichetVisible}
@@ -115,5 +154,19 @@ const styles = StyleSheet.create({
   },
   actionButton: {
     flex: 1,
-  }
+  },
+  leftAction: {
+    backgroundColor: AppTheme.colors.swipeActionBackground,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    marginVertical: 8,
+    marginHorizontal: 16,
+    borderRadius: 8,
+    padding: 20,
+  },
+  actionText: {
+    color: AppTheme.colors.swipeActionText,
+    fontWeight: '600',
+    padding: 10,
+  },
 });

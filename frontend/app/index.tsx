@@ -1,12 +1,13 @@
 import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { Stack } from 'expo-router';
-import { ActivityIndicator, Text } from 'react-native-paper';
+import { ActivityIndicator, Text, Snackbar } from 'react-native-paper';
 import { useDashboard } from '../src/hooks/useDashboard';
 import { LocationGroupCard } from '../src/components/LocationGroupCard';
+import { AppTheme } from '../src/theme';
 
 export default function ParcelListScreen() {
-  const { groups, loading, error, archiveParcel } = useDashboard();
+  const { groups, loading, error, archiveParcel, undoArchive, hasPendingArchive, pendingTrackingNumber } = useDashboard();
 
   if (loading) {
     return (
@@ -44,6 +45,27 @@ export default function ParcelListScreen() {
           <Text variant="bodyLarge">Aucun colis à récupérer pour le moment.</Text>
         </View>
       )}
+
+      <Snackbar
+        visible={hasPendingArchive}
+        onDismiss={() => {}} // Controlled by useDashboard timeout
+        action={{
+          label: 'ANNULER',
+          onPress: undoArchive,
+          textColor: AppTheme.colors.snackbarAction,
+        }}
+        duration={5000}
+        theme={{
+          colors: {
+            onSurface: AppTheme.colors.snackbarBackground,
+            inverseOnSurface: AppTheme.colors.snackbarText,
+          }
+        }}
+      >
+        <Text style={{ color: AppTheme.colors.snackbarText }}>
+          Colis {pendingTrackingNumber} archivé.
+        </Text>
+      </Snackbar>
     </View>
   );
 }
