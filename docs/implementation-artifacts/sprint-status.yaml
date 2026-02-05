@@ -43,6 +43,7 @@ development_status:
   epic-1: done
   1-1-connexion-oauth2-gmail-standard: done
   1-2-polling-cible-marquage-job: done
+  1-3-deploiement-continu-mobile-eas-github-actions: done
   epic-1-retrospective: optional
 
   epic-2: in-progress
