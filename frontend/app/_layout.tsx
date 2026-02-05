@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Stack, useRouter, useSegments, useRootNavigationState } from 'expo-router';
-import { PaperProvider, MD3LightTheme } from 'react-native-paper';
+import { PaperProvider } from 'react-native-paper';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useAuthStore } from '../src/core/auth/authStore';
-
-const theme = {
-  ...MD3LightTheme,
-  colors: {
-    ...MD3LightTheme.colors,
-    warning: '#FFB300', // Orange for MEDIUM
-    info: '#2196F3',    // Blue for LOW
-  },
-};
+import { AppTheme } from '../src/theme';
 
 export default function RootLayout() {
   const apiKey = useAuthStore((state) => state.apiKey);
@@ -43,11 +36,13 @@ export default function RootLayout() {
   }
 
   return (
-    <PaperProvider theme={theme}>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="login" options={{ title: 'Connexion' }} />
-        <Stack.Screen name="index" options={{ title: 'Mes Colis' }} />
-      </Stack>
-    </PaperProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <PaperProvider theme={AppTheme}>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="login" options={{ title: 'Connexion' }} />
+          <Stack.Screen name="index" options={{ title: 'Mes Colis' }} />
+        </Stack>
+      </PaperProvider>
+    </GestureHandlerRootView>
   );
 }

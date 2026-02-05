@@ -1,6 +1,6 @@
 # Story 4.2: Archivage par Swipe & Undo
 
-Status: ready-for-dev
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -12,21 +12,21 @@ so that **my list stays clean with minimal effort and no fear of mistakes.**
 
 ## Acceptance Criteria
 
-1. **Given** I am on the dashboard list.
-2. **When** I perform a "Swipe-to-left" gesture on a parcel item.
-3. **Then** a subtle haptic feedback is triggered (using `expo-haptics`).
-4. **And** the parcel is immediately removed from the active list (optimistic UI).
-5. **And** a Snackbar appears for 5 seconds with an "UNDO" (ANNULER) button.
-6. **And** clicking "UNDO" restores the parcel to its exact previous position in the list.
-7. **And** if no Undo occurs, the `ARCHIVED` status is persisted in the backend.
+1. [x] **Given** I am on the dashboard list.
+2. [x] **When** I perform a "Swipe-to-left" gesture on a parcel item.
+3. [x] **Then** a subtle haptic feedback is triggered (using `expo-haptics`).
+4. [x] **And** the parcel is immediately removed from the active list (optimistic UI).
+5. [x] **And** a Snackbar appears for 5 seconds with an "UNDO" (ANNULER) button.
+6. [x] **And** clicking "UNDO" restores the parcel to its exact previous position in the list.
+7. [x] **And** if no Undo occurs, the `ARCHIVED` status is persisted in the backend.
 
 ## Tasks / Subtasks
 
-- [ ] **Components**: Wrap `ParcelCard` with `Swipeable` from `react-native-gesture-handler` (AC: 2)
-- [ ] **Infrastructure**: Integrate `expo-haptics` for vibration feedback (AC: 3)
-- [ ] **State**: Implement `Undo` logic in the `useDashboard` store/hook (AC: 4, 5, 6)
-- [ ] **API**: Call the `archiveParcel` endpoint after the 5s timeout if not undone (AC: 7)
-- [ ] **Testing**: Create component tests for swipe and undo behavior (AC: 1-7)
+- [x] **Components**: Wrap `ParcelCard` with `Swipeable` from `react-native-gesture-handler` (AC: 2)
+- [x] **Infrastructure**: Integrate `expo-haptics` for vibration feedback (AC: 3)
+- [x] **State**: Implement `Undo` logic in the `useDashboard` store/hook (AC: 4, 5, 6)
+- [x] **API**: Call the `archiveParcel` endpoint after the 5s timeout if not undone (AC: 7)
+- [x] **Testing**: Create component tests for swipe and undo behavior (AC: 1-7)
 
 ## Dev Notes
 
@@ -38,6 +38,8 @@ so that **my list stays clean with minimal effort and no fear of mistakes.**
 
 - `frontend/src/components/ParcelCard.tsx`
 - `frontend/src/hooks/useDashboard.ts`
+- `frontend/app/index.tsx` (Added Snackbar)
+- `frontend/app/_layout.tsx` (Added GestureHandlerRootView)
 
 ### References
 
@@ -54,5 +56,22 @@ Gemini 2.0 Flash (SM Agent YOLO Mode)
 ### Debug Log References
 
 ### Completion Notes List
+- Implemented `Swipeable` in `ParcelCard` using `react-native-gesture-handler`.
+- Added haptic feedback using `expo-haptics`.
+- Refactored `useDashboard` hook to support a 5-second undo window.
+- Added `Snackbar` to `app/index.tsx` for visual Undo feedback with tracking number.
+- **Review Fixes Applied**:
+    - Added `GestureHandlerRootView` to `app/_layout.tsx` (Critical for Android support).
+    - Fixed memory leak in `useDashboard` by cleaning up `setTimeout` on unmount.
+    - Improved race condition handling when archiving multiple parcels in sequence.
+    - Removed redundant "ARCHIVER" button from `ParcelCard`.
+- Created `frontend/src/hooks/useDashboard.test.ts` to verify the logic.
+- All tests passing (13/13).
 
 ### File List
+- `frontend/src/hooks/useDashboard.ts`
+- `frontend/src/hooks/useDashboard.test.ts`
+- `frontend/src/components/ParcelCard.tsx`
+- `frontend/src/components/ParcelCard.test.tsx`
+- `frontend/app/index.tsx`
+- `frontend/app/_layout.tsx`

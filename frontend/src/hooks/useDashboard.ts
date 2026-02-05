@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import * as Haptics from 'expo-haptics';
 import { LocationGroup } from '../types';
 import { useAuthStore, HEADER_NAME } from '../core/auth/authStore';
 import { API_URL } from '../core/api/config';
@@ -43,9 +44,27 @@ export const useDashboard = () => {
     fetchParcels();
   }, [apiKey]);
 
+  const [undoTimeout, setUndoTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [pendingArchive, setPendingArchive] = useState<{trackingNumber: string, previousGroups: LocationGroup[]} | null>(null);
+
+  useEffect(() => {
+    // Cleanup timeout on unmount
+    return () => {
+      if (undoTimeout) clearTimeout(undoTimeout);
+    };
+  }, [undoTimeout]);
+
   const archiveParcel = async (trackingNumber: string) => {
-    // Optimistic UI update: remove the parcel from the local state immediately
+    // If there's already a pending archive, execute it immediately
+    if (undoTimeout && pendingArchive) {
+      clearTimeout(undoTimeout);
+      await executeArchive(pendingArchive.trackingNumber, pendingArchive.previousGroups);
+    }
+
     const previousGroups = [...groups];
+    setPendingArchive({ trackingNumber, previousGroups });
+
+    // Optimistic UI update: remove the parcel from the local state immediately
     setGroups(currentGroups => 
       currentGroups.map(group => ({
         ...group,
@@ -53,6 +72,16 @@ export const useDashboard = () => {
       })).filter(group => group.parcels.length > 0)
     );
 
+    const timeout = setTimeout(() => {
+      executeArchive(trackingNumber, previousGroups);
+      setUndoTimeout(null);
+      setPendingArchive(null);
+    }, 5000);
+
+    setUndoTimeout(timeout);
+  };
+
+  const executeArchive = async (trackingNumber: string, previousGroupsFallback: LocationGroup[]) => {
     try {
       const response = await fetch(`${API_URL}/api/parcels/${trackingNumber}/archive`, {
         method: 'POST',
@@ -67,10 +96,29 @@ export const useDashboard = () => {
       await fetchParcels(true);
     } catch (err: any) {
       // Rollback on error
-      setGroups(previousGroups);
+      setGroups(previousGroupsFallback);
       setError(err.message);
     }
   };
 
-  return { groups, loading, error, archiveParcel, refresh: () => fetchParcels(true) };
+  const undoArchive = () => {
+    if (undoTimeout && pendingArchive) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      clearTimeout(undoTimeout);
+      setGroups(pendingArchive.previousGroups);
+      setUndoTimeout(null);
+      setPendingArchive(null);
+    }
+  };
+
+  return { 
+    groups, 
+    loading, 
+    error, 
+    archiveParcel, 
+    undoArchive, 
+    pendingTrackingNumber: pendingArchive?.trackingNumber,
+    hasPendingArchive: !!undoTimeout, 
+    refresh: () => fetchParcels(true) 
+  };
 };

@@ -2,19 +2,33 @@
 jest.mock('react-native-reanimated', () => {
   const React = require('react');
   const View = require('react-native').View;
-  return {
+  const Reanimated = {
     default: {
       call: () => {},
     },
     useSharedValue: (v) => ({ value: v }),
     useAnimatedStyle: (fn) => fn(),
+    useAnimatedGestureHandler: () => ({}),
+    useAnimatedScrollHandler: () => ({}),
+    useDerivedValue: (v) => ({ value: v }),
     withTiming: (v) => v,
     withSpring: (v) => v,
+    withDelay: (d, v) => v,
+    withSequence: (...args) => args[args.length - 1],
     runOnJS: (fn) => fn,
     runOnUI: (fn) => fn,
     makeMutable: (v) => ({ value: v }),
+    createAnimatedComponent: (comp) => comp,
     setUpTests: () => {},
+    Interpolation: {},
+    interpolate: (v, input, output) => v,
+    Extrapolate: { CLAMP: 'clamp' },
     View: View,
+  };
+  return {
+    __esModule: true,
+    ...Reanimated,
+    default: Reanimated,
   };
 });
 
