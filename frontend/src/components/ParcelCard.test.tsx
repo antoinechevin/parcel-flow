@@ -59,4 +59,15 @@ describe('ParcelCard', () => {
     
     expect(getByTestId('swipeable')).toBeTruthy();
   });
+
+  it('renders ARCHIVER button for non-available parcels', () => {
+    const nonAvailableParcel: Parcel = { ...mockParcel, status: 'PICKED_UP' };
+    const { getByText } = render(
+      <PaperProvider>
+        <ParcelCard parcel={nonAvailableParcel} onArchive={() => {}} />
+      </PaperProvider>
+    );
+    
+    expect(getByText('ARCHIVER')).toBeTruthy();
+  });
 });
