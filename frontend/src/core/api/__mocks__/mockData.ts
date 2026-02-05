@@ -1,4 +1,4 @@
-import { LocationGroup } from '../../types';
+import { LocationGroup } from '../../../types';
 
 export const MOCK_PARCELS: LocationGroup[] = [
   {
