@@ -120,6 +120,20 @@ So that I only process relevant emails once.
 **Then** matching unread emails are fetched
 **And** processed emails are marked as "read" or "processed" in Gmail to avoid duplicates
 
+### Story 1.3 : Déploiement Continu Mobile (EAS & GitHub Actions)
+
+As a Developer,
+I want to automate the mobile app deployment through GitHub Actions using EAS,
+So that every change on the main branch is automatically buildable or updatable without manual intervention.
+
+**Acceptance Criteria:**
+
+**Given** a push to the main branch
+**When** the GitHub Action runs
+**Then** it executes `eas update` for over-the-air (OTA) updates on the production channel
+**And** it supports manual triggers for full `eas build` when native changes are detected
+**And** it uses a secure `EXPO_TOKEN` stored in GitHub Secrets
+
 ## Epic 2 : Extraction Intelligente & Confidentialité
 Transformer le chaos des emails bruts en données structurées (Code, Lieu, Date limite) par transporteur, tout en garantissant que le contenu privé des emails est immédiatement supprimé après analyse.
 **FRs couverts :** FR2.2, FR2.3, NFR1.1
