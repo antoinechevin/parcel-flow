@@ -38,9 +38,9 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <PaperProvider theme={AppTheme}>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="login" options={{ title: 'Connexion' }} />
-          <Stack.Screen name="index" options={{ title: 'Mes Colis' }} />
+        <Stack>
+          <Stack.Screen name="login" options={{ headerShown: false }} />
+          <Stack.Screen name="index" options={{ title: 'Mes Colis', headerShown: true }} />
         </Stack>
       </PaperProvider>
     </GestureHandlerRootView>

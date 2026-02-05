@@ -3,16 +3,25 @@ import * as Haptics from 'expo-haptics';
 import { LocationGroup } from '../types';
 import { useAuthStore, HEADER_NAME } from '../core/auth/authStore';
 import { API_URL } from '../core/api/config';
+import { MOCK_PARCELS } from '../core/api/__mocks__/mockData';
 
 export const useDashboard = () => {
   const [groups, setGroups] = useState<LocationGroup[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const apiKey = useAuthStore((state) => state.apiKey);
+  const isDemoMode = useAuthStore((state) => state.isDemoMode);
   const logout = useAuthStore((state) => state.logout);
 
   const fetchParcels = async (silent = false) => {
     if (!silent) setLoading(true);
+    
+    if (isDemoMode) {
+      setGroups(MOCK_PARCELS);
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await fetch(`${API_URL}/api/dashboard`, {
         headers: {
@@ -42,7 +51,7 @@ export const useDashboard = () => {
     }
 
     fetchParcels();
-  }, [apiKey]);
+  }, [apiKey, isDemoMode]);
 
   const [undoTimeout, setUndoTimeout] = useState<NodeJS.Timeout | null>(null);
   const [pendingArchive, setPendingArchive] = useState<{trackingNumber: string, previousGroups: LocationGroup[]} | null>(null);
@@ -82,6 +91,11 @@ export const useDashboard = () => {
   };
 
   const executeArchive = async (trackingNumber: string, previousGroupsFallback: LocationGroup[]) => {
+    if (isDemoMode) {
+        // In demo mode, we just simulate success (optimistic update stays)
+        return;
+    }
+
     try {
       const response = await fetch(`${API_URL}/api/parcels/${trackingNumber}/archive`, {
         method: 'POST',
