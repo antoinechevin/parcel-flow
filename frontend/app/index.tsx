@@ -1,13 +1,16 @@
 import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { Stack } from 'expo-router';
-import { ActivityIndicator, Text, Snackbar } from 'react-native-paper';
+import { ActivityIndicator, Text, Snackbar, Switch, Surface } from 'react-native-paper';
 import { useDashboard } from '../src/hooks/useDashboard';
 import { LocationGroupCard } from '../src/components/LocationGroupCard';
 import { AppTheme } from '../src/theme';
+import { useAuthStore } from '../src/core/auth/authStore';
 
 export default function ParcelListScreen() {
   const { groups, loading, error, archiveParcel, undoArchive, hasPendingArchive, pendingTrackingNumber } = useDashboard();
+  const isDemoMode = useAuthStore((state) => state.isDemoMode);
+  const setDemoMode = useAuthStore((state) => state.setDemoMode);
 
   if (loading) {
     return (
@@ -28,7 +31,24 @@ export default function ParcelListScreen() {
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: 'Mes Colis' }} />
+      <Stack.Screen 
+        options={{ 
+            title: 'Mes Colis',
+            headerRight: () => (
+                <View style={styles.headerRight}>
+                    <Text variant="labelSmall" style={{ marginRight: 8 }}>DÉMO</Text>
+                    <Switch value={isDemoMode} onValueChange={setDemoMode} />
+                </View>
+            )
+        }} 
+      />
+
+      {isDemoMode && (
+        <Surface style={styles.demoBanner} elevation={1}>
+            <Text variant="labelMedium" style={styles.demoBannerText}>MODE DÉMO ACTIF (Données simulées)</Text>
+        </Surface>
+      )}
+
       {groups && groups.length > 0 ? (
         <FlatList
           data={groups}
@@ -86,5 +106,19 @@ const styles = StyleSheet.create({
   error: {
     color: 'red',
     marginBottom: 8,
+  },
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 16,
+  },
+  demoBanner: {
+    padding: 8,
+    backgroundColor: AppTheme.colors.demoBannerBackground,
+    alignItems: 'center',
+  },
+  demoBannerText: {
+    color: AppTheme.colors.demoBannerText,
+    fontWeight: 'bold',
   }
 });

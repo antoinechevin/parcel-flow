@@ -15,7 +15,11 @@ describe('useDashboard', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.useFakeTimers();
-    (useAuthStore as unknown as jest.Mock).mockReturnValue('test-api-key');
+    // Default mock implementation: not demo mode
+    (useAuthStore as unknown as jest.Mock).mockImplementation((selector) => {
+      const state = { apiKey: 'test-api-key', isDemoMode: false, logout: jest.fn() };
+      return selector(state);
+    });
   });
 
   afterEach(() => {
@@ -121,5 +125,23 @@ describe('useDashboard', () => {
 
     expect(global.fetch).toHaveBeenCalledWith(expect.stringContaining('archive'), expect.objectContaining({ method: 'POST' }));
     expect(result.current.hasPendingArchive).toBe(false);
+  });
+
+  it('returns mock data when in demo mode', async () => {
+    // Override auth mock for this test
+    (useAuthStore as unknown as jest.Mock).mockImplementation((selector) => {
+      const state = { apiKey: 'test-key', isDemoMode: true, logout: jest.fn() };
+      return selector(state);
+    });
+
+    const { result } = renderHook(() => useDashboard());
+
+    // Should not call fetch
+    expect(global.fetch).not.toHaveBeenCalled();
+    
+    // Should return mock data
+    // Assuming MOCK_PARCELS has 2 groups
+    expect(result.current.groups).toHaveLength(2);
+    expect(result.current.loading).toBe(false);
   });
 });

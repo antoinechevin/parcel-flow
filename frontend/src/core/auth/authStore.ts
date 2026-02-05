@@ -4,7 +4,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface AuthState {
   apiKey: string | null;
+  isDemoMode: boolean;
   setApiKey: (key: string) => void;
+  setDemoMode: (isDemo: boolean) => void;
   logout: () => void;
 }
 
@@ -14,8 +16,10 @@ export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       apiKey: null,
+      isDemoMode: false,
       setApiKey: (key) => set({ apiKey: key }),
-      logout: () => set({ apiKey: null }),
+      setDemoMode: (isDemo) => set({ isDemoMode: isDemo }),
+      logout: () => set({ apiKey: null, isDemoMode: false }),
     }),
     {
       name: 'parcel-flow-auth',

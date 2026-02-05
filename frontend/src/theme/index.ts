@@ -15,5 +15,8 @@ export const AppTheme = {
     
     swipeActionBackground: '#B00020', // Error red for archive/delete
     swipeActionText: '#ffffff',
+
+    demoBannerBackground: '#FFEBEE', // Light Red
+    demoBannerText: '#D32F2F',       // Material Red 700
   },
 };
