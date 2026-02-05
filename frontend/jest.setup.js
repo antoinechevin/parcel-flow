@@ -1,5 +1,30 @@
 // Mock Reanimated
-require('react-native-reanimated').setUpTests();
+jest.mock('react-native-reanimated', () => {
+  const React = require('react');
+  const View = require('react-native').View;
+  return {
+    default: {
+      call: () => {},
+    },
+    useSharedValue: (v) => ({ value: v }),
+    useAnimatedStyle: (fn) => fn(),
+    withTiming: (v) => v,
+    withSpring: (v) => v,
+    runOnJS: (fn) => fn,
+    runOnUI: (fn) => fn,
+    makeMutable: (v) => ({ value: v }),
+    setUpTests: () => {},
+    View: View,
+  };
+});
+
+// Mock Worklets
+jest.mock('react-native-worklets-core', () => ({
+  Worklets: {
+    createRunOnJS: (fn) => fn,
+    createRunOnUI: (fn) => fn,
+  },
+}));
 
 // Mock Expo Router
 jest.mock('expo-router', () => ({
