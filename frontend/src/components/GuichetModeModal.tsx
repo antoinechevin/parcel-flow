@@ -1,7 +1,8 @@
 import React from 'react';
 import { Modal, Portal, Text, Button, IconButton, useTheme } from 'react-native-paper';
-import { StyleSheet, View, Image, Dimensions } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
+import { useBrightnessControl } from '../hooks/useBrightnessControl';
 import { Parcel } from '../types';
 
 interface GuichetModeModalProps {
@@ -12,6 +13,7 @@ interface GuichetModeModalProps {
 
 export const GuichetModeModal: React.FC<GuichetModeModalProps> = ({ visible, onDismiss, parcel }) => {
   const theme = useTheme();
+  useBrightnessControl(visible);
   
   // Use pickupCode for QR if present, otherwise trackingNumber
   const qrValue = parcel.pickupCode || parcel.trackingNumber;
