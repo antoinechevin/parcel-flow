@@ -13,9 +13,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.achevin.parcelflow"
     },
     "android": {
+      "package": "com.achevin.parcelflow",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -24,7 +26,10 @@
       "predictiveBackGestureEnabled": false,
       "permissions": [
         "android.permission.WRITE_SETTINGS"
-      ]
+      ],
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -39,6 +44,9 @@
         "projectId": "5a7cb3c4-c9ea-4678-9722-3f8327ba3172"
       }
     },
-    "owner": "achevin"
+    "owner": "achevin",
+    "updates": {
+      "url": "https://u.expo.dev/5a7cb3c4-c9ea-4678-9722-3f8327ba3172"
+    }
   }
 }
