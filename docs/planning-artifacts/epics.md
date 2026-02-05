@@ -242,3 +242,17 @@ So that I have a fallback for complex cases or to verify past deliveries.
 **When** I click the "Open original email" button
 **Then** the native Gmail app opens directly on the corresponding email thread
 **And** I can navigate to a dedicated "Archives" screen to see the history of all archived parcels (FR4.3)
+
+### Story 4.6 : Mode Démo Contextuel (Showcase)
+
+En tant que **Développeur/Présentateur**,
+je souhaite **basculer entre mes données réelles et des données de démonstration** directement depuis le tableau de bord,
+afin de **pouvoir présenter toutes les fonctionnalités de l'application sans dépendre de l'état de mon compte personnel.**
+
+**Acceptance Criteria:**
+
+**Given** I am on the dashboard list
+**When** I toggle the "Demo Mode" switch in the header
+**Then** the UI displays simulated data instead of real backend data
+**And** a clear visual indicator "MODE DÉMO" is visible
+**And** no real API calls are triggered for dashboard actions while in this mode
