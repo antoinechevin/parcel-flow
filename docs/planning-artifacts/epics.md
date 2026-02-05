@@ -7,326 +7,224 @@ stepsCompleted:
 inputDocuments:
   - docs/prd.md
   - docs/architecture.md
+  - docs/planning-artifacts/ux-design-specification.md
+  - docs/implementation-artifacts/
 ---
 
 # Parcel-Flow - Epic Breakdown
 
 ## Overview
 
-This document provides the complete epic and story breakdown for Parcel-Flow, decomposing the requirements from the PRD, UX Design if it exists, and Architecture requirements into implementable stories.
+This document provides the complete epic and story breakdown for Parcel-Flow, decomposing the requirements from the PRD, UX Design, and Architecture requirements into implementable stories. It tracks the progress from initial scaffolding to advanced mobile features.
 
 ## Requirements Inventory
 
 ### Functional Requirements
 
-FR1: Ingestion Intelligente (The "Pull" Strategy)
-- FR1.1: Le système doit se connecter à l'API Gmail via OAuth2 (Scope Readonly restreint).
-- FR1.2: Le système doit interroger périodiquement (Job planifié) Gmail avec des requêtes ciblées par provider (ex: `from:chronopost subject:disponible`).
-- FR1.3: Le système doit marquer les emails comme "traités" (ou lus) pour éviter les doublons.
-
-FR2: Extraction Déterministe (Le Cœur du Système)
-- FR2.2 - Stratégie Multi-Provider: Le système utilise des expressions régulières (Regex) spécifiques à chaque transporteur (Chronopost, Mondial Relay, Vinted) pour extraire les données.
-- FR2.3 - Gestion d'Erreur: Si le format de l'email ne correspond pas à la Regex attendue, le colis est marqué "A vérifier".
-
-FR3: Consultation Mobile "Zéro Stress"
-- FR3.1: Liste triée par Urgence (Date limite la plus proche en premier).
-- FR3.2 - Mode Guichet: Au clic, afficher le Code de Retrait en très gros caractères (50% écran) et forcer la luminosité au maximum (via API Native).
-- FR3.3 - Deep Link de Secours (Fallback): Bouton "Ouvrir l'email original" qui lance l'application Gmail native sur le message exact.
-
-FR4: Cycle de Vie & Archives
-- FR4.1: L'utilisateur peut archiver un colis manuellement ("Swipe-to-archive").
-- FR4.2: Une action d'archivage déclenche un Toast "Annuler" (Undo) pendant 3 à 5 secondes.
-- FR4.3: Accès à l'historique des colis archivés.
+- FR1.1: Connexion à l'API Gmail via OAuth2 (Scope Readonly).
+- FR1.2: Interrogation périodique (Job) avec requêtes ciblées par provider.
+- FR1.3: Marquage des emails traités comme "lus".
+- FR2.2: Extraction déterministe (Regex) pour Chronopost, Mondial Relay, Vinted Go.
+- FR2.3: Gestion des échecs d'extraction (Statut TO_VERIFY).
+- FR3.1: Liste mobile triée par Urgence (Date limite la plus proche).
+- FR3.2: Mode Guichet (Gros caractères + Luminosité Forcée à 100%).
+- FR3.3: Deep Link "Ouvrir l'email original" vers l'app Gmail.
+- FR4.1: Archivage manuel via geste "Swipe-to-archive".
+- FR4.2: Feedback "Undo" (Toast) pendant 3-5 secondes après archivage.
+- FR4.3: Vue Historique des colis archivés.
+- FR4.4: Gestion automatique de l'expiration (Statut EXPIRED).
 
 ### NonFunctional Requirements
 
-NFR1: Privacy & Sécurité
-- NFR1.1 - Éphémérité: Le corps brut de l'email ne doit jamais être persisté en base de données.
-- NFR1.2 - Politique de Rétention: Les colis archivés sont supprimés définitivement de la base de données après 30 jours (Job Automatique).
-- NFR1.3 - Isolation: Le token d'accès Gmail est stocké de manière sécurisée (Vault ou Env Var chiffrée).
-
-NFR2: Robustesse Technique (Clean Arch)
-- NFR2.1: Le Domaine métier doit être pur (aucune dépendance Spring, Gmail ou SQL).
-- NFR2.2: Les interactions externes sont isolées dans des "Adapters".
-
-NFR3: Expérience Mobile
-- NFR3.1 - Offline Read: L'application doit mettre en cache la dernière liste connue pour consultation sans réseau.
-- NFR3.2 - Performance: Lancement de l'application en < 2 secondes (optimisation JS bundle).
+- NFR1.1: Non-persistance du corps brut de l'email (Éphémérité).
+- NFR1.2: Purge automatique des archives après 30 jours.
+- NFR1.3: Stockage sécurisé des tokens OAuth.
+- NFR2.1: Pureté du Domaine (Pas de Spring/JPA/Reflection dans `domain`).
+- NFR2.2: Isolation stricte via Adapters (Hexagonal Architecture).
+- NFR3.1: Mode Offline (Cache local de la dernière liste).
+- NFR3.2: Performance de lancement (< 2 secondes).
 
 ### Additional Requirements
 
-From Architecture:
-- **Monorepo Structure**: Implement strict folder structure (backend, frontend, infra).
-- **Backend Architecture**: Hexagonal Architecture (Ports & Adapters). Domain must be pure Java.
-- **Backend Tech**: Java 21, Spring Boot 3.3+, Spring AI.
-- **Frontend Tech**: React Native (Expo), React Native Paper, Zustand.
-- **Testing**: ATDD with Cucumber (Gherkin), Testcontainers, ArchUnit.
-- **Infrastructure**: PostgreSQL, Docker, GitHub Actions (CI/CD).
-- **API**: REST Controllers.
+**From Architecture:**
+- Java 21 / Spring Boot 3.3.
+- React Native Expo SDK 52.
+- ArchUnit pour garantir la pureté hexagonale.
+- ATDD piloté par Gherkin (Cucumber JVM).
+- PostgreSQL 16.
+- Structure Monorepo stricte.
 
-From UX (Inferred):
-- **UI Framework**: React Native Paper (Material Design 3).
-- **Theme**: Strict use of Design Tokens (Colors, Typography) in `theme.ts`.
-- **Dark Mode**: Native support.
-- **Dashboard**: FlashList for performance, Traffic light color coding for urgency.
-- **Guichet Mode**: Max brightness control, large text.
+**From UX Design:**
+- Thème Material Design 3 (React Native Paper).
+- Mode Dark OLED (#000000).
+- Système de couleur "Traffic Light" pour l'urgence.
+- Opération à une main (Zone interactive en bas).
+- Feedback haptique lors des actions clés (Swipe, Refresh).
 
 ### FR Coverage Map
 
-FR1.1: Epic 1 - Connexion API Gmail OAuth2
+FR1.1: Epic 1 - Connexion OAuth2 Gmail
 FR1.2: Epic 1 - Polling périodique des emails
 FR1.3: Epic 1 - Marquage des emails traités
-FR2.2: Epic 2 - Extraction par Gemini
-FR2.3: Epic 2 - Gestion d'erreur et fallback
-FR3.1: Epic 3 - Liste triée par urgence
-FR3.2: Epic 4 - Mode Guichet (Luminosité, Gros caractères)
+FR2.2: Epic 2 - Extraction Regex (Chronopost, MR, Vinted)
+FR2.3: Epic 2 - Statut TO_VERIFY en cas d'échec
+FR3.1: Epic 3 - Tri par urgence sur le Dashboard
+FR3.2: Epic 4 - Mode Guichet (Luminosité & Zoom)
 FR3.3: Epic 4 - Deep Link vers Gmail
-FR4.1: Epic 4 - Archivage manuel
-FR4.2: Epic 4 - Toast "Undo"
-FR4.3: Epic 4 - Historique des archives
-NFR1.1: Epic 2 - Non-persistance du corps d'email
-NFR1.2: Epic 4 - Suppression automatique après 30 jours
-NFR1.3: Epic 1 - Sécurité du Token
-NFR2.1: Epic 1 - Architecture Hexagonale pure
-NFR2.2: Epic 1 - Isolation des Adapters
-NFR3.1: Epic 3 - Mode Offline
-NFR3.2: Epic 3 - Performance lancement
+FR4.1: Epic 4 - Geste Swipe-to-archive
+FR4.2: Epic 4 - Toast Undo après archivage
+FR4.3: Epic 4 - Vue Historique des archives
+FR4.4: Epic 3 - Gestion automatique de l'expiration
 
 ## Epic List
 
-### Epic 1: La Fondation "Clean Arch" & Connexion Gmail
-Mettre en place l'infrastructure technique (Monorepo, CI/CD, Architecture Hexagonale) et permettre au système de se connecter à Gmail de manière sécurisée pour identifier les emails de colis.
-**FRs covered:** FR1.1, FR1.2, FR1.3, NFR1.3, NFR2.1, NFR2.2
+### Epic 1 : Ingestion Automatique des Colis
+Permettre au système de se connecter en toute sécurité au compte Gmail de l'utilisateur pour identifier et récupérer automatiquement les emails de livraison dès qu'ils arrivent.
+**FRs couverts :** FR1.1, FR1.2, FR1.3
 
-### Epic 2: Le Cœur d'Extraction (Regex) & Protection de la Vie Privée
-Implémenter la logique d'extraction des données par Regex (Stratégie par Provider) en garantissant l'anonymisation stricte des données sensibles avant traitement.
-**FRs covered:** FR2.2, FR2.3, NFR1.1
+### Epic 2 : Extraction Intelligente & Confidentialité
+Transformer le chaos des emails bruts en données structurées (Code, Lieu, Date limite) par transporteur, tout en garantissant que le contenu privé des emails est immédiatement supprimé après analyse.
+**FRs couverts :** FR2.2, FR2.3, NFR1.1
 
-### Epic 3: Le Dashboard Mobile & Consultation "Zéro Stress"
-Créer l'interface mobile pour afficher la liste des colis triée par urgence, avec une gestion performante et un accès hors ligne.
-**FRs covered:** FR3.1, NFR3.1, NFR3.2
+### Epic 3 : Dashboard Mobile "Zéro Stress"
+Offrir une vue d'ensemble des colis actifs, triés par priorité d'urgence et accessibles instantanément, même dans les zones sans réseau (point relais en sous-sol).
+**FRs couverts :** FR3.1, FR4.4, NFR3.1, NFR3.2
 
-### Epic 4: L'Expérience "Guichet" & Cycle de Vie
-Peaufiner l'expérience utilisateur au point de retrait (luminosité max, deep link) et gérer le cycle de vie complet des données (archivage, suppression automatique).
-**FRs covered:** FR3.2, FR3.3, FR4.1, FR4.2, FR4.3, NFR1.2
+## Epic 1 : Ingestion Automatique des Colis
+Permettre au système de se connecter en toute sécurité au compte Gmail de l'utilisateur pour identifier et récupérer automatiquement les emails de livraison dès qu'ils arrivent.
+**FRs couverts :** FR1.1, FR1.2, FR1.3
 
-## Epic 1: La Fondation "Clean Arch" & Connexion Gmail
-
-Mettre en place l'infrastructure technique (Monorepo, CI/CD, Architecture Hexagonale) et permettre au système de se connecter à Gmail de manière sécurisée pour identifier les emails de colis.
-
-### Story 1.1: Initialisation Monorepo & Scaffolding Walking Skeleton
-
-As a Lead Developer,
-I want to initialize the Monorepo with the strict folder structure and a "Walking Skeleton" of the Backend and Frontend,
-So that the team can start working on a solid technical foundation that respects the defined architecture.
-
-**Acceptance Criteria:**
-
-**Given** an empty git repository
-**When** I run the setup scripts
-**Then** I should see the folders `backend`, `frontend`, and `infra` created.
-**And** the backend project uses Spring Boot 3.3+ and Java 21.
-**And** the frontend project uses Expo and React Native Paper.
-**And** the CI pipeline workflow runs and passes for both.
-
-### Story 1.2.1: Visualisation Liste Simple (MVP)
-
-As a User,
-I want to see a list of my active parcels on my phone,
-so that I can track what I need to pick up.
-
-**Acceptance Criteria:**
-
-- Backend: GET /api/parcels returns a flat list of parcels.
-- Frontend: ParcelListScreen displays parcels in a flat list.
-- ATDD: DashboardList.feature passes.
-
-### Story 1.2.2: Regroupement par Point de Retrait
-
-As a User,
-I want my parcels grouped by pickup location on my dashboard,
-so that I can see where I need to go.
-
-**Acceptance Criteria:**
-
-- Backend: RetrieveDashboardUseCase aggregates parcels by PickupPoint.
-- Frontend: LocationGroupCard displays grouped parcels.
-- ATDD: DashboardAggregation.feature passes.
-
-### Story 1.2.3: Indicateurs d'Urgence
-
-As a User,
-I want to see urgency indicators on my pickup locations,
-so that I don't miss a deadline.
-
-**Acceptance Criteria:**
-
-- Backend: Groups are sorted by Urgency (HIGH first).
-- Frontend: LocationGroupCard displays colored urgency indicators.
-- ATDD: DashboardUrgency.feature passes.
-
-### Story 1.3: Adapter Gmail (Client d'Infrastructure)
-
-As a Developer,
-I want a Gmail client that can list and read unread delivery emails,
-so that the system can fetch data from the outside world using a standardized Port.
-
-**Acceptance Criteria:**
-
-- MailSourcePort interface exists.
-- GmailInboundAdapter implements MailSourcePort.
-- Successfully connects to Gmail API via OAuth2.
-
-### Story 1.4: Polling Job & Orchestration
+### Story 1.1 : Connexion OAuth2 Gmail (Standard)
 
 As a System,
-I want to periodically trigger the mail checking process,
-so that new delivery emails are automatically processed without manual intervention.
+I want to connect to Gmail API with a restricted readonly scope,
+So that I can access delivery emails without compromising user privacy.
 
 **Acceptance Criteria:**
 
-- Spring @Scheduled task runs at configurable interval.
-- Job calls MailSourcePort and markAsRead after processing.
+**Given** valid OAuth2 credentials
+**When** the system requests access
+**Then** a secure token is obtained and stored safely
+**And** the scope is limited to readonly access to emails
 
-## Epic 2: Le Cœur d'Extraction (Regex) & Protection de la Vie Privée
+### Story 1.2 : Polling ciblé & Marquage (Job)
 
-Implémenter la logique d'extraction des données par Regex (Stratégie par Provider) en garantissant l'anonymisation stricte des données sensibles avant traitement.
+As a System,
+I want to poll Gmail for specific queries (e.g. `from:chronopost`) and mark them as read,
+So that I only process relevant emails once.
 
-### Story 2.2: Extraction de Métadonnées (Regex Strategies)
+**Acceptance Criteria:**
+
+**Given** a list of provider queries (Chronopost, Mondial Relay, Vinted)
+**When** the scheduled job runs
+**Then** matching unread emails are fetched
+**And** processed emails are marked as "read" or "processed" in Gmail to avoid duplicates
+
+## Epic 2 : Extraction Intelligente & Confidentialité
+Transformer le chaos des emails bruts en données structurées (Code, Lieu, Date limite) par transporteur, tout en garantissant que le contenu privé des emails est immédiatement supprimé après analyse.
+**FRs couverts :** FR2.2, FR2.3, NFR1.1
+
+### Story 2.1 : Extraction déterministe par Provider
+
+As a System,
+I want to use specific Regex strategies for Chronopost, Mondial Relay and Vinted Go,
+So that I extract Tracking Code, Pickup Location, and Deadline accurately.
+
+**Acceptance Criteria:**
+
+**Given** a raw email text from a recognized provider
+**When** the corresponding provider strategy is applied
+**Then** a `Parcel` record is created with extracted metadata (Code, Location, Deadline)
+**And** the raw email body is NEVER saved in the database to ensure privacy
+
+### Story 2.2 : Gestion des échecs (Statut TO_VERIFY)
+
+As a System,
+I want to flag parcels as `TO_VERIFY` if extraction fails,
+So that the user knows a manual check is needed.
+
+**Acceptance Criteria:**
+
+**Given** an email that doesn't match any known Regex pattern
+**When** the processing job runs
+**Then** a parcel record is created with status `TO_VERIFY`
+**And** the record includes a reference/link to the original email for manual consultation
+
+## Epic 3 : Dashboard Mobile "Zéro Stress"
+Offrir une vue d'ensemble des colis actifs, triés par priorité d'urgence et accessibles instantanément, même dans les zones sans réseau (point relais en sous-sol).
+**FRs couverts :** FR3.1, FR4.4, NFR3.1, NFR3.2
+
+### Story 3.1 : Dashboard Trié par Urgence
 
 As a User,
-I want the system to extract tracking details using specific rules for Chronopost, Mondial Relay, and Vinted,
-So that I get reliable data without AI hallucinations.
-
-**Acceptance Criteria:**
-
-**Given** a raw email from a known provider (e.g., Chronopost)
-**When** passed to the `RegexParserAdapter`
-**Then** the specific strategy for that provider is selected.
-**And** the Regex extracts: Pickup Code, Deadline, and Location.
-**And** a new Parcel is created with these details.
-
-### Story 2.3: Gestion d'Echec de Parsing (Fallback)
-
-As a User,
-I want the system to flag parcels where the email format has changed,
-So that I can manually check them instead of having missing info.
-
-**Acceptance Criteria:**
-
-**Given** an email where the Regex does not match (format change)
-**When** the parcel is created
-**Then** its status is set to "TO_VERIFY".
-**And** the parcel record includes a reference/link to the original email.
-
-### Story 2.2.4: Orchestration par Requêtes Ciblées (Targeted Polling)
-
-As a Developer,
-I want to configure specific Gmail queries for each provider and map them to their dedicated extractors,
-So that the system only fetches relevant emails and applies the strictly correct parsing logic without ambiguity.
-
-**Acceptance Criteria:**
-
-- **Provider Configuration:** Define a structure (Enum or Bean Registry) linking a `Gmail Query` (e.g., `from:vinted...`) to a specific `ParcelExtractionPort` bean.
-- **MailSourcePort Update:** The interface must accept a `query` parameter (e.g., `fetchEmails(String query)`).
-- **Polling Logic:** The scheduled job iterates through all configured providers, executes their specific query, and passes the results ONLY to the mapped extractor.
-- **Efficiency:** Generic/broad email fetching is removed to optimize quotas and relevance.
-
-## Epic 3: Le Dashboard Mobile & Consultation "Zéro Stress"
-
-Créer l'interface mobile pour afficher la liste des colis triée par urgence, avec une gestion performante et un accès hors ligne.
-
-### Story 3.1: Dashboard Mobile avec Liste Triée
-
-As a User,
-I want to see my active parcels in a list sorted by urgency (soonest expiration date first),
-So that I know exactly which parcel to pick up first.
+I want to see my parcels sorted by deadline with clear visual priority,
+So that I can plan my pickup tour efficiently.
 
 **Acceptance Criteria:**
 
 **Given** a list of active parcels
 **When** viewing the Dashboard
-**Then** parcels are sorted by expiration date (descending).
-**And** visual indicators (Traffic light colors) show the level of urgency.
-**And** the list scrolling is performant (using FlashList).
+**Then** parcels are grouped by location (PickupPoint)
+**And** groups are sorted by the most urgent parcel deadline (Soonest first)
+**And** "Expired" parcels are displayed at the bottom of the list with reduced opacity
+**And** "Traffic Light" colors (Red/Orange/Green) are applied based on the deadline
 
-### Story 3.2: Cache Local & Mode Offline
+### Story 3.2 : Cache Local (Offline Mode)
 
 As a User,
-I want to access my parcel list even when I have no internet connection,
-So that I am never blocked at the counter.
+I want to access my last synced list even without an internet connection,
+So that I am never blocked at the counter in a "dead zone".
 
 **Acceptance Criteria:**
 
-**Given** a previously loaded parcel list
+**Given** a previously successful sync
 **When** the device is offline
-**Then** the application displays the cached list.
-**And** an "Offline Mode" indicator is visible to the user.
+**Then** the application displays the cached version of the parcel list
+**And** an "Offline Mode" banner or indicator is clearly visible
+**And** the UI remains responsive and allows opening the "Guichet Mode" for cached parcels
 
-## Epic 4: L'Expérience "Guichet" & Cycle de Vie
+## Epic 4 : Expérience Guichet & Fin de Cycle
+Optimiser le moment critique du retrait (Luminosité max, codes géants) et permettre de clore proprement le cycle de vie du colis par un geste simple et réversible (Swipe-to-archive).
+**FRs couverts :** FR3.2, FR3.3, FR4.1, FR4.2, FR4.3, NFR1.2
 
-Peaufiner l'expérience utilisateur au point de retrait (luminosité max, deep link) et gérer le cycle de vie complet des données (archivage, suppression automatique).
-
-### Story 4.1.0: Mode Guichet Web (Codes & QR Codes)
-
-As a User (Web App),
-I want to see my withdrawal codes and QR codes for Chronopost, Vinted Go, and Mondial Relay in a dedicated "Counter Mode" view,
-so that I can easily retrieve my parcels tonight even without the mobile app's native features.
-
-**Acceptance Criteria:**
-- Extraction of PIN codes for Chronopost, Vinted Go, and Mondial Relay.
-- Extraction of QR Code image URLs from emails.
-- Large character display and image rendering in the web app.
-
-### Story 4.1: Mode Guichet (Luminosité & Zoom Code) - Mobile Native
+### Story 4.1 : Mode Guichet (Luminosité Native & Zoom)
 
 As a User,
-I want to tap a parcel and see its tracking code in giant characters with maximum screen brightness,
-So that the shopkeeper can easily scan or read it.
+I want the screen to automatically switch to maximum brightness when showing a withdrawal code,
+So that the shopkeeper's scanner can read it without friction.
 
 **Acceptance Criteria:**
 
-**Given** a selected parcel
-**When** entering "Counter Mode"
-**Then** the tracking code is displayed in large font (approx 50% screen).
-**And** the device screen brightness is set to 100%.
-**And** brightness returns to previous level when closing the mode.
+**Given** I open the "Guichet Mode" for a specific parcel
+**When** the modal becomes visible
+**Then** the device screen brightness is set to 100% (using expo-brightness)
+**And** the withdrawal code is displayed in large, high-contrast characters
+**And** the brightness returns to its original system level when the modal is closed
 
-### Story 4.2: Archivage avec Option Annuler (Undo)
+### Story 4.2 : Archivage par Swipe & Undo
 
 As a User,
-I want to swipe a parcel to archive it and have a few seconds to undo my action,
-So that I don't lose data by mistake.
+I want to archive a parcel with a natural swipe gesture and have a safety net to undo it,
+So that my list stays clean with minimal effort and no fear of mistakes.
 
 **Acceptance Criteria:**
 
-**Given** an active parcel
-**When** I perform a "Swipe-to-archive" gesture
-**Then** the parcel is removed from the active list.
-**And** a Toast appears for 5 seconds with an "Undo" button.
-**And** clicking "Undo" restores the parcel to the active list.
-**And** I can navigate to a separate view to see the list of archived parcels.
+**Given** I am on the dashboard list
+**When** I perform a "Swipe-to-left" gesture on a parcel item
+**Then** a subtle haptic feedback is triggered
+**And** the parcel is immediately removed from the active list
+**And** a Snackbar appears for 5 seconds with an "UNDO" (ANNULER) button
+**And** clicking "UNDO" restores the parcel to its exact previous position in the list
 
-### Story 4.3: Deep Link vers Gmail Original
+### Story 4.3 : Deep Link Gmail & Historique des Archives
 
 As a User,
-I want a button to open the original email in my Gmail app,
-So that I can check details that were not extracted.
+I want to be able to open the original email in Gmail or consult my archived parcels,
+So that I have a fallback for complex cases or to verify past deliveries.
 
 **Acceptance Criteria:**
 
-**Given** a parcel detail view
-**When** I click "Open original email"
-**Then** the native Gmail application opens directly to the specific email thread.
-
-### Story 4.4: Suppression Automatique & Purge des Données
-
-As a System,
-I want to permanently delete archived parcels after 30 days,
-So that I respect data retention policies.
-
-**Acceptance Criteria:**
-
-**Given** parcels archived for more than 30 days
-**When** the daily purge job runs
-**Then** these parcels are permanently deleted from the database.
+**Given** a parcel detail or "Guichet Mode" view
+**When** I click the "Open original email" button
+**Then** the native Gmail app opens directly on the corresponding email thread
+**And** I can navigate to a dedicated "Archives" screen to see the history of all archived parcels (FR4.3)
