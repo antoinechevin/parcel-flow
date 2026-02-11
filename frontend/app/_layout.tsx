@@ -7,6 +7,7 @@ import { AppTheme } from '../src/theme';
 
 export default function RootLayout() {
   const apiKey = useAuthStore((state) => state.apiKey);
+  const isDemoMode = useAuthStore((state) => state.isDemoMode);
   const segments = useSegments();
   const router = useRouter();
   const navigationState = useRootNavigationState();
@@ -21,15 +22,16 @@ export default function RootLayout() {
     if (!isMounted || !navigationState?.key) return;
 
     const inAuthGroup = segments[0] === 'login';
+    const isAuthenticated = !!apiKey || isDemoMode;
 
-    if (!apiKey && !inAuthGroup) {
+    if (!isAuthenticated && !inAuthGroup) {
       // Redirect to the login page if not authenticated
       router.replace('/login');
-    } else if (apiKey && inAuthGroup) {
+    } else if (isAuthenticated && inAuthGroup) {
       // Redirect away from the login page if authenticated
       router.replace('/');
     }
-  }, [apiKey, segments, isMounted, navigationState?.key]);
+  }, [apiKey, isDemoMode, segments, isMounted, navigationState?.key]);
 
   if (!isMounted || !navigationState?.key) {
     return null; // Ou un écran de chargement très simple

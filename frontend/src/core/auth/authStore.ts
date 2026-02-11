@@ -17,8 +17,8 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       apiKey: null,
       isDemoMode: false,
-      setApiKey: (key) => set({ apiKey: key }),
-      setDemoMode: (isDemo) => set({ isDemoMode: isDemo }),
+      setApiKey: (key) => set({ apiKey: key, isDemoMode: false }),
+      setDemoMode: (isDemo) => set({ isDemoMode: isDemo, apiKey: isDemo ? null : null }),
       logout: () => set({ apiKey: null, isDemoMode: false }),
     }),
     {
