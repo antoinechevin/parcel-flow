@@ -45,7 +45,7 @@ export const useDashboard = () => {
   };
 
   useEffect(() => {
-    if (!apiKey) {
+    if (!apiKey && !isDemoMode) {
       setLoading(false);
       return;
     }

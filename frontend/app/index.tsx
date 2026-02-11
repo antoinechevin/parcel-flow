@@ -1,11 +1,12 @@
 import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { Stack } from 'expo-router';
-import { ActivityIndicator, Text, Snackbar, Switch, Surface } from 'react-native-paper';
+import { ActivityIndicator, Text, Snackbar, Button } from 'react-native-paper';
 import { useDashboard } from '../src/hooks/useDashboard';
 import { LocationGroupCard } from '../src/components/LocationGroupCard';
 import { AppTheme } from '../src/theme';
 import { useAuthStore } from '../src/core/auth/authStore';
+import { DemoBanner } from '../src/components/DemoBanner';
 
 export default function ParcelListScreen() {
   const { groups, loading, error, archiveParcel, undoArchive, hasPendingArchive, pendingTrackingNumber } = useDashboard();
@@ -34,20 +35,20 @@ export default function ParcelListScreen() {
       <Stack.Screen 
         options={{ 
             title: 'Mes Colis',
-            headerRight: () => (
-                <View style={styles.headerRight}>
-                    <Text variant="labelSmall" style={{ marginRight: 8 }}>DÉMO</Text>
-                    <Switch value={isDemoMode} onValueChange={setDemoMode} />
-                </View>
-            )
+            headerRight: () => isDemoMode ? (
+                <Button 
+                  mode="text" 
+                  compact 
+                  onPress={() => setDemoMode(false)}
+                  labelStyle={{ fontSize: 10 }}
+                >
+                  QUITTER DÉMO
+                </Button>
+            ) : null
         }} 
       />
 
-      {isDemoMode && (
-        <Surface style={styles.demoBanner} elevation={1}>
-            <Text variant="labelMedium" style={styles.demoBannerText}>MODE DÉMO ACTIF (Données simulées)</Text>
-        </Surface>
-      )}
+      {isDemoMode && <DemoBanner absolute={false} />}
 
       {groups && groups.length > 0 ? (
         <FlatList
@@ -111,14 +112,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginRight: 16,
-  },
-  demoBanner: {
-    padding: 8,
-    backgroundColor: AppTheme.colors.demoBannerBackground,
-    alignItems: 'center',
-  },
-  demoBannerText: {
-    color: AppTheme.colors.demoBannerText,
-    fontWeight: 'bold',
   }
 });

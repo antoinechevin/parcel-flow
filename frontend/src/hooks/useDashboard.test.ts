@@ -140,8 +140,8 @@ describe('useDashboard', () => {
     expect(global.fetch).not.toHaveBeenCalled();
     
     // Should return mock data
-    // Assuming MOCK_PARCELS has 2 groups
-    expect(result.current.groups).toHaveLength(2);
+    // Assuming MOCK_PARCELS has 4 groups (enriched data)
+    expect(result.current.groups).toHaveLength(4);
     expect(result.current.loading).toBe(false);
   });
 });
