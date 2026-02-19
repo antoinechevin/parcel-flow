@@ -1,13 +1,14 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: parcel-flow-db
+    networks:
+      - default
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-parcelflow}
       POSTGRES_USER: ${POSTGRES_USER:-user}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -20,9 +21,14 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: parcel-flow-backend
-    ports:
-      - "8080:8080"
+    networks:
+      - default
+      - apps-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-backend.rule=Host(`${BACKEND_HOST}`)"
+      - "traefik.http.services.${COMPOSE_PROJECT_NAME}-backend.loadbalancer.server.port=8080"
+      - "traefik.docker.network=apps-network"
     environment:
       - DATABASE_URL=jdbc:postgresql://postgres:5432/${POSTGRES_DB:-parcelflow}
       - PGUSER=${POSTGRES_USER:-user}
@@ -31,7 +37,6 @@ services:
       - GMAIL_CLIENT_SECRET=${GMAIL_CLIENT_SECRET}
       - GMAIL_REFRESH_TOKEN=${GMAIL_REFRESH_TOKEN}
       - SECURITY_API_KEY=${SECURITY_API_KEY}
-
     depends_on:
       postgres:
         condition: service_healthy
@@ -41,12 +46,21 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        - EXPO_PUBLIC_API_URL=https://${CODESPACE_NAME}-8080.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN:-app.github.dev}
-    container_name: parcel-flow-frontend
-    ports:
-      - "80:80"
+        - EXPO_PUBLIC_API_URL=${EXPO_PUBLIC_API_URL:-http://localhost:8080}
+    networks:
+      - default
+      - apps-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-frontend.rule=Host(`${FRONTEND_HOST}`)"
+      - "traefik.http.services.${COMPOSE_PROJECT_NAME}-frontend.loadbalancer.server.port=80"
+      - "traefik.docker.network=apps-network"
     depends_on:
       - backend
 
 volumes:
   postgres_data:
+
+networks:
+  apps-network:
+    external: true
