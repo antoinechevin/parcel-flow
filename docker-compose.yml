@@ -47,10 +47,8 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        - EXPO_PUBLIC_API_URL=https://${CODESPACE_NAME}-8080.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN:-app.github.dev}
+        - EXPO_PUBLIC_API_URL=${EXPO_PUBLIC_API_URL}
     container_name: parcel-flow-frontend
-    ports:
-      - "80:80"
     depends_on:
       - backend
 
