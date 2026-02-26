@@ -32,6 +32,12 @@ services:
       - GMAIL_REFRESH_TOKEN=${GMAIL_REFRESH_TOKEN}
       - SECURITY_API_KEY=${SECURITY_API_KEY}
 
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
     depends_on:
       postgres:
         condition: service_healthy
@@ -41,10 +47,13 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        - EXPO_PUBLIC_API_URL=https://${CODESPACE_NAME}-8080.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN:-app.github.dev}
+        - EXPO_PUBLIC_API_URL=${EXPO_PUBLIC_API_URL}
     container_name: parcel-flow-frontend
-    ports:
-      - "80:80"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     depends_on:
       - backend
 
