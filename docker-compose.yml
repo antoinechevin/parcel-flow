@@ -49,6 +49,11 @@ services:
       args:
         - EXPO_PUBLIC_API_URL=${EXPO_PUBLIC_API_URL}
     container_name: parcel-flow-frontend
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     depends_on:
       - backend
 
