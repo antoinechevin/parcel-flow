@@ -23,7 +23,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @CucumberContextConfiguration
-@SpringBootTest(classes = {BackendApplication.class, CucumberConfiguration.TestConfig.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(
+    classes = {BackendApplication.class, CucumberConfiguration.TestConfig.class}, 
+    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+    properties = "SECURITY_REQUIRE_HTTPS=false"
+)
 @org.springframework.test.context.ActiveProfiles("test")
 public class CucumberConfiguration {
 

@@ -1,0 +1,1232 @@
+
+<!-- ======= START CSS/HEAD ======= -->
+
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--[if !mso]><!-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--<![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;640&display=swap" rel="stylesheet" />
+    <title></title>
+    <style type="text/css">
+        * {
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-width: 100%;
+            -webkit-font-smoothing: antialiased;
+            mso-line-height-rule: exactly;
+        }
+
+        table {
+            border-spacing: 0;
+        }
+
+        img {
+            border: 0;
+        }
+
+        .wrapper {
+            width: 100%;
+            table-layout: fixed;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        .webkit {
+            max-width: 640px;
+        }
+
+        .outer {
+            margin: 0 auto;
+            width: 100%;
+            max-width: 640px;
+        }
+
+        .inner {
+            padding: 10px;
+        }
+
+        .one-column .contents {
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .two-column .column {
+            width: 100%;
+            max-width: 300px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .contents {
+            width: 100%;
+        }
+
+        .two-column img {
+            width: 100%;
+            max-width: 280px;
+            height: auto;
+        }
+
+
+        @media only screen and (max-width: 599px),
+        screen and (max-device-width: 599px) {
+            .marg-mob {
+                height: 30px !important;
+                line-height: 30px !important;
+                font-size: 30px !important;
+            }
+
+
+           .marg-mob2 {
+                width: 30px;
+            }
+
+            .marg-mob-3 {
+                padding: 10px 0 !important;
+            }
+
+            .txt-mob {
+                font-size: 30px !important;
+                line-height: 32px !important;
+            }
+
+            .desktop-only {
+                display: none;
+            }
+
+         	.mobile-only {
+                display: table;
+            }
+
+            .mb-padding-top-10 {
+                padding-top: 10px;
+            }
+
+            .mb-padding-bottom-10 {
+                padding-bottom: 10px;
+            }
+
+            .mb-padding-bottom-20 {
+                padding-bottom: 20px;
+            }
+
+        }
+
+@media only screen and (max-width: 350px),
+        screen and (max-device-width: 350px) {
+.marg-mob2 {
+                width: 15px;
+            }
+        }
+
+@media only screen and (min-width: 600px),
+        screen and (min-device-width: 600px) {
+
+			.mb-applocker {
+                padding-left: 30px !important;
+             	padding-right: 0 !important
+            }
+
+          .desktop-only {
+                display: table;
+            }
+
+         	.mobile-only {
+                display: none;
+            }
+
+        }
+
+    </style>
+    <!--[if (gte mso 9)|(IE)]>
+	<style type="text/css">
+		table {border-collapse: collapse !important;}
+	</style>
+	<![endif]-->
+
+    <!--[if mso]>
+<style type="text/css">
+body,table tr,table td,a, span,table.MsoNormalTable {font-family:Arial, Helvetica, sans-serif !important;}
+</style>
+<![endif]-->
+</head>
+
+<!-- ======= END CSS/HEAD ======= -->
+
+
+
+<!-- ======= START HEADER ======= -->
+
+<body style="margin:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;min-width:100%;"><img alt="" src="https://tracking.network1.pickup.fr/tracking/1/open/FjgZJhwwxqL5vS2CrxGP2dboyljiuagpaxD7Y4ZaaW6-Svnl87cy0_sL-6trhHU1SBoqjGAkFWsSse56gaKVeFnln2j_lbzSpzdgu3DuK5QfzzDpbUOcH2-PF4fxkFkhVdsZvzsHnYDIcQxYRH4dYreJ38wiG4cCAj870bp74ZJtSTQ0DQWBkFpMOzj8eFLAFTT_Pgp6t6ICO8703orkGR56QV0BB-bmfK1JrqoXbMv2f5vuCDJ7sAiio-VnyjokFVniOlbQgLXL5oRAQEACJGSL8sgLbAB75SX9q0Ju-udL8H5Pne-2lD37zxbfITN8YZZfqF-qPTIltYO9u-MUHog0kxndjnIUHy-LAPEeuuhsRMlkPj1DQquKpzg6yfFGhzBgkOrNfZlwbGYVru84SzAhZ9QRZEiVu9lgRp8GpbDz-2KkJtkHKdvsJj79LfxNEiSkMOD6ndPUJ_U9XgpdqTeU4FYyqpWp4hC6KfAt3rO0OKVyRb3s70BPIbahlitOnxxL_W_OGQrU04A9w_mLN5jGc92px7ZwXI9cYmlHxIOV2mKERPF1c9LZ0lCkQvoN3p9QezVXSaFLnACPXLF7WP3TEJJkg8oJvOwDRjZ-ZzM=" width="1" height="1">
+    <center class="wrapper" style="width:100%;table-layout:fixed;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#F6F6F6;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F6F6F6;" bgcolor="#F6F6F6;">
+            <tr>
+                <td width="100%">
+                    <div class="webkit" style="max-width:640px;margin:0 auto;">
+
+                        <!--[if (gte mso 9)|(IE)]>
+
+						<table width="640" align="center" cellpadding="0" cellspacing="0" border="0" style="border-spacing:0;font-family: Calibri, sans-serif;color:#333333;" >
+							<tr>
+								<td style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;" >
+								<![endif]-->
+
+                        <!-- ======= start main body ======= -->
+                        <table class="outer" align="center" cellpadding="0" cellspacing="0" border="0" style="border-spacing:0;margin:0 auto;width:100%;max-width:640px;" bgcolor="#F6F6F6">
+                            <tr>
+                                <td style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;">
+
+
+<table border="0" width="100%" cellpadding="0" cellspacing="0" bgcolor="#F6F6F6">
+                                        <tr>
+                                            <td style="background-color: #F6F6F6;" bgcolor="#F6F6F6">
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #F6F6F6;border-radius:0px !important;" bgcolor="#F6F6F6">
+  <tr>
+ 		<td height="20" width="100%" style="font-size: 20px; line-height: 20px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+
+
+                                                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;font-family: 'Montserrat', Arial, sans-serif;">
+                                                    <tr>
+                                                        <td width="20"></td>
+                                                        <td style="font-family: 'Montserrat', Arial, sans-serif;font-size:14px;color:#706F6F;line-height:16px;text-align: center;">
+
+                                                            Si ce message ne s'affiche pas correctement, <a href="https://tracking.network1.pickup.fr/tracking/1/click/U_Q0TJuUHr5rfuzqR8rAF7MIiiZEj9l5ivxEY58bYiW_ulXnV_yej1gjzgSJAl5QdMsVPUsh6eeIGwwW3FpJL0DrcpMLlPUv4D96sJUWjh_5L3eci1etlN00MrAKnJCXJd_axbDBzHYval6ok5n4pxFGHd4btBMz8_CWsh32rXG1IA3pXeDv71cLgMF7yCODKe89ejdpBKALAYbmwUcLY1-jD3BrOIuomjmuzAvDAzIo48u8WuulUtz4o5nNAYLZHnhD6Vk-tAzcyiic3iQo1zU37-8NevRXeoZUQrGpbFSRIjds-xemLGG0lodZgaHefFXh4Vsnpkuf0CO-9PoA7rowdSc-ilf--iW5f9pkJQZ3Sp1Us0DJGebzocnMrLJWtnWowfXjxhKdIoxHRXefzsZPHBQ-KAUFL80MsFNDlksUZVAhazvcB-_-b3njzfQ0y3itZuR_5lq5kOKtGavAgPerBW-x868pQTaeE9-2bgRewGxT9GwBdOjj5P8UGsLBesOmrrMoEM_491dsqmiTWEoFZJqH5yStOcAD_OMF6fLo8SpD6V6MO_5ZOBegfgokOxv_cyikkOYS9Hf0E-h0SBh-j_cbnGHwL63Fm4-FK0WZNea0ao4Xzga85Z_8-4Z7" target="_blank" style="text-decoration:underline;color:#706F6F;">cliquez ici</a>.
+                                                        </td>
+                                                        <td width="20"></td>
+                                                    </tr>
+                                                </table>
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #F6F6F6;border-radius:0px !important;" bgcolor="#F6F6F6">
+  <tr>
+ 		<td height="20" width="100%" style="font-size: 20px; line-height: 20px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+
+
+                                                              </td>
+                                        </tr>
+                                    </table>
+
+<!-- ======= END HEADER ======= -->
+
+
+
+<!-- ======= START LOGOS ======= -->
+
+<!-- ======= START LOGOS ======= -->
+
+                                    <table class="one-column" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;max-width: 640px;background-color: #E6E7E8;border-top-left-radius:20px;border-top-right-radius:20px;" bgcolor="#E6E7E8">
+                                        <tr>
+                                            <td class="marg-mob2" width="40"></td>
+                                            <td>
+                                                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;">
+                                                    <tr>
+                                                        <td class="marg-mob" height="40" width="100%" style="font-size: 20px; line-height: 20px;">&nbsp;
+
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;">
+                                                    <tr>
+                                                        <td align="left">
+                                                            <img src="https://avn-webexternal.azureedge.net/avn-prod/LOGO_CHR_PICKUP" width="131" alt="Logo" style="max-width:131px; width:131px;padding-right:10px;" />
+                                                        </td>
+
+
+                                                        <td align="right">
+                                                            <img src="https://avn-webexternal.azureedge.net/avn-prod/VINTED" width="131" alt="Logo" style=" max-width:131px; width:131px;padding-left:10px;" />
+                                                        </td>
+
+
+                                                    </tr>
+                                                </table>
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #E6E7E8;border-radius:0px !important;" bgcolor="#E6E7E8">
+  <tr>
+ 		<td height="40" width="100%" style="font-size: 40px; line-height: 40px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+
+
+                                                <!-- ======= END LOGOS ======= -->
+
+<!-- ======= END LOGOS ======= -->
+
+
+
+<!-- ======= START INTRO ======= -->
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%"
+    style="border-spacing:0;font-family: 'Montserrat', Arial, sans-serif;">
+    <tr>
+        <td class="txt-mob"
+            style="width:100%;font-family: 'Montserrat', Arial, sans-serif;font-size:32px;color:#414042;line-height:34px;font-weight:400;text-align: left;">
+
+
+                Votre colis VINTED est disponible en consigne Pickup
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </td>
+    </tr>
+</table>
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #E6E7E8;border-radius:0px !important;" bgcolor="#E6E7E8">
+  <tr>
+ 		<td height="40" width="100%" style="font-size: 40px; line-height: 40px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+
+
+
+</td>
+<td class="marg-mob2" width="40"></td>
+</tr>
+</table>
+
+<!-- ======= END INTRO ======= -->
+
+
+
+<!-- ======= START PEAK ======= -->
+
+
+
+<!-- ======= END PEAK ======= -->
+
+
+
+<!-- ======= START RATP ======= -->
+
+
+
+<!-- ======= END RATP ======= -->
+
+
+
+<!-- ======= START HELLO ======= -->
+
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #FFFFFF;border-radius:0px !important;" bgcolor="#FFFFFF">
+  <tr>
+ 		<td height="40" width="100%" style="font-size: 40px; line-height: 40px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+
+
+<table class="one-column" border="0" cellpadding="0" cellspacing="0" width="100%"
+    style="border-spacing:0;background-color: #ffffff;font-family: 'Montserrat', Arial, sans-serif;" bgcolor="#ffffff">
+    <tr>
+        <td class="marg-mob2" width="40"></td>
+
+        <td
+            style="font-family: 'Montserrat', Arial, sans-serif;font-size:16px;color:#414042;line-height:19px;text-align: left;font-weight:400;">
+
+            Bonjour Noura Chevin&nbsp;!<br /><br />
+
+
+
+
+
+
+
+
+
+
+
+                    Votre colis VINTED n&deg;&nbsp;<a target="_blank"
+                        style="text-decoration: underline; color:#414042"
+                        href="https://tracking.network1.pickup.fr/tracking/1/click/YlhGBmHftYMwjodQxoQE7-jUhpl4bM8XxsGr0l8Ypt-1tSZTMRKAtiynphyc0Jt6H7tG2sYioX9dxcm9pFe-9AP8W36Ig1UUvyNNOVrzaMyHO7xLgDtpUyPbd6DJ52GNIn0VBpw-bb2sDOYREXFKndVtv05Cv6aPDqWy_gB4ltFC8HxUUt2DjA7KYg1VjMpWPgbeGx5Is0Nd5JfCXe1IYRvp_5yTzWE2iQvQD62ko1LyUXKaR2ljkJGdtVr8OYg4tab07-1qHXBtqlwKZeMS8g9nI27R7QnAh55yrJ-QYUaXwhqg80dGzy5WN1iWgkeCPRL8j3voJg75oax8w8LQ7ZWfM-9z7sBqG8vkfN-jHlqyxFSdZ703ik9imXeqpEL28luVJERtxGsjDgmeql9j1EXbIV2QkWz2c6g6a9wvXm5WB5rtbcOeGc2XKOza4gWQuFO-2fLxLzefePE9JUyjZ7SVHM7PMWg1mn48ib5bB_CcEyH7TRVQUUH_zQagsAMPltalb3b-8AepxiLRripfrRkq2vqy-IttblR0B2wMGc6tVibnhqMv2_l3ZXAjKhVGCMA4MTCeZz_VwfeSdoglWOgXD5XqTTOoMdf9Ub_qUZk=">XW313763680TS</a> est disponible en Consigne Otarie L Arbresle jusqu'au
+                    <strong>mardi 3 mars 2026</strong>. Passé cette date, il sera renvoyé &#224; son expéditeur.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- ======= LECLERC ======= -->
+
+
+
+
+
+
+
+            <!-- ======= VIP ======= -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- ======= SHOP2SHOP ======= -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </td>
+        <td class="marg-mob2" width="40"></td>
+    </tr>
+</table>
+
+<!-- ======= END HELLO ======= -->
+
+
+
+<!-- ======= START DIVERTED ======= -->
+
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #FFFFFF;border-radius:0px !important;" bgcolor="#FFFFFF">
+  <tr>
+ 		<td height="40" width="100%" style="font-size: 40px; line-height: 40px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+	    <table class="one-column" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #ffffff;" bgcolor="#ffffff">
+        <tr>
+            <td>
+
+                <center>
+                    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-spacing:0;background-color: #ffffff;" bgcolor="#ffffff">
+                        <tr>
+                            <td>
+
+                                <table border="0" align="center" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;">
+                                    <tbody>
+                                        <tr>
+                                            <td class="marg-mob2" width="40"></td>
+                                            <td align="center">
+
+                                                <table border="0" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+                                                    <tr>
+                                                        <td>
+
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #009ADF;border-top-left-radius:20px; border-top-right-radius:20px;" bgcolor="#009ADF">
+  <tr>
+ 		<td height="20" width="100%" style="font-size: 20px; line-height: 20px; border-top-left-radius:20px; border-top-right-radius:20px;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+
+                                                            <table border="0" cellpadding="0" cellspacing="0" style="margin:0 auto;font-family: 'Montserrat', Arial, sans-serif;background-color: #009ADF;" bgcolor="#009ADF;">
+                                                                <tr>
+                                                                    <td width="20"></td>
+                                                                    <td align="center" bgcolor="#009ADF" width="auto" style="text-decoration: none;border:0;text-align: center;font-size: 16px;line-height:19px;font-family: 'Montserrat', Arial, sans-serif;color: #ffffff;font-weight:500;background: #009ADF;">
+                                                                       Malheureusement, votre colis n’a pas pu être livré dans votre point initial. Mais rassurez-vous, il est entre de bonnes mains et vous attend sagement dans le point de retrait ci-dessous.
+                                                                    </td>
+                                                                    <td width="20"></td>
+                                                                </tr>
+                                                            </table>
+
+
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #009ADF;border-bottom-left-radius:20px; border-bottom-right-radius:20px;" bgcolor="#009ADF">
+  <tr>
+ 		<td height="20" width="100%" style="font-size: 20px; line-height: 20px; border-bottom-left-radius:20px; border-bottom-right-radius:20px;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                            </td>
+                                            <td class="marg-mob2" width="40"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </td>
+                        </tr>
+                    </table>
+                </center>
+
+            </td>
+        </tr>
+    </table>
+
+<!-- ======= END HELLO ======= -->
+
+
+
+ <!-- ======= START PROCESS ======= -->
+
+
+<!-- START PROCESS -->
+
+<!-- START PICKUP PASS -->
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #FFFFFF;border-radius:0px !important;" bgcolor="#FFFFFF">
+  <tr>
+ 		<td height="35" width="100%" style="font-size: 35px; line-height: 35px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+
+
+<table align="center" class="one-column" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #ffffff;" bgcolor="#ffffff">
+<tr>
+<td>
+
+ <table width="320" align="center" class="one-column" border="0" cellpadding="0" cellspacing="0" style="border-spacing:0;background-color: #ffffff;max-width: 320px; width:100%;" bgcolor="#ffffff">
+     <tr align="center">
+         <td class="marg-mob2" width="40"></td>
+         <td width="320">
+
+
+                <img src="https://avisageng-colis-webexternal.pickup-services.com/api/barcode/DataMatrix?d=FR82478;XW313763680TS|63158994" width="210" alt="QR code" style="max-width:210px; width:100%;" />
+
+         </td>
+         <td class="marg-mob2" width="40"></td>
+     </tr>
+ </table>
+
+</td>
+</tr>
+</table>
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #FFFFFF;border-radius:0px !important;" bgcolor="#FFFFFF">
+  <tr>
+ 		<td height="20" width="100%" style="font-size: 20px; line-height: 20px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+
+
+<!-- END PICKUP PASS -->
+
+
+
+
+
+<!-- START LOCKER CODES -->
+<table align="center" class="one-column" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #ffffff;" bgcolor="#ffffff">
+<tr>
+<td>
+
+<table width="100%" align="center" class="one-column" border="0" cellpadding="0" cellspacing="0" style="border-spacing:0;background-color: #ffffff;max-width: 230px; width:100%;" bgcolor="#ffffff">
+
+<tr align="center">
+        <td style="font-family: 'Montserrat', Arial, sans-serif;font-size:16px;line-height:25px;color:#414042;text-align: center;font-weight:500;border-top:4px solid #F2F3F5;padding-top:20px;">
+
+                   <text>
+               Identifiant&nbsp;: <span style="font-weight: 500; font-size: 22px;"><strong>6315</strong></span><br/>
+               Code d'ouverture&nbsp;: <span style="font-weight: 500; font-size: 22px;"><strong>8994</strong></span>
+                   </text>
+
+        </td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #FFFFFF;border-radius:0px !important;" bgcolor="#FFFFFF">
+  <tr>
+ 		<td height="32" width="100%" style="font-size: 32px; line-height: 32px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+	<!-- END LOCKER CODES -->
+
+
+
+<!-- START MESSAGE -->
+
+<table class="one-column" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;max-width: 640px;background-color: #ffffff;" bgcolor="#ffffff;">
+    <tr>
+        <td class="marg-mob2" width="40"></td>
+
+        <td>
+
+<table class="one-column" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;max-width: 560px;background-color: #009adf;border-radius:20px;" bgcolor="#009adf;">
+    <tr>
+        <td class="marg-mob2" width="40"></td>
+        <td>
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #009adf;border-radius:0px !important;" bgcolor="#009adf">
+  <tr>
+ 		<td height="20" width="100%" style="font-size: 20px; line-height: 20px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+
+
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;font-family: 'Montserrat', Arial, sans-serif;">
+                <tr>
+                    <td style="width:100%;font-family: 'Montserrat', Arial, sans-serif;font-size:16px;color:#ffffff;line-height:19px;font-weight:500;text-align: center;">
+
+
+                            Pour retirer votre colis, scannez le <strong>Pickup Pass</strong><br class="desktop-only"> ou saisissez vos <strong>codes de retrait</strong> ci-dessus.
+
+                    </td>
+                </tr>
+            </table>
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #009adf;border-radius:0px !important;" bgcolor="#009adf">
+  <tr>
+ 		<td height="20" width="100%" style="font-size: 20px; line-height: 20px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+
+
+        </td>
+        <td class="marg-mob2" width="40"></td>
+    </tr>
+</table>
+
+        </td>
+        <td class="marg-mob2" width="40"></td>
+    </tr>
+</table>
+
+<!-- END MESSAGE -->
+
+
+
+
+
+
+<!-- END PROCESS -->
+
+<!-- ======= END PROCESS ======= -->
+
+
+
+ <!-- ======= START INFO ======= -->
+
+
+<!-- START ACCESS -->
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #FFFFFF;border-radius:0px !important;" bgcolor="#FFFFFF">
+  <tr>
+ 		<td height="40" width="100%" style="font-size: 40px; line-height: 40px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+
+
+<table class="one-column" border="0" cellpadding="0" cellspacing="0" width="100%"
+   style="color:#414042;border-spacing:0;background-color: #ffffff;font-family: 'Montserrat', Arial, sans-serif;" bgcolor="#ffffff">
+    <tr>
+        <td class="marg-mob2" width="40"></td>
+        <td
+           style="font-family: 'Montserrat', Arial, sans-serif;font-size:28px;line-height:28px;text-align: left;">
+
+
+Votre consigne Pickup
+
+        </td>
+        <td class="marg-mob2" width="40"></td>
+    </tr>
+</table>
+
+
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #FFFFFF;border-radius:0px !important;" bgcolor="#FFFFFF">
+  <tr>
+ 		<td height="30" width="100%" style="font-size: 30px; line-height: 30px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #ffffff;" bgcolor="#ffffff">
+    <tr>
+        <td style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-align:center;font-size:0;">
+            <!--[if (gte mso 9)|(IE)]>
+            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-spacing:0;font-family: Calibri, sans-serif;color:#333333;" >
+            <tr>
+            <td width="50%" valign="top" style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;" >
+            <![endif]-->
+            <div class="column"
+               style="width:100%;max-width:320px;display:inline-block;vertical-align:top;direction:ltr;">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-spacing:0;">
+                    <tr>
+                        <td class="inner" style="padding-top:0;padding-bottom:30px;padding-right:30px;padding-left:30px;">
+                            <table cellpadding="0" cellspacing="0" border="0" class="contents" style="border-spacing:0;width:100%;font-family: 'Montserrat', Arial, sans-serif;"
+                                bgcolor="#ffffff">
+                                <tr>
+                                    <td width="30" class="marg-mob-3" style="text-align: left;padding: 0 10px 10px 10px !important;vertical-align:top;">
+                                        <img src="https://avn-webexternal.azureedge.net/avn-prod/ICO_CHR_LOCATION" width="23" alt="Flèche"
+                                           style="border-width:0;margin: 0 auto;" />
+                                    </td>
+
+                                    <td style="font-family: 'Montserrat', Arial, sans-serif;font-size:15px;color:#414042;line-height:18px;text-align: left;font-weight:500;">
+
+<strong>Consigne Otarie L Arbresle</strong><BR><BR>
+18 PLACE DES 3 COMMUNES<BR>
+69210 L ARBRESLE<BR>
+
+
+                                    </td>
+                                </tr>
+                            </table>
+
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #FFFFFF;border-radius:0px !important;" bgcolor="#FFFFFF">
+  <tr>
+ 		<td height="30" width="100%" style="font-size: 30px; line-height: 30px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+
+
+                            <table cellpadding="0" cellspacing="0" border="0" class="contents" style="border-spacing:0;width:100%;font-family: 'Montserrat', Arial, sans-serif;" bgcolor="#ffffff">
+                                <tr>
+                                    <td width="30" class="marg-mob-3" style="text-align: left;padding: 10px">
+
+                                        </td>
+                                    <td style="font-family: 'Montserrat', Arial, sans-serif;font-size:14px;color:#414042;line-height:16px;text-align: center;font-weight:400;border:1px solid #404241;border-radius:20px;padding:8px;">
+
+                                          	<a target="_blank" href="https://tracking.network1.pickup.fr/tracking/1/click/YlhGBmHftYMwjodQxoQE7xQA3MJaCmBVXFPzr5AdKyTGvM-90WnGSlBhSdPSyloKkfi4M7U4x63yR9GZ8pEIWydED75YGmMqhdSTI9EyWYg0flwY6yf2t8KQLJN-tJNKTmrJApiiHkVVibpFqDl4vKE_BOGQ5MSQDiNMTk1g2vlKafFzdymVYGMSaOTqDuOVx4x0tYjSA5xLnRAK7s6AQD49_33kojOWfh6DLJg2sIY0G0iCxQNYKb0rb6C7PysRjPGROCzXX1ZCeoOwcsZlU7msFUIJQxfbNR5PN8Lyggy3CRSIsySDnw2RZbDN37uR9kAYC74nqoJ2IlmCZFYMYrtWGUF7Oi4v9oIWkjcBgXnOADpIdj6nWPVWo6zxohDzfNy4eX1rgdgLPPlHnW4nvtTFdNuDIV5G2_0j21zar1H6uEO0mK-UGkx8rWmjPGjhCDOf7llCtPJBq1rgKBexWAicy-oY0GJ4J94ZXJgMJgsVnPFdN4cRT3o37v0IhQYQQpXvsKL4nz0B5XYkH4FeO-X2ksgAEtCzzDd8jg-T0slm5EUw_SYXGSufgEjP0OAEjK1czDaU7y8w0ZXC3cCS15ejfVCHF_3pyYSReiNA1Q0=" style="color: #414042;text-decoration:none;">Voir sur la carte</a>
+
+                                    </td>
+                                    <td width="50" class="marg-mob-3" style="text-align: left;padding: 10px">
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!--[if (gte mso 9)|(IE)]>
+            </td><td width="50%" valign="top" style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;" >
+            <![endif]-->
+            <div class="column"
+               style="width:100%;max-width:320px;display:inline-block;vertical-align:top;direction:ltr;">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-spacing:0;">
+                    <tr>
+                        <td class="inner" style="padding-top:0;padding-bottom:0px;padding-right:30px;padding-left:30px;">
+                            <table cellpadding="0" cellspacing="0" border="0" class="contents" style="border-spacing:0;width:100%;font-family: 'Montserrat', Arial, sans-serif;"
+                                bgcolor="#ffffff">
+                                <tr>
+                                <td width="30" class="marg-mob-3" style="text-align: left;padding: 0 10px 10px 10px !important;vertical-align:top;">
+                                        <img src="https://avn-webexternal.azureedge.net/avn-prod/ICO_CHR_CLOCK" width="23" alt="Flèche"
+                                           style="border-width:0;margin: 0 auto;" />
+                                    </td>
+                                    <td style="font-family: 'Montserrat', Arial, sans-serif;font-size:15px;color:#414042;line-height:18px;text-align: left;font-weight:500;">
+                                        <strong>Horaires d&#8217;ouverture&nbsp;:</strong><br />
+
+<TABLE style="margin:10px 0 0 0;" align="center">
+
+                <TR><TD style='width:45% !important;padding-right:5px;font-family:Montserrat,Arial,sans-serif;font-size:14px !important;color:#414042;line-height:18px;text-align:left;font-weight:500;mso-line-height-rule:exactly' vAlign=middle width=120 align=left>lun. - dim.</TD><TD style='width:55% !important;font-family:Montserrat,Arial,sans-serif;font-size:14px !important;color:#414042;line-height:18px;text-align:center;font-weight:500;mso-line-height-rule:exactly;background-color:#eee;border-radius:10px;padding:4px 7px;' vAlign=top align=center>00:01 - 23:59</TD></TR><TR><TD style='font-size:1px;height:5px;line-height:1px;' height=5 colSpan=2>&nbsp;</TD></TR>
+</TABLE><br/>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
+        </td>
+    </tr>
+</table>
+
+
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #FFFFFF;border-bottom-left-radius:20px; border-bottom-right-radius:20px;" bgcolor="#FFFFFF">
+  <tr>
+ 		<td height="10" width="100%" style="font-size: 10px; line-height: 10px; border-bottom-left-radius:20px; border-bottom-right-radius:20px;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+<!-- ======= START MYCHRONOPOST ======= -->
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #F6F6F6;border-radius:0px !important;" bgcolor="#F6F6F6">
+  <tr>
+ 		<td height="40" width="100%" style="font-size: 40px; line-height: 40px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+	<!-- ======= END MYCHRONOPOST ======= -->
+<table class="one-column" border="0" cellpadding="0" cellspacing="0" width="100%"
+style="border-spacing:0;font-family: 'Barlow', Arial, sans-serif;">
+<tr>
+
+	<td width="640" style="font-size: 0 !important; line-height: 0 !important; border-radius:20px;">
+
+<a target="_blank" href="https://tracking.network1.pickup.fr/tracking/1/click/U_Q0TJuUHr5rfuzqR8rAF7MIiiZEj9l5ivxEY58bYiW_ulXnV_yej1gjzgSJAl5QdMsVPUsh6eeIGwwW3FpJL0DrcpMLlPUv4D96sJUWjh-716IJPzCoqtIHuB3nxEnMb7NwvwrGqW5NdU1ufKEXShuH9Y7Ir_jQp-eefD34hG68AnRUT98V0ZKLPUTXj3et8s8LJSUfrb0wdgxVv0-hiff-se-phudG0cBQwvjHLYuIsKVd6-EENvFH-YVgXXITKqk7Vge98S6oWhDt8GXQXmRVe3V7EfFs3HO6u0zIL9huLwYrwACMdoLEa-GKZ7Gx8RD4kZwszcJWYE6jmQ6OaTUDh88R4zfgveP4UnerDLZ6uy5ftaFh72sTHZA_9x58jBHgrwVfNy9fC2pFAqVQHGvL5Imz7fvAcnm4MDTcLfsaOoYG8tSxfJA9ZGfa-fk8mkuHa-graRw16Wvbn9Y9-avsKSAJayt9lsfgO7fz7s-7U7qzf7x84f_jVG0B5VoZnzoZN8-EDl16uHmhoVnoDRscTFBb_8wz5VpX3UPeDWz_OlML19afDdmzBYuKU9R35c6lZCqIayGQJXBQQaAh2Z0bJfXhZ45gDDL9v8Wm1gkDlW_P3dZW03TyChkDvrdk">
+		<img src="https://avn-webexternal.azureedge.net/avn-prod/BANNER_MYCHRONOPOST" alt="Parcelpoint" width="640" style="max-width:640px; width:100%; border-radius:20px !important;" />
+</a>
+
+	</td>
+
+</tr>
+</table>
+
+<!-- ======= END INFO ======= -->
+
+
+
+<!-- ======= START RSE ======= -->
+
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #F6F6F6;border-radius:0px !important;" bgcolor="#F6F6F6">
+  <tr>
+ 		<td height="40" width="100%" style="font-size: 40px; line-height: 40px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+
+
+                                    <table class="one-column" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;max-width: 640px;background-color: #009ADF;border-radius:20px;" bgcolor="#009ADF;">
+                                        <tr>
+                                            <td class="marg-mob2" width="40"></td>
+                                            <td>
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #009ADF;border-radius:0px !important;" bgcolor="#009ADF">
+  <tr>
+ 		<td height="30" width="100%" style="font-size: 30px; line-height: 30px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+
+
+                                                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;font-family: 'Montserrat', Arial, sans-serif;">
+                                                    <tr>
+                                                        <td style="width:100%;font-family: 'Montserrat', Arial, sans-serif;font-size:16px;color:#ffffff;line-height:19px;font-weight:500;text-align: center;">
+                                                            Chronopost s'engage, aux côtés de Geopost,<br class="desktop-only"> à réduire drastiquement les émissions de gaz à effet de serre<br class="desktop-only"> pour atteindre zéro émission nette d'ici à 2040
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #009ADF;border-radius:0px !important;" bgcolor="#009ADF">
+  <tr>
+ 		<td height="20" width="100%" style="font-size: 20px; line-height: 20px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+
+
+                                                <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #009ADF;" bgcolor="#009ADF">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td align="center">
+                                                                <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto;border: 1px solid #fff;border-radius: 40px">
+                                                                    <tr>
+
+                                                                        <td>
+                                                                            <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto;font-family: 'Montserrat', Arial, sans-serif;">
+                                                                                <tr>
+                                                                                    <td height="10" width="100%" style="font-size: 10px; line-height: 10px;">
+                                                                                        &nbsp;
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td align="center" bgcolor="#00A6E1" width="220" style="width:220px;">
+                                                                                        <a href="https://tracking.network1.pickup.fr/tracking/1/click/YlhGBmHftYMwjodQxoQE7wcG97ie2YJ_JtdlDssYCzOzK06xONOuJ9nxY7gMT8FiwKPnomqwXeEVBKtmEzuK20BCIRV4rx1tWT3rRaQdl0lNsxJEmyShkq32V1uGonJFPfhkyUUvgHkx4nVxHZK2upgX_CPcYn2RJdg0ymPdIiaCk4lroq8V4qGbvInrbvAKSGpsrIM3Xkv46CRAbbtgjrrVkIokFCwm8KlV5U2Ovi1jbmO5qIGPpj1p_fcl9HkhobkbPEuRSEB2y8uNa4nSJPz_sUeca18GMf9mV8Ro8gP7W5wrCy35AApLeHfaUUyHTOTzHiZY7gRMiuOxt5iSe8BBeL3GK6Ad1L2CznPwH0l0nx8nMpgspbHNZ3fhk6FtxVyECnWrhYkOzbbbpEf9COU6-ZNJR9fx9OR_tuAZuGQdSUOmF2CrGpXRUmdLONj4nWdM8YqIScWxpxiU2p3ToxgG6afnqcaniXFQ4Go0BxTuCgdtu881L2W3rvcRkmweMaedkaeUYZoK6WoYy7oayZq8fqfRdXYKdtWQwvgTDgxd3mKuOKhYh1TeI3Ajaw8ohQkKyexlNxLgK4MIEaMk9EYgsfszslf9D1TEPlN49kE=" target="_blank" style="width:220px;display: block;text-decoration: none;border:0;text-align: center;font-size: 16px;line-height:18px;font-family: 'Montserrat', Arial, sans-serif;color: #ffffff;font-weight:400;background: #009ADF;padding:4px 6px;">Consultez notre page RSE</a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td height="10" width="100%" style="font-size: 10px; line-height: 10px;">&nbsp;
+
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #009ADF;border-radius:0px !important;" bgcolor="#009ADF">
+  <tr>
+ 		<td height="30" width="100%" style="font-size: 30px; line-height: 30px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+
+
+                                            </td>
+                                            <td class="marg-mob2" width="40"></td>
+                                        </tr>
+                                    </table>
+
+<!-- ======= END RSE ======= -->
+
+
+
+<!-- ======= START FOOTER ======= -->
+
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #F6F6F6;border-radius:0px !important;" bgcolor="#F6F6F6">
+  <tr>
+ 		<td height="40" width="100%" style="font-size: 40px; line-height: 40px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+
+
+<table class="one-column" border="0" cellpadding="0" cellspacing="0" width="100%"
+    style="border-spacing:0;background-color: #f6f6f6;font-family: 'Montserrat', Arial, sans-serif;" bgcolor="#f6f6f6">
+    <tr>
+        <td width="20"></td>
+        <td
+            style="font-family: 'Montserrat', Arial, sans-serif;font-size:11px;color:#808285;line-height:12px;text-align: center;font-weight:500;">
+
+            <text>
+                Pri&#232;re de ne pas r&#233;pondre &#224; ce message.<br /><br />
+                &#169; Chronopost 2026<br />Chronopost SAS capital de 32 632 000 &#8364;, 3 Boulevard
+                Romain Rolland 75014 Paris - RCS Paris 383 960 135
+                <br /><br />
+Chronopost traite les données recueillies pour gérer l'acheminement de votre colis et votre preuve de dépôt.<br />
+Cliquez ici pour en savoir plus sur la <a href="https://tracking.network1.pickup.fr/tracking/1/click/U_Q0TJuUHr5rfuzqR8rAFwr2Ch0OGqA4AeiyTu0aHpYYJDRKfbc-5ACaUaC1etXMv6JLt32_jOr0Mlg9e0sLCP6D7OMQCYleljtif9tHrm8H4p-ayaeDr3pyuwVbkGtd1FVg030TUgtrLVKmuDeh7ieGrTfkLlKT2_9fnaEqlUhy1lFhvoL0lFL_73u_Wb16-gFfOUsmW2siTdksoJTid1G8FJLuyCMAgNwpz-Q2Nb_OqxPRscjiZI6s2LQUfqCToD925KKbhlV0uCRUEMRJCMf7knmfzvo30nGBRe_aWzfWFV1Y6aCAbaifqe1L9MUP8YKgVs2Kawrbfsy4VGMVpitH04ObUlmxuAvl1Z20Hv5EHkJOORGvXcBDiTS15f9octciZIY9Y1DUlft0VsDQ-MUJqhrahbm3EqSfs1_KjyjrFSegiHwtJ0SLW6oSSCM_2i2BVlavoFCFV8dM3WgaO2cRTsUIlJTay8vFfcoTJhnDFUJ4bWwwFTazf0aNzmB5CkEx2a8KfEIPHZbRFo5pxLFUgZczV_-ntyRV6u3bCZnwXdeTfr-lJZ_zmiogWBmJ1YhXzqE9SA_AADF1h4VpTW5ieMXMtfDZxvYgBxbUbpCRmYmn_eXr1XlxmwthsbQq" target="_blank">gestion de vos données</a> et <a href="https://tracking.network1.pickup.fr/tracking/1/click/BHyupDhiFllNjhKjpviufExQrtaTv9jbfqa-izFOrOVjiOaACHYOwdUo9lCk5sqwN1baI4NiQn4QKyvhmvJA34V6Xb6axs66qcyPmleMYRsWy7H_RKWCghTQvZLuzuziAZIUhhHZhIXu22zYOXw1Njc06gG4cBY6k1B-4qKpEn2VeBzjFFQtCFU3Rrz5c1I-NX_gFOoORgIMejG9MWPeVSU5JpdFEVIrM04HY6zV07z7z-A6Z6EjmG5LFzqyyO_c_tg0YLSBxSQYtsciSJ649TpJNBkWp75DWCiQbqadJGmTPIrV0-Gttqm5XgSauNS8lLnHPJg1q05yl2-YjDufXLrLXKFU_msknkHUCQIcBIwRYYLmTEFSohwMvA7ZPANccGVIqozVOiued6MKMKNLtk4a23o0Toyi-D7dcuYY1Yh0jWgZKlKZQsY3raaDVa7H0GdmMlN-f1tSJbrp_Z4nzLhJaofdc8CEUc2knsXt5Jo0J2vHu9oPt8bM2URUIb3VpmlczojWMA1t7xJ-j5g0GQhnoJHIyq5jViMdta4E1PC4V7Exn8qBqbJN5XaUoPubfLH4WJsnRU-pGfoY15fze9wGcoP8138xs3TU7quOJ6Y=" target="_blank">vos droits</a>.
+          		<br /><br /><br />
+          PICKUP SERVICES, société par actions simplifiée, au capital social de 373.240 euros, dont le siège social est situé 66-68 rue des Rosiers – 93400 Saint-Ouen, immatriculée au Registre du Commerce et des Sociétés de BOBIGNY sous le numéro 432 938 710.<br/><br/> Pour plus d’information sur notre Politique de protection des données, veuillez cliquer sur le lien suivant : <a target="_blank" href="https://tracking.network1.pickup.fr/tracking/1/click/YlhGBmHftYMwjodQxoQE7zUuDSDsyAvyPTQSNxf_dUzoOXEcagARoLGGiKc_SB0khb8tXZr26pzu_RhWNKV6hhy5zIALn8nCXFSGGQV6esf9hN6AofGqhkruMzRWcEVvkb5iIZ0_l7YV3OOFgYerkLRzyCDb8wqcv9X05nFxFMyyHWgFUOBI_QIvSbahBwcJRYzn--bWKcrR_oczw8_4ssklo8w1RprMmS49JkXYvAhv0MyD3K5jurpza-UGR7iG1Jh-6zjorH21srGpTtgkMB8b_Yu1KopbZdL--ADPVHr4O9YdfumOcTr8QpxUoPA2SBVbpRqcpFEvW7xqYKnvg_NEF0041iGxr73gGzjYwixXyRLS9wWYBe7cUKlwbMm9Rwve8NtyMAO9ptDmIbIhOZxg5mnJdBGIY_XMpTuihcc96EwVTG4sPokYIEazsV_i7TS33i6aC5RAFMz_dX8aeHOXL0lBd1km6SEK_-F5-c2fLe6xbn0-5RmBTL331MxAEI0Qj8X1UHrInI34URQl8YVW51kjVLUZPSrM47ib9B3szTXA9BsWxzQN1YEE9EhVo4ZKEVctW1z667IqYraO9ZuTnE-0p5-lMjZIqSpfD9A=">https://www.pickup.fr/politique-de-confidentialite</a>
+
+            </text>
+
+        </td>
+        <td width="20"></td>
+    </tr>
+</table>
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0;background-color: #F6F6F6;border-radius:0px !important;" bgcolor="#F6F6F6">
+  <tr>
+ 		<td height="40" width="100%" style="font-size: 40px; line-height: 40px; border-radius:0px !important;">
+		&nbsp;
+		</td>
+ 	</tr>
+</table>
+
+
+
+
+
+<!-- ======= END FOOTER ======= -->
+
+
+
+<!-- ======= START CLOSING HTML ======= -->
+
+</td>
+</tr>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+					</td>
+				</tr>
+			</table>
+			<![endif]-->
+</div>
+</td>
+</tr>
+</table>
+</center>
+
+</body>
+
+</html>
+
+<!-- ======= END CLOSING HTML ======= -->

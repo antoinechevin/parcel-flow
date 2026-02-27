@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(ParcelController.class)
+@WebMvcTest(controllers = ParcelController.class, properties = "SECURITY_REQUIRE_HTTPS=false")
 class ParcelControllerTest {
 
     @Autowired

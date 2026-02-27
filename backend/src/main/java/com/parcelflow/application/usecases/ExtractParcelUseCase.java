@@ -44,12 +44,7 @@ public class ExtractParcelUseCase {
                     return;
                 }
 
-                if (repositoryPort.findByTrackingNumber(cleanTrackingNumber).isPresent()) {
-                    log.info("Parcel with tracking number {} already exists. Skipping.", cleanTrackingNumber);
-                    return;
-                }
-
-                log.info("Metadata extracted: {}. Saving parcel...", cleanTrackingNumber);
+                Optional<Parcel> existingParcelOpt = repositoryPort.findByTrackingNumber(cleanTrackingNumber);
                 
                 PickupPoint pickupPoint = null;
                 if (metadata.pickupLocation() != null && !metadata.pickupLocation().isBlank()) {
@@ -61,6 +56,35 @@ public class ExtractParcelUseCase {
                         null // Leave opening hours null instead of "Unknown"
                     );
                 }
+
+                if (existingParcelOpt.isPresent()) {
+                    Parcel existingParcel = existingParcelOpt.get();
+                    log.info("Parcel with tracking number {} already exists. Updating metadata...", cleanTrackingNumber);
+                    
+                    // Specific for rerouting/update: reset status to AVAILABLE and update location
+                    Parcel updatedParcel = new Parcel(
+                        existingParcel.id(),
+                        cleanTrackingNumber,
+                        metadata.carrier() != null ? metadata.carrier() : existingParcel.carrier(),
+                        metadata.expirationDate() != null ? metadata.expirationDate() : existingParcel.deadline(),
+                        ParcelStatus.AVAILABLE, // Reset status as new info received
+                        pickupPoint != null ? pickupPoint : existingParcel.pickupPoint(),
+                        metadata.pickupCode() != null ? metadata.pickupCode() : existingParcel.pickupCode(),
+                        metadata.qrCodeUrl() != null ? metadata.qrCodeUrl() : existingParcel.qrCodeUrl(),
+                        metadata.barcodeType() != null ? metadata.barcodeType() : existingParcel.barcodeType()
+                    );
+                    
+                    if (pickupPoint == null && metadata.carrier() != null && metadata.carrier().contains("Rerouté")) {
+                        log.warn("Rerouting detected but no new location found for {}. Keeping old location: {}", 
+                            cleanTrackingNumber, existingParcel.pickupPoint().name());
+                    }
+                    
+                    repositoryPort.save(updatedParcel);
+                    log.info("Parcel updated successfully.");
+                    return;
+                }
+
+                log.info("Metadata extracted: {}. Saving new parcel...", cleanTrackingNumber);
 
                 Parcel parcel = new Parcel(
                     ParcelId.random(),

@@ -2,6 +2,7 @@ package com.parcelflow.infrastructure.extraction;
 
 import com.parcelflow.domain.model.ProviderDefinition;
 import com.parcelflow.domain.ports.ProviderRegistryPort;
+import com.parcelflow.infrastructure.adapters.extraction.chronopost.ChronopostReroutingStrategy;
 import org.springframework.stereotype.Component;
 import java.util.List;
 
@@ -11,12 +12,18 @@ public class ProviderRegistry implements ProviderRegistryPort {
     private final List<ProviderDefinition> providers;
 
     public ProviderRegistry(ChronopostPickupExtractionAdapter chronopostAdapter,
+                            ChronopostReroutingStrategy chronopostReroutingStrategy,
                             MondialRelayExtractionAdapter mondialRelayAdapter,
                             VintedGoExtractionAdapter vintedGoAdapter) {
         this.providers = List.of(
             new ProviderDefinition(
+                "Chronopost Rerouting", 
+                "from:(chronopost@network1.pickup.fr OR chronopost@network2.pickup.fr) \"n’a pas pu être livré dans votre point initial\"", 
+                chronopostReroutingStrategy
+            ),
+            new ProviderDefinition(
                 "Chronopost", 
-                "from:(chronopost@network1.pickup.fr OR chronopost@network2.pickup.fr)", 
+                "from:(chronopost@network1.pickup.fr OR chronopost@network2.pickup.fr) -\"n’a pas pu être livré dans votre point initial\"", 
                 chronopostAdapter
             ),
             new ProviderDefinition(

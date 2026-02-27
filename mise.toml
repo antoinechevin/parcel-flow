@@ -1,0 +1,31 @@
+[tools]
+gemini-cli = "latest"
+node = "latest"
+npm = "latest"
+maven = "latest"
+java = "latest"
+docker-compose = "latest"
+docker-cli = "latest"
+
+[env]
+_.file = ".env"
+
+[tasks.up]
+description = "Launch the Docker stack"
+run = "docker-compose up -d"
+
+[tasks.down]
+description = "Stop the Docker stack"
+run = "docker-compose down"
+
+[tasks.logs]
+description = "Show logs from the Docker stack"
+run = "docker-compose logs -f"
+
+[tasks.ps]
+description = "Show status and mapped ports of the Docker stack"
+run = "docker-compose ps"
+
+[tasks.build]
+description = "Build the Docker stack"
+run = "docker-compose build"
