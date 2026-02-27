@@ -49,6 +49,8 @@ development_status:
   epic-2: in-progress
   2-1-extraction-deterministe-par-provider: done
   2-2-gestion-des-echecs-statut-to-verify: ready-for-dev
+  2-2-6-support-reroutage-chronopost: done
+  2-2-7-robustesse-auto-correction: ready-for-dev
   epic-2-retrospective: optional
 
   epic-3: backlog

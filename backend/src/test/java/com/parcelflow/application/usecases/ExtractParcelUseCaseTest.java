@@ -123,4 +123,33 @@ class ExtractParcelUseCaseTest {
         verify(repositoryPort).save(captor.capture());
         assertEquals("SPACED-123", captor.getValue().trackingNumber());
     }
+
+    @Test
+    void shouldUpdateExistingParcelWhenTrackingNumberAlreadyExists() {
+        String trk = "EXISTING-TRK";
+        ParcelId existingId = ParcelId.random();
+        Parcel existingParcel = new Parcel(
+            existingId, trk, "Old Carrier", null, ParcelStatus.ARCHIVED, 
+            new PickupPoint("loc1", "Old Location", "Old Location", null), 
+            "old-code", null, BarcodeType.NONE
+        );
+        
+        ParcelMetadata newMetadata = new ParcelMetadata(
+            trk, "New Carrier", null, "New Location", "new-code", "new-qr", BarcodeType.QR_CODE
+        );
+
+        when(extractionPort.extract(anyString(), any())).thenReturn(Optional.of(newMetadata));
+        when(repositoryPort.findByTrackingNumber(trk)).thenReturn(Optional.of(existingParcel));
+
+        useCase.execute("content", ZonedDateTime.now());
+
+        ArgumentCaptor<Parcel> captor = ArgumentCaptor.forClass(Parcel.class);
+        verify(repositoryPort).save(captor.capture());
+        
+        Parcel updated = captor.getValue();
+        assertEquals(existingId, updated.id());
+        assertEquals("New Carrier", updated.carrier());
+        assertEquals(ParcelStatus.AVAILABLE, updated.status(), "Status should be reset to AVAILABLE upon update");
+        assertEquals("New Location", updated.pickupPoint().name());
+    }
 }

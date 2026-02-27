@@ -27,15 +27,22 @@ class ProviderRegistryTest {
     @Autowired
     private VintedGoExtractionAdapter vintedGoAdapter;
 
+    @Autowired
+    private com.parcelflow.infrastructure.adapters.extraction.chronopost.ChronopostReroutingStrategy chronopostReroutingStrategy;
+
     @Test
     void should_contain_all_providers_with_correct_queries() {
         List<ProviderDefinition> providers = registry.getAllProviders();
         
-        assertEquals(3, providers.size());
+        assertEquals(4, providers.size());
 
         ProviderDefinition chronopost = findProvider(providers, "Chronopost");
-        assertEquals("from:(chronopost@network1.pickup.fr OR chronopost@network2.pickup.fr)", chronopost.query());
+        assertEquals("from:(chronopost@network1.pickup.fr OR chronopost@network2.pickup.fr) -\"n’a pas pu être livré dans votre point initial\"", chronopost.query());
         assertSame(chronopostAdapter, chronopost.adapter());
+
+        ProviderDefinition rerouting = findProvider(providers, "Chronopost Rerouting");
+        assertEquals("from:(chronopost@network1.pickup.fr OR chronopost@network2.pickup.fr) \"n’a pas pu être livré dans votre point initial\"", rerouting.query());
+        assertSame(chronopostReroutingStrategy, rerouting.adapter());
 
         ProviderDefinition mondialRelay = findProvider(providers, "Mondial Relay");
         assertEquals("from:(noreply@mondialrelay.fr OR notifications@shipup.co) subject:\"disponible\"", mondialRelay.query());
