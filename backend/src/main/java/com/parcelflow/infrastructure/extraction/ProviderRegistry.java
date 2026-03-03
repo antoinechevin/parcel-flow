@@ -11,9 +11,15 @@ public class ProviderRegistry implements ProviderRegistryPort {
     private final List<ProviderDefinition> providers;
 
     public ProviderRegistry(ChronopostPickupExtractionAdapter chronopostAdapter,
+                            ChronopostDivertedExtractionAdapter chronopostDivertedAdapter,
                             MondialRelayExtractionAdapter mondialRelayAdapter,
                             VintedGoExtractionAdapter vintedGoAdapter) {
         this.providers = List.of(
+            new ProviderDefinition(
+                "Chronopost Diverted",
+                "from:(chronopost@network1.pickup.fr OR chronopost@network2.pickup.fr) subject:(\"différent\")",
+                chronopostDivertedAdapter
+            ),
             new ProviderDefinition(
                 "Chronopost", 
                 "from:(chronopost@network1.pickup.fr OR chronopost@network2.pickup.fr)", 
