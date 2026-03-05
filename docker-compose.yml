@@ -6,8 +6,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-parcelflow}
       POSTGRES_USER: ${POSTGRES_USER:-user}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
-    ports:
-      - "5432:5432"
+    # ports:
+    #   - "5432:5432" # Removed static port binding for Coolify preview
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -21,8 +21,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: parcel-flow-backend
-    ports:
-      - "8080:8080"
+    # ports:
+    #   - "8080:8080" # Removed static port binding for Coolify preview
     environment:
       - DATABASE_URL=jdbc:postgresql://postgres:5432/${POSTGRES_DB:-parcelflow}
       - PGUSER=${POSTGRES_USER:-user}
