@@ -25,7 +25,7 @@ export default function LoginScreen() {
     setError(null);
 
     try {
-      const response = await fetch(`${API_URL}/api/auth/verify`, {
+      const response = await fetch(`${API_URL}/auth/verify`, {
         headers: {
           [HEADER_NAME]: password,
         },
