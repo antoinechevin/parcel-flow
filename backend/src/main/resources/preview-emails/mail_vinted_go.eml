@@ -1,0 +1,359 @@
+Delivered-To: antoine.chevin@gmail.com
+Received: by 2002:adf:ae5a:0:b0:42f:ab8a:35ad with SMTP id u26csp294935wrd;
+        Thu, 11 Dec 2025 05:44:25 -0800 (PST)
+X-Forwarded-Encrypted: i=4; AJvYcCUZqcngfTisuMonP8d3jhX3UmT+Bh9JwYZ6QAatVVYQV7M45gbVABHgkCJ/MY5fVLAz5EjWGdCB9revGMiJRQ==@gmail.com
+X-Received: by 2002:a05:6402:234f:b0:641:8f8d:e640 with SMTP id 4fb4d7f45d1cf-6496db69929mr5807290a12.23.1765460665188;
+        Thu, 11 Dec 2025 05:44:25 -0800 (PST)
+ARC-Seal: i=3; a=rsa-sha256; t=1765460665; cv=pass;
+        d=google.com; s=arc-20240605;
+        b=Pbs8v81jDx4ET30QWHM44AIVmMIBXmz066LoHUX65zuTxpWSAzLGi5vW5b4bkNUGTa
+         WEMenaZyrD/lWLe0bH+p/lrmCeMrwWWoEezBFLqxGAOpnS/OCZR9xmXDbN3agYO02RvJ
+         uABekBEevCB4yOfjwMNrzF9wzx43YuUINyDsOLf4GA27ODP+HhmRjyJj8JGMai0HnBvo
+         4Y9GCLl+x0CNTWWhBM7yeEeP0al/CuAbs+qfrdxNMm6catsBQSSryxjV9qZQ1szEby0j
+         J4r0rOR66n+pbTh85q3pp7fl4Rlet6kPoY73a5UkNNQRaVSV/CESFgNKPJ2K8iRL8bTv
+         uqDg==
+ARC-Message-Signature: i=3; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:to:from:subject:reply-to:message-id
+         :mime-version:feedback-id:date:dkim-signature:dkim-signature
+         :delivered-to;
+        bh=VZTyWQB11wyUoaj/hYQWdt73gmaNAh/l46SSoYzHJNs=;
+        fh=aUxP9XL+0m0/AypwEOOvwQqf76Cjg2+Fxq+q+mjGVPM=;
+        b=Mnm61nlEG8wDhiA4Y7N+7Z1V/f47yplXNTW4ILLu/9UCUZdn01Ah1qIqkJtUsv742I
+         5wJvPZqf0d1oseSAMpcwrmXn+vIOtqLdY2SS80HbKy9B1NjcWtyi6dW04hf9v6/UGpK8
+         Gy3MM2HMyRiOLfl1wrmS4e1M+CB8IgmktMEYyDNNAewJSxY5RkPVmMZTdlbY+pADDDRK
+         DvuMR9ER5HevJcyOsRsQ71D6/6fu8yNEJfi0mVMen8KlXgT3uKcHNYrosBz1p1rRpxI1
+         apge4Xe4kDlS63/CThuuW3zCSG6bDxywsHnTLR5cwC+2sC+HKylwbf/SaodQ2EfKJRZl
+         6qhg==;
+        dara=google.com
+ARC-Authentication-Results: i=3; mx.google.com;
+       dkim=pass header.i=@vinted.com header.s=y6o5uyjples473rsiwwhpguvhe2tcqv2 header.b=mQfiwPa7;
+       dkim=pass header.i=@amazonses.com header.s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn header.b=WrX3M3GU;
+       arc=pass (i=2 spf=pass spfdomain=eu-west-1.amazonses.com dkim=pass dkdomain=vinted.com dkim=pass dkdomain=amazonses.com dmarc=pass fromdomain=vinted.com);
+       spf=pass (google.com: domain of anou.chevin+caf_=antoine.chevin=gmail.com@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom="anou.chevin+caf_=antoine.chevin=gmail.com@gmail.com";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=vinted.com;
+       dara=pass header.i=@gmail.com
+Return-Path: <anou.chevin+caf_=antoine.chevin=gmail.com@gmail.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id 4fb4d7f45d1cf-6498203bf55sor787245a12.1.2025.12.11.05.44.25
+        for <antoine.chevin@gmail.com>
+        (Google Transport Security);
+        Thu, 11 Dec 2025 05:44:25 -0800 (PST)
+Received-SPF: pass (google.com: domain of anou.chevin+caf_=antoine.chevin=gmail.com@gmail.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@vinted.com header.s=y6o5uyjples473rsiwwhpguvhe2tcqv2 header.b=mQfiwPa7;
+       dkim=pass header.i=@amazonses.com header.s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn header.b=WrX3M3GU;
+       arc=pass (i=2 spf=pass spfdomain=eu-west-1.amazonses.com dkim=pass dkdomain=vinted.com dkim=pass dkdomain=amazonses.com dmarc=pass fromdomain=vinted.com);
+       spf=pass (google.com: domain of anou.chevin+caf_=antoine.chevin=gmail.com@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom="anou.chevin+caf_=antoine.chevin=gmail.com@gmail.com";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=vinted.com;
+       dara=pass header.i=@gmail.com
+ARC-Seal: i=2; a=rsa-sha256; t=1765460665; cv=pass;
+        d=google.com; s=arc-20240605;
+        b=R6TGWXZkjsyibhlshi/QLINmK9Qnbao7H+hTEoltqqYkLD498uRKh4y9fnnYLuR7u4
+         CyFlD9I22/FTq49tgWLtmN6gsGI4tI20ww4pNNzf1sk5ASuH0bte72qtZWG0dkPwQC4V
+         3A4TZFLvXlXdeDY2uLMhDbSJkBbolcTGk87LlWu5VdkL/SYe+iAjAT6+xB6uVxkVr6Wn
+         xrid6GyUqHYOQkAYZQXbR2Jl6Vayn/+e4ISC9Kv2WSEgSJsWTo+lVBCRi9pJ1vohyuih
+         5ZHfM/JJeVFnbu6YZX+USkhRMJZ47Nc2bOyMKKu4LlcDxf2Khg2TzxEZSi2MbPgoah3Q
+         R3FQ==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:to:from:subject:reply-to:message-id
+         :mime-version:feedback-id:date:dkim-signature:dkim-signature
+         :delivered-to;
+        bh=VZTyWQB11wyUoaj/hYQWdt73gmaNAh/l46SSoYzHJNs=;
+        fh=aUxP9XL+0m0/AypwEOOvwQqf76Cjg2+Fxq+q+mjGVPM=;
+        b=dAOP0lSV4iONf/67uYmu9CQVERFoDorjDQ2jB/YH0HZruYf/PpnBoFvYXftNaeDLMp
+         rcDR1e9/uVYjoaWXpCIZKwD1NiA4zMpNDI92ytBriWXHcDB6nu6IeuWcQ/i/s3aEh6qI
+         yv+kQuCkSmUhBxV+Eg/+wKtc/ToB6J7VMzWn4gjNm4xuWZBizCQmTvZBjFdAvHaMHeUX
+         gllnxZcRG6SaVq+76nwAFqdbLtgqvGVPw/KAHK3T8fcj2kUxVjzCvw5cmiwj1OuKnCGy
+         X2/OykDgaJm9G0JQDC3WsQJVqH0ncC/hIQsb5ltvppQxJGJ39ZOV2fjL13ZqXX/kuIWB
+         k4zA==;
+        dara=google.com
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@vinted.com header.s=y6o5uyjples473rsiwwhpguvhe2tcqv2 header.b=mQfiwPa7;
+       dkim=pass header.i=@amazonses.com header.s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn header.b=WrX3M3GU;
+       spf=pass (google.com: domain of 0102019b0da7db6e-087abb34-7628-4674-aef8-0b5286c97f74-000000@eu-west-1.amazonses.com designates 69.169.229.229 as permitted sender) smtp.mailfrom=0102019b0da7db6e-087abb34-7628-4674-aef8-0b5286c97f74-000000@eu-west-1.amazonses.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=vinted.com
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765460665; x=1766065465;
+        h=content-transfer-encoding:to:from:subject:reply-to:message-id
+         :mime-version:feedback-id:date:dkim-signature:dkim-signature
+         :delivered-to:x-forwarded-for:x-forwarded-to:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=VZTyWQB11wyUoaj/hYQWdt73gmaNAh/l46SSoYzHJNs=;
+        b=sP3UzgaqQ/MBDSbOX3+kM/58pj25kPnOWjiX346V/o+LUovj0rFhrqfckmPcfligWH
+         V9WbvzTwENWgVgoUmkPtNPYdnkzpHyLxVl6n/BjOeIQyqponPGxQ2JSehZV5jLFghKVj
+         +RXiKGKo8B8wkbziE5aG2xBlEEJHxiM76a7bN3tnxtJhDFfRhtAJ5o1AEbf4vwMTIenf
+         D60db2Q2sQBoya943N+cyQRuKFKbFcvypXoQFGEF6qsK6kru6gAwut3ydI0T99YOQ/eJ
+         /whQAsEtX7fGSvo6S3my7fMP46I4TVazJO3AvOJbyZGMEWPAAno/bp3k9VH5Nx5SFaEo
+         cWgw==
+X-Forwarded-Encrypted: i=2; AJvYcCXWCx7gOPPwpqVcGxBwq3QumWUwWxBbb9oCrpl/3q4iw5eOsx+sfP11UXNeSaiIRos+vVawY2jFpax4l524gA==@gmail.com
+X-Gm-Message-State: AOJu0YyzJlvQbs6iOobDXxXVjHDAVRmxYA9C7TxU5oPeurMa5ql83IqF /6fTkIrFaEMUgv3Qx86R5yVmjeUodHQU+I+i3T6ajPjqdDtEo2/TX8ExxQkFc1InnjfZN33YxqS WnlksTb8cZxYYJlWze7V2YSx0bCHRUDEURA+vV2MrTONYI68dvBHSkrCtiMRsFw==
+X-Received: by 2002:a05:6402:1471:b0:649:906d:784f with SMTP id 4fb4d7f45d1cf-649906d7b13mr984924a12.32.1765460664701;
+        Thu, 11 Dec 2025 05:44:24 -0800 (PST)
+X-Forwarded-To: noura.chevin@gmail.com, antoine.chevin@gmail.com
+X-Forwarded-For: anou.chevin@gmail.com noura.chevin@gmail.com, antoine.chevin@gmail.com
+Delivered-To: anou.chevin@gmail.com
+Received: by 2002:a05:7208:314:b0:f2:f7e4:9c80 with SMTP id n20csp843270rbb;
+        Thu, 11 Dec 2025 05:44:23 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGJ+YgUI5jnnN/KbdsSQSFIWayfXTPSOIaFsXfQXS6gPpS15P9sS+PsGqhNTS2q/GJIhCMl
+X-Received: by 2002:a05:6000:2287:b0:42f:7636:95cc with SMTP id ffacd0b85a97d-42fa3afd4cdmr7339723f8f.33.1765460663470;
+        Thu, 11 Dec 2025 05:44:23 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1765460663; cv=none;
+        d=google.com; s=arc-20240605;
+        b=K0iiaUSNVg6lN3A9atLqbZ0rbzc4hJ5qmjtyjf0Ot+auF9HhbLQJDr9+HZ2tpBe6+1
+         IcThYZ5Z+9V4yVH4DwBR29PpnoC1/kO3sRypFnqLkF1kK1KyjgV63/cdbqLFw7s/wqJB
+         rLnuLQ+r4ECMNyfr1Ira1tZTIvYi8h+mLahFMxIejrJy3wsFTKWu4SBegCWWxu0Hnoeg
+         ZKvU7d5nK5mgy5t8or4WRAzg1T4CxEzr01snZhGd1ekQpwu5LnMrgrxfAhjw/ZA+Biqr
+         gF3yn+7ThIuSjV7/lehaIstU8AgJDZIxLj74HfbeK9CvX+wOc3RI1Gb+X5gMGyFjesC7
+         cwCw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:to:from:subject:reply-to:message-id
+         :mime-version:feedback-id:date:dkim-signature:dkim-signature;
+        bh=VZTyWQB11wyUoaj/hYQWdt73gmaNAh/l46SSoYzHJNs=;
+        fh=udNoXpeG+OMEkgJAXtykmfhVkwwLlXB0f7WfAuY6LWU=;
+        b=VbhTIxXuh8Tlk4ISInlMBLJUwI2Xm05hCwSdUph8Wu8PYsFJSmk5/7ivUvnptv8/ry
+         JBZRETz5S/aU8VtykuCn0xUcA46L9TEJtFtQ81ERqmo3ieGbX6ibPR2UQTaHZnL7V2HO
+         APPh0j/4qe5e3SK7wMpYPwZulFAp+5W4O2+5+yRzFJtaIsHN8xoGbCTVPZX47IA6oS8z
+         B7Ig9Fry+F0rp83O0DfWSpiXlLnvj3XfsrRPtp6XH/8FnBZ4NEZQuWv82u2+81zEwVcE
+         Q3pcW9qCFL/gd23aWdQlLK6IZYkNSzm0LOT7TYoWZ52zIwiyjhuYp+41bHTwaezdBQ16
+         51PQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@vinted.com header.s=y6o5uyjples473rsiwwhpguvhe2tcqv2 header.b=mQfiwPa7;
+       dkim=pass header.i=@amazonses.com header.s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn header.b=WrX3M3GU;
+       spf=pass (google.com: domain of 0102019b0da7db6e-087abb34-7628-4674-aef8-0b5286c97f74-000000@eu-west-1.amazonses.com designates 69.169.229.229 as permitted sender) smtp.mailfrom=0102019b0da7db6e-087abb34-7628-4674-aef8-0b5286c97f74-000000@eu-west-1.amazonses.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=vinted.com
+Return-Path: <0102019b0da7db6e-087abb34-7628-4674-aef8-0b5286c97f74-000000@eu-west-1.amazonses.com>
+Received: from b229-229.smtp-out.eu-west-1.amazonses.com (b229-229.smtp-out.eu-west-1.amazonses.com. [69.169.229.229])
+        by mx.google.com with ESMTPS id ffacd0b85a97d-42fae9e1173si765624f8f.516.2025.12.11.05.44.23
+        for <anou.chevin@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 Dec 2025 05:44:23 -0800 (PST)
+Received-SPF: pass (google.com: domain of 0102019b0da7db6e-087abb34-7628-4674-aef8-0b5286c97f74-000000@eu-west-1.amazonses.com designates 69.169.229.229 as permitted sender) client-ip=69.169.229.229;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple; s=y6o5uyjples473rsiwwhpguvhe2tcqv2; d=vinted.com; t=1765460663; h=Date:MIME-Version:Message-ID:Reply-To:Subject:From:To:Content-Transfer-Encoding:Content-Type; bh=o2tSdYPbDENoNSp65HBuUmny97jGUG9t4pAiItBB06I=; b=mQfiwPa7jedch8rU03eLDsJSZE6QsG0KZBjmINMJ3P5burEsSmLcGhyncOHfv6l1 izwIQAa9sgTQ8B/x3oOPl0C3z1Eb9PvCFXtv2PWX2fxlKDW5QeEGuKFrs5I9teFMGQR bKI+UGRQTVMlfeH1x0XZhOXm7tmOxoSVOxqu+K3s=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple; s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1765460663; h=Date:Feedback-ID:MIME-Version:Message-ID:Reply-To:Subject:From:To:Content-Transfer-Encoding:Content-Type; bh=o2tSdYPbDENoNSp65HBuUmny97jGUG9t4pAiItBB06I=; b=WrX3M3GUA/mz2BNhLmCHNTJKlT1DojZU9Oj9Nm/8QJiW/ePb2hwH8pvgniBiXK8F CYKC+C2uHau5Na+CGBFmXGBWCrkEZ8iGTc/DE5yRt3xY8tPExqaMvD/0JQeulFYrqbM jbW8+3zJwVx2Zf5bL0rJp2x6XsK+66qx01xr3m68=
+Date: Thu, 11 Dec 2025 13:44:23 +0000
+Feedback-ID: ::1.eu-west-1.QOzjNwxJtlDcPj1T2b+NJY3x2BmLrUAayYYkSNgKC8I=:AmazonSES
+MIME-Version: 1.0
+Message-ID: <0102019b0da7db6e-087abb34-7628-4674-aef8-0b5286c97f74-000000@eu-west-1.amazonses.com>
+Reply-To: no-reply@vinted.com
+Subject: Il est temps de récupérer ton colis ! #1764156123430443
+From: no-reply@vinted.com
+To: anou.chevin@gmail.com
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=UTF-8
+X-SES-Outgoing: 2025.12.11-69.169.229.229
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=3D"UTF-8">
+  <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D=
+1.0">
+  <style>
+      .main {
+          font-family: 'Helvetica', Helvetica, 'Helvetica Neue', Arial, san=
+s-serif;
+          font-size: 16px;
+          background-color: #f4f4f4;
+          border-radius: 20px;
+          margin: 0;
+          padding: 10px;
+      }
+
+      .container {
+          max-width: 600px;
+          margin: auto;
+          background-color: #fff;
+          border-radius: 15px;
+          overflow: hidden;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .header {
+          background-color: #004654;
+          padding: 20px;
+          font-size: 24px;
+      }
+
+      .content {
+          padding: 20px;
+      }
+
+      .content h1 {
+          font-size: 24px;
+          font-weight: 700;
+          margin: 30px 0 40px;
+          color: #4A4A4A;
+      }
+
+      .content p {
+          margin: 5px 0;
+      }
+
+      .img-div {
+          text-align: center;
+          width: 100%;
+      }
+
+      @media (min-width: 380px) {
+          .img-div .qr-code {
+              margin: 0 auto;
+              background-color: #FeFeFe;
+              border: 4px solid #003f4b;
+              padding: 15px;
+              border-radius: 20px;
+              width: 250px;
+          }
+      }
+      .vinted_color { color: #127078; font-weight: bold; }
+      .background-2{
+          background-color: #F2F3F2;
+      }
+      .img-div .qr-code{
+          margin: 0 auto;
+          background-color: #FeFeFe;
+          border: 4px solid #003f4b;
+          padding: 15px;
+          border-radius: 20px;
+          width: 250px;
+      }
+
+      .img-div img {
+          display: inline-block;
+          width: 70%;
+          max-width: 300px;
+      }
+
+      @media (max-width: 768px) {
+          .mobile-left {
+          margin: 0 auto;
+          text-align: left !important;
+          }
+      }
+      .block-header {
+        font-size:14px; font-weight: 300;
+      }
+</style>
+  <link rel=3D"stylesheet" href=3D"/mailer.css">
+</head>
+<body><img src=3D'https://www.vinted.fr//crm/email_open_track?email_code=3D=
+VCARRIER_READY_FOR_PICKUP&hash=3Dc32543e6feb744df6bba755fe5153356c95befdc51=
+59913a247303b7ece63a6a00db5f0eba5399c1d10eb8c2f33a757c&correlation_id=3D176=
+4156123430443-76834ef6-2932-4cc484' width=3D1 height=3D1 alt=3D''/>
+<div class=3D"main">
+  <div class=3D"container">
+    <div class=3D"header">
+      <a href=3D"https://vintedgo.com" target=3D"_blank">
+          <img src=3D'https://vintedgo.com/assets/vinted-go-logo-white-emai=
+l.png' alt=3D'' style=3D'width: 180px;'>
+      </a>
+    </div>
+    <div class=3D"content">
+      <h1 style=3D"color: #004654; font-size: 24px; font-weight: 700; margi=
+n: 30px 0 40px;">
+  Bonjour Noura Chevin,
+</h1>
+
+  <p>Ton colis <b>Vinted Go</b> est arriv=C3=A9. Tu peux d=C3=A8s =C3=A0 pr=
+=C3=A9sent le r=C3=A9cup=C3=A9rer.</p>
+<br>
+<br>
+<div style=3D"background:#F2F3F2; border-radius:10px; text-align:center; pa=
+dding:24px; margin:0 0 16px 0; font-size: 14px;">
+  <div class=3D"block-header" style=3D"margin-bottom:16px;">
+    =C3=80 retirer avant le
+  </div>
+  <div style=3D"font-size:24px; font-weight:700; color:#222; margin-bottom:=
+16px;">
+    <b>17/12/2025</b>
+  </div>
+ =20
+   <div style=3D"font-size:12px; margin-bottom:16px;">
+    Nous le retournerons =C3=A0 l&#39;exp=C3=A9diteur si tu ne le r=C3=A9cu=
+p=C3=A8res pas =C3=A0 temps.
+  </div>
+</div>
+<div style=3D"background:#F2F3F2; border-radius:10px; text-align:center; pa=
+dding:24px; margin:0 0 16px 0; font-size: 14px;">
+  <div class=3D"block-header" style=3D"margin-bottom:16px;">Adresse</div>
+ <div style=3D"font-size:16px; font-weight:700; color:#222; margin-bottom:6=
+px;">
+    <b>Consigne Vinted Go</b>
+  </div>
+
+  <div style=3D"font-size:16px; font-weight:700; color:#222; margin-bottom:=
+16px;">
+    <b>
+      Les Casiers Des Saveurs
+    </b>
+  </div>
+  <div style=3D"font-size:16px; font-weight:700; color:#222; margin-bottom:=
+2px;">
+    <b>
+      <a target=3D"_blank" href=3D"https://vintedgo.com/fr/carrier-location=
+s?region=3Deurope&amp;selected_point=3D103598">210 Route Du Bourg</a>
+    </b>
+    <br>
+      <b><a target=3D"_blank" href=3D"https://vintedgo.com/fr/carrier-locat=
+ions?region=3Deurope&amp;selected_point=3D103598">Sourcieux Les Mines</a></=
+b>
+  </div>
+</div>
+
+    <div style=3D"background:#F2F3F2; border-radius:10px; text-align:center=
+; padding:24px; margin:0 0 16px 0; font-size: 14px;">
+    <div class=3D"block-header" style=3D"margin-bottom:16px;">D=C3=A9tails =
+de la commande</div>
+    <div style=3D"font-size:16px; font-weight:700; color:#222; margin-botto=
+m:6px;">
+      <b>Lot de 2 articles,<br>3.50 =E2=82=AC</b>
+    </div>
+  </div>
+
+  <div style=3D"background:#F2F3F2; border-radius:10px; text-align:center; =
+padding:24px; margin:0 0 16px 0; font-size: 14px;">
+    <div class=3D"block-header" style=3D"margin-bottom:16px;">Horaires d&#3=
+9;ouverture</div>
+    <div style=3D"font-size:16px; margin-bottom:6px; line-height: 22px;">
+          <div style=3D"padding: 4px;">
+            <b>Lundi=E2=80=93Dimanche</b>
+            <p>
+              06:00-22:00
+            </p>
+          </div>
+    </div>
+  </div>
+
+<div style=3D"background:#F2F3F2; border-top-left-radius:10px; border-top-r=
+ight-radius:10px; text-align:center; padding:24px; font-size: 14px;">
+  <div class=3D'block-header' style=3D" margin-bottom:16px;">Code de retrai=
+t</div>
+  <div class=3D"img-div" style=3D"margin-bottom:16px;">
+      <img alt=3D"QR code" style=3D"border: 4px solid #003f4b; border-radiu=
+s: 20px;" src=3D"http://p.vintedgo.com/public/v1/qr_codes/1764156123430443:=
+E32782:0313084538f335746ff4812f2587c47ef34be7a147d0ffaa585952a723db8d25?ema=
+il_code=3DVCARRIER_READY_FOR_PICKUP&amp;time=3D2025-12-11T13%3A44%3A22Z" />
+  </div>
+</div>
+<div style=3D"background:#F2F3F2; border-bottom-left-radius:10px; border-bo=
+ttom-right-radius:10px; text-align:center; padding:0 24px 24px 24px; margin=
+:0 0 16px 0; font-size: 14px;">
+  <div class=3D'mobile-left' style=3D"font-size:14px;">
+    Scanne ce QR code pour r=C3=A9cup=C3=A9rer ton colis ou saisis le code =
+suivant : <b>E32782</b>
+  </div>
+</div>
+<br>
+<p>Num=C3=A9ro de suivi : <a target=3D"_blank" href=3D"https://vintedgo.com=
+/fr/tracking/1764156123430443">1764156123430443</a></p>
+<br>
+<p><b>Besoin d'aide ?</b> N'h=C3=A9site pas =C3=A0 consulter notre <a href=
+=3D'https://vintedgo.com/fr/faq' target=3D'_blank'>site Web</a>.</p>
+<br>
+<p>L&#39;=C3=A9quipe Vinted Go</p>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>
