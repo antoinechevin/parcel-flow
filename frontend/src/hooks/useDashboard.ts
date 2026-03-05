@@ -23,7 +23,7 @@ export const useDashboard = () => {
     }
 
     try {
-      const response = await fetch(`${API_URL}/api/dashboard`, {
+      const response = await fetch(`${API_URL}/dashboard`, {
         headers: {
           [HEADER_NAME]: apiKey!,
         },
@@ -97,7 +97,7 @@ export const useDashboard = () => {
     }
 
     try {
-      const response = await fetch(`${API_URL}/api/parcels/${trackingNumber}/archive`, {
+      const response = await fetch(`${API_URL}/parcels/${trackingNumber}/archive`, {
         method: 'POST',
         headers: {
           [HEADER_NAME]: apiKey!,
