@@ -3,6 +3,7 @@ package com.parcelflow.application.usecases;
 import com.parcelflow.domain.model.LocationGroup;
 import com.parcelflow.domain.model.Parcel;
 import com.parcelflow.domain.model.ParcelStatus;
+import com.parcelflow.domain.model.PickupPoint;
 import com.parcelflow.domain.model.UrgencyLevel;
 import com.parcelflow.domain.ports.ParcelRepositoryPort;
 import com.parcelflow.domain.service.UrgencyCalculator;
