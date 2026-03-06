@@ -37,7 +37,7 @@ class ProviderRegistryTest {
         assertEquals(4, providers.size());
 
         ProviderDefinition chronopostDiverted = findProvider(providers, "Chronopost Diverted");
-        assertEquals("from:(chronopost@network1.pickup.fr OR chronopost@network2.pickup.fr) subject:(\"différent\")", chronopostDiverted.query());
+        assertEquals("from:(chronopost@network1.pickup.fr OR chronopost@network2.pickup.fr)", chronopostDiverted.query());
         assertSame(chronopostDivertedAdapter, chronopostDiverted.adapter());
 
         ProviderDefinition chronopost = findProvider(providers, "Chronopost");

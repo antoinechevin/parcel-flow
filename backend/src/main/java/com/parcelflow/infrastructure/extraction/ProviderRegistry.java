@@ -17,7 +17,7 @@ public class ProviderRegistry implements ProviderRegistryPort {
         this.providers = List.of(
             new ProviderDefinition(
                 "Chronopost Diverted",
-                "from:(chronopost@network1.pickup.fr OR chronopost@network2.pickup.fr) subject:(\"différent\")",
+                "from:(chronopost@network1.pickup.fr OR chronopost@network2.pickup.fr)",
                 chronopostDivertedAdapter
             ),
             new ProviderDefinition(

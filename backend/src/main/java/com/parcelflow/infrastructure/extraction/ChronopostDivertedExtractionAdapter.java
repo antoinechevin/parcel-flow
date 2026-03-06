@@ -107,19 +107,23 @@ public class ChronopostDivertedExtractionAdapter implements ParcelExtractionPort
 
         // Fallback regex on HTML since text might merge things unexpectedly
         String html = doc.html();
-        Pattern htmlPattern = Pattern.compile("disponible en\\s+(.*?)\\s+jusqu'au", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+        Pattern htmlPattern = Pattern.compile("disponible (?:en|au|à)\\s+(.*?)\\s+jusqu'au", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
         Matcher htmlMatcher = htmlPattern.matcher(html);
         if (htmlMatcher.find()) {
              return Jsoup.parse(htmlMatcher.group(1)).text().trim();
         }
 
-        Pattern p = Pattern.compile("disponible en\\s+(.*?)\\s+jusqu'au", Pattern.CASE_INSENSITIVE);
+        Pattern p = Pattern.compile("disponible (?:en|au|à)\\s+(.*?)\\s+jusqu'au", Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(text);
         if (m.find()) {
             String extracted = m.group(1).trim();
             // Since `text` strips HTML, it might include previous tags' texts. Let's clean it.
             if (extracted.contains("est disponible en ")) {
                 extracted = extracted.substring(extracted.lastIndexOf("est disponible en ") + 18);
+            } else if (extracted.contains("est disponible au ")) {
+                extracted = extracted.substring(extracted.lastIndexOf("est disponible au ") + 18);
+            } else if (extracted.contains("est disponible à ")) {
+                extracted = extracted.substring(extracted.lastIndexOf("est disponible à ") + 17);
             }
             return extracted;
         }

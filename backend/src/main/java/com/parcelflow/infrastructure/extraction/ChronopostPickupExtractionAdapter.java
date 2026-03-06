@@ -34,8 +34,7 @@ public class ChronopostPickupExtractionAdapter implements ParcelExtractionPort {
         }
 
         // Let the Diverted adapter handle redirected parcels
-        if (emailContent.contains("pas pu être livré dans votre point initial") ||
-            emailContent.contains("différent")) {
+        if (emailContent.contains("point initial") || emailContent.contains("différent")) {
             return Optional.empty();
         }
 
