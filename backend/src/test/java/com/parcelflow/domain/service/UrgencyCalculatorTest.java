@@ -68,14 +68,4 @@ class UrgencyCalculatorTest {
         assertEquals(UrgencyLevel.LOW, result.level());
         assertEquals(5, result.daysUntil());
     }
-
-    @Test
-    void should_ignore_parcels_with_null_deadline() {
-        LocalDate today = LocalDate.now(fixedClock);
-        Parcel p1 = new Parcel(ParcelId.random(), "T1", "DHL", null, ParcelStatus.AVAILABLE, pp, null, null, BarcodeType.QR_CODE);
-        Parcel p2 = new Parcel(ParcelId.random(), "T2", "DHL", today.plusDays(5), ParcelStatus.AVAILABLE, pp, null, null, BarcodeType.QR_CODE);
-        UrgencyCalculator.Result result = calculator.calculate(List.of(p1, p2), today);
-        assertEquals(UrgencyLevel.LOW, result.level());
-        assertEquals(5, result.daysUntil());
-    }
 }

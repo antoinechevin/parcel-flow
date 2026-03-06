@@ -3,8 +3,9 @@ package com.parcelflow.application.usecases;
 import com.parcelflow.domain.model.LocationGroup;
 import com.parcelflow.domain.model.Parcel;
 import com.parcelflow.domain.model.ParcelStatus;
-import com.parcelflow.domain.model.PickupPoint;
 import com.parcelflow.domain.model.UrgencyLevel;
+import com.parcelflow.domain.model.PickupPoint;
+import com.parcelflow.domain.model.BarcodeType;
 import com.parcelflow.domain.ports.ParcelRepositoryPort;
 import com.parcelflow.domain.service.UrgencyCalculator;
 
@@ -23,8 +24,6 @@ public class RetrieveDashboardUseCase {
         this.urgencyCalculator = urgencyCalculator;
     }
 
-    private static final PickupPoint UNKNOWN_PICKUP_POINT = new PickupPoint("unknown", "Lieu inconnu", "", "");
-
     public List<LocationGroup> retrieve() {
         LocalDate today = LocalDate.now(urgencyCalculator.getClock());
 
@@ -37,19 +36,20 @@ public class RetrieveDashboardUseCase {
                     }
                     return p;
                 })
-                .collect(Collectors.groupingBy(p -> p.pickupPoint() != null ? p.pickupPoint() : UNKNOWN_PICKUP_POINT))
+                .collect(Collectors.groupingBy(Parcel::pickupPoint))
                 .entrySet().stream()
                 .map(entry -> {
                     List<Parcel> parcels = entry.getValue();
                     UrgencyCalculator.Result result = urgencyCalculator.calculate(parcels, today);
 
                     List<Parcel> sortedParcels = parcels.stream()
-                            .sorted(Comparator.comparing(this::getParcelPriority).thenComparing(Parcel::deadline, Comparator.nullsLast(Comparator.naturalOrder())))
+                            .sorted(Comparator.comparing(this::getParcelPriority)
+                                    .thenComparing(Parcel::deadline, Comparator.nullsLast(Comparator.naturalOrder())))
                             .collect(Collectors.toList());
 
                     return new LocationGroup(entry.getKey(), sortedParcels, result.level(), result.daysUntil());
                 })
-                .sorted(Comparator.comparing(this::getGroupPriority).thenComparing(LocationGroup::urgency).thenComparing(g -> g.pickupPoint() != null ? g.pickupPoint().name() : ""))
+                .sorted(Comparator.comparing(this::getGroupPriority).thenComparing(g -> g.urgency()).thenComparing(g -> g.pickupPoint().name()))
                 .collect(Collectors.toList());
     }
 
