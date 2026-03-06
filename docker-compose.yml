@@ -10,8 +10,8 @@ services:
     #   - "5432:5432" # Removed static port binding for Coolify preview
     networks:
       - parcelflow-net
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+    # volumes:
+    #   - postgres_data:/var/lib/postgresql/data # Commented out for ephemeral preview DB
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-user} -d ${POSTGRES_DB:-parcelflow}"]
       interval: 5s
@@ -67,5 +67,5 @@ networks:
   parcelflow-net:
     driver: bridge
 
-volumes:
-  postgres_data:
+# volumes:
+#   postgres_data:
