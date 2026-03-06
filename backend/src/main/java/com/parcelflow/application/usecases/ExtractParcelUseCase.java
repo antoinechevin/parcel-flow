@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.UUID;
+import com.parcelflow.domain.model.BarcodeType;
 
 public class ExtractParcelUseCase {
 
@@ -44,12 +45,12 @@ public class ExtractParcelUseCase {
                     return;
                 }
 
-                if (repositoryPort.findByTrackingNumber(cleanTrackingNumber).isPresent()) {
-                    log.info("Parcel with tracking number {} already exists. Skipping.", cleanTrackingNumber);
-                    return;
+                Optional<Parcel> existingParcelOpt = repositoryPort.findByTrackingNumber(cleanTrackingNumber);
+                if (existingParcelOpt.isPresent()) {
+                    log.info("Parcel with tracking number {} already exists. Updating it...", cleanTrackingNumber);
+                } else {
+                    log.info("Metadata extracted: {}. Creating new parcel...", cleanTrackingNumber);
                 }
-
-                log.info("Metadata extracted: {}. Saving parcel...", cleanTrackingNumber);
                 
                 PickupPoint pickupPoint = null;
                 if (metadata.pickupLocation() != null && !metadata.pickupLocation().isBlank()) {
@@ -62,20 +63,43 @@ public class ExtractParcelUseCase {
                     );
                 }
 
+                ParcelId parcelId = existingParcelOpt.map(Parcel::id).orElseGet(ParcelId::random);
+                ParcelStatus status = existingParcelOpt.map(Parcel::status).orElse(ParcelStatus.AVAILABLE);
+
+                // Intelligent merge: keep old data if new extraction is missing it
+                java.time.LocalDate finalExpirationDate = metadata.expirationDate() != null ?
+                        metadata.expirationDate() :
+                        existingParcelOpt.map(Parcel::deadline).orElse(null);
+
+                String finalPickupCode = metadata.pickupCode() != null ?
+                        metadata.pickupCode() :
+                        existingParcelOpt.map(Parcel::pickupCode).orElse(null);
+
+                String finalQrCodeUrl = metadata.qrCodeUrl() != null ?
+                        metadata.qrCodeUrl() :
+                        existingParcelOpt.map(Parcel::qrCodeUrl).orElse(null);
+
+                BarcodeType finalBarcodeType = metadata.barcodeType() != null && metadata.barcodeType() != BarcodeType.NONE ?
+                        metadata.barcodeType() :
+                        existingParcelOpt.map(Parcel::barcodeType).orElse(BarcodeType.NONE);
+
+                PickupPoint finalPickupPoint = pickupPoint != null ? pickupPoint :
+                        existingParcelOpt.map(Parcel::pickupPoint).orElse(null);
+
                 Parcel parcel = new Parcel(
-                    ParcelId.random(),
+                    parcelId,
                     cleanTrackingNumber,
                     metadata.carrier(),
-                    metadata.expirationDate(),
-                    ParcelStatus.AVAILABLE,
-                    pickupPoint,
-                    metadata.pickupCode(),
-                    metadata.qrCodeUrl(),
-                    metadata.barcodeType()
+                    finalExpirationDate,
+                    status,
+                    finalPickupPoint,
+                    finalPickupCode,
+                    finalQrCodeUrl,
+                    finalBarcodeType
                 );
                 
                 repositoryPort.save(parcel);
-                log.info("Parcel saved successfully.");
+                log.info("Parcel saved/updated successfully.");
             },
             () -> log.warn("No metadata extracted from email content.")
         );

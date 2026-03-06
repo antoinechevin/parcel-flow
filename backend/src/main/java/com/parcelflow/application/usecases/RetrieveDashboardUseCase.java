@@ -4,6 +4,8 @@ import com.parcelflow.domain.model.LocationGroup;
 import com.parcelflow.domain.model.Parcel;
 import com.parcelflow.domain.model.ParcelStatus;
 import com.parcelflow.domain.model.UrgencyLevel;
+import com.parcelflow.domain.model.PickupPoint;
+import com.parcelflow.domain.model.BarcodeType;
 import com.parcelflow.domain.ports.ParcelRepositoryPort;
 import com.parcelflow.domain.service.UrgencyCalculator;
 
@@ -41,7 +43,8 @@ public class RetrieveDashboardUseCase {
                     UrgencyCalculator.Result result = urgencyCalculator.calculate(parcels, today);
 
                     List<Parcel> sortedParcels = parcels.stream()
-                            .sorted(Comparator.comparing(this::getParcelPriority).thenComparing(Parcel::deadline))
+                            .sorted(Comparator.comparing(this::getParcelPriority)
+                                    .thenComparing(Parcel::deadline, Comparator.nullsLast(Comparator.naturalOrder())))
                             .collect(Collectors.toList());
 
                     return new LocationGroup(entry.getKey(), sortedParcels, result.level(), result.daysUntil());

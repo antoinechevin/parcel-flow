@@ -25,6 +25,9 @@ FROM nginx:alpine
 # Install curl for healthcheck
 RUN apk add --no-cache curl
 
+# Copy the custom Nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Copy the built files from the builder stage to Nginx html directory
 COPY --from=builder /app/dist /usr/share/nginx/html
 

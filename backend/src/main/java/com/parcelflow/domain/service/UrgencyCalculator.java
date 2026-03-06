@@ -27,6 +27,7 @@ public class UrgencyCalculator {
         return parcels.stream()
             .filter(p -> p.status() == ParcelStatus.AVAILABLE)
             .map(Parcel::deadline)
+            .filter(java.util.Objects::nonNull)
             .min(LocalDate::compareTo)
             .map(deadline -> {
                 long daysUntil = ChronoUnit.DAYS.between(today, deadline);
