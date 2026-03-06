@@ -12,8 +12,10 @@ export default function Heartbeat() {
     
     // Use environment variable or fallback to localhost
     // In Codespaces, set EXPO_PUBLIC_API_URL in .env.local
-    const apiUrl = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8080';
-    const fullUrl = `${apiUrl}/heartbeat`;
+    const apiUrl = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8080/api';
+    // Remove the /api suffix if it exists for the heartbeat since it might not be prefixed yet
+    const baseApiUrl = apiUrl.replace(/\/api\/?$/, '');
+    const fullUrl = `${baseApiUrl}/heartbeat`;
 
     console.log(`Starting heartbeat check to: ${fullUrl}`);
     try {
