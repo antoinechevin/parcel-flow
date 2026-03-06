@@ -20,6 +20,8 @@ import java.util.Properties;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class PreviewMailSourceDecorator implements MailSourcePort {
 
@@ -29,8 +31,9 @@ public class PreviewMailSourceDecorator implements MailSourcePort {
     // Regex for dynamic tracking code replacements
     private static final Pattern MONDIAL_RELAY_TRACKING = Pattern.compile("(Votre colis\\s+)(\\d+)(\\s+est disponible)");
     private static final Pattern MONDIAL_RELAY_HTML_TRACKING = Pattern.compile("(<strong>)(\\d+)(</strong>)");
-    private static final Pattern CHRONOPOST_TRACKING = Pattern.compile("(colis n°.*?>)([A-Z0-9]+)(<)");
-    private static final Pattern VINTED_GO_TRACKING = Pattern.compile("(numéro de suivi.*?>)([A-Z0-9]+)(<)");
+    private static final Pattern CHRONOPOST_TRACKING = Pattern.compile("(n°(?:\\s*(?:de colis)?\\s*<[^>]+>\\s*|\\s+))([A-Z0-9]{10,20})", Pattern.CASE_INSENSITIVE);
+    private static final Pattern VINTED_GO_TRACKING = Pattern.compile("(numéro de suivi(?:\\s*<[^>]+>\\s*)*\\s*)([A-Z0-9]{10,20})", Pattern.CASE_INSENSITIVE);
+    private static final Pattern EXPIRATION_DATE_PATTERN = Pattern.compile("(jusqu'au\\s+(?:<[^>]+>)*)\\s*[a-zA-Z]+\\s+\\d+\\s+[a-zA-Z]+\\s+\\d{4}");
 
     public PreviewMailSourceDecorator(MailSourcePort delegate) {
         this.delegate = delegate;
@@ -118,6 +121,15 @@ public class PreviewMailSourceDecorator implements MailSourcePort {
         if (body == null) return null;
         String mocked = body;
 
+        // Force a future expiration date for Chronopost/Vinted
+        DateTimeFormatter frenchFormatter = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy", Locale.FRENCH);
+        String futureDateStr = ZonedDateTime.now().plusDays(5).format(frenchFormatter);
+        Matcher dateMatcher = EXPIRATION_DATE_PATTERN.matcher(mocked);
+        if (dateMatcher.find()) {
+            // Replace the date part while keeping the "jusqu'au" and any HTML tags intact
+            mocked = dateMatcher.replaceAll("$1 " + futureDateStr);
+        }
+
         // Try to replace numbers for Mondial Relay
         Matcher m1 = MONDIAL_RELAY_TRACKING.matcher(mocked);
         if (m1.find()) {
@@ -131,13 +143,13 @@ public class PreviewMailSourceDecorator implements MailSourcePort {
         // Try Chronopost
         Matcher m3 = CHRONOPOST_TRACKING.matcher(mocked);
         if (m3.find()) {
-             mocked = m3.replaceAll("$1MOCK-$2$3");
+             mocked = m3.replaceAll("$1MOCK-$2");
         }
 
         // Try Vinted
         Matcher m4 = VINTED_GO_TRACKING.matcher(mocked);
         if (m4.find()) {
-             mocked = m4.replaceAll("$1MOCK-$2$3");
+             mocked = m4.replaceAll("$1MOCK-$2");
         }
 
         // Add a global visual marker if no regex matched perfectly but we know it's a mock
