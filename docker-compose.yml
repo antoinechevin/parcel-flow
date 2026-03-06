@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: parcel-flow-db
+    # container_name: parcel-flow-db # Removed to avoid conflicts in Coolify previews
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-parcelflow}
       POSTGRES_USER: ${POSTGRES_USER:-user}
@@ -20,7 +20,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: parcel-flow-backend
+    # container_name: parcel-flow-backend # Removed to avoid conflicts in Coolify previews
     # ports:
     #   - "8080:8080" # Removed static port binding for Coolify preview
     environment:
@@ -48,7 +48,7 @@ services:
       dockerfile: Dockerfile
       args:
         - EXPO_PUBLIC_API_URL=${EXPO_PUBLIC_API_URL}
-    container_name: parcel-flow-frontend
+    # container_name: parcel-flow-frontend # Removed to avoid conflicts in Coolify previews
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:80/"]
       interval: 30s
