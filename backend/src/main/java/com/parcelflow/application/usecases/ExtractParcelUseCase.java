@@ -44,12 +44,12 @@ public class ExtractParcelUseCase {
                     return;
                 }
 
-                if (repositoryPort.findByTrackingNumber(cleanTrackingNumber).isPresent()) {
-                    log.info("Parcel with tracking number {} already exists. Skipping.", cleanTrackingNumber);
-                    return;
+                Optional<Parcel> existingParcelOpt = repositoryPort.findByTrackingNumber(cleanTrackingNumber);
+                if (existingParcelOpt.isPresent()) {
+                    log.info("Parcel with tracking number {} already exists. Updating it...", cleanTrackingNumber);
+                } else {
+                    log.info("Metadata extracted: {}. Creating new parcel...", cleanTrackingNumber);
                 }
-
-                log.info("Metadata extracted: {}. Saving parcel...", cleanTrackingNumber);
                 
                 PickupPoint pickupPoint = null;
                 if (metadata.pickupLocation() != null && !metadata.pickupLocation().isBlank()) {
@@ -62,12 +62,15 @@ public class ExtractParcelUseCase {
                     );
                 }
 
+                ParcelId parcelId = existingParcelOpt.map(Parcel::id).orElseGet(ParcelId::random);
+                ParcelStatus status = existingParcelOpt.map(Parcel::status).orElse(ParcelStatus.AVAILABLE);
+
                 Parcel parcel = new Parcel(
-                    ParcelId.random(),
+                    parcelId,
                     cleanTrackingNumber,
                     metadata.carrier(),
                     metadata.expirationDate(),
-                    ParcelStatus.AVAILABLE,
+                    status,
                     pickupPoint,
                     metadata.pickupCode(),
                     metadata.qrCodeUrl(),
@@ -75,7 +78,7 @@ public class ExtractParcelUseCase {
                 );
                 
                 repositoryPort.save(parcel);
-                log.info("Parcel saved successfully.");
+                log.info("Parcel saved/updated successfully.");
             },
             () -> log.warn("No metadata extracted from email content.")
         );
