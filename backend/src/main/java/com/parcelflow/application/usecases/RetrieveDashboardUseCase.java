@@ -41,12 +41,12 @@ public class RetrieveDashboardUseCase {
                     UrgencyCalculator.Result result = urgencyCalculator.calculate(parcels, today);
 
                     List<Parcel> sortedParcels = parcels.stream()
-                            .sorted(Comparator.comparing(this::getParcelPriority).thenComparing(Parcel::deadline))
+                            .sorted(Comparator.comparing(this::getParcelPriority).thenComparing(Parcel::deadline, Comparator.nullsLast(Comparator.naturalOrder())))
                             .collect(Collectors.toList());
 
                     return new LocationGroup(entry.getKey(), sortedParcels, result.level(), result.daysUntil());
                 })
-                .sorted(Comparator.comparing(this::getGroupPriority).thenComparing(g -> g.urgency()).thenComparing(g -> g.pickupPoint().name()))
+                .sorted(Comparator.comparing(this::getGroupPriority).thenComparing(LocationGroup::urgency).thenComparing(g -> g.pickupPoint() != null ? g.pickupPoint().name() : ""))
                 .collect(Collectors.toList());
     }
 
