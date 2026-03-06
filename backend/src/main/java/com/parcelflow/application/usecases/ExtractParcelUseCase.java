@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.UUID;
+import com.parcelflow.domain.model.BarcodeType;
 
 public class ExtractParcelUseCase {
 
@@ -65,16 +66,36 @@ public class ExtractParcelUseCase {
                 ParcelId parcelId = existingParcelOpt.map(Parcel::id).orElseGet(ParcelId::random);
                 ParcelStatus status = existingParcelOpt.map(Parcel::status).orElse(ParcelStatus.AVAILABLE);
 
+                // Intelligent merge: keep old data if new extraction is missing it
+                java.time.LocalDate finalExpirationDate = metadata.expirationDate() != null ?
+                        metadata.expirationDate() :
+                        existingParcelOpt.map(Parcel::deadline).orElse(null);
+
+                String finalPickupCode = metadata.pickupCode() != null ?
+                        metadata.pickupCode() :
+                        existingParcelOpt.map(Parcel::pickupCode).orElse(null);
+
+                String finalQrCodeUrl = metadata.qrCodeUrl() != null ?
+                        metadata.qrCodeUrl() :
+                        existingParcelOpt.map(Parcel::qrCodeUrl).orElse(null);
+
+                BarcodeType finalBarcodeType = metadata.barcodeType() != null && metadata.barcodeType() != BarcodeType.NONE ?
+                        metadata.barcodeType() :
+                        existingParcelOpt.map(Parcel::barcodeType).orElse(BarcodeType.NONE);
+
+                PickupPoint finalPickupPoint = pickupPoint != null ? pickupPoint :
+                        existingParcelOpt.map(Parcel::pickupPoint).orElse(null);
+
                 Parcel parcel = new Parcel(
                     parcelId,
                     cleanTrackingNumber,
                     metadata.carrier(),
-                    metadata.expirationDate(),
+                    finalExpirationDate,
                     status,
-                    pickupPoint,
-                    metadata.pickupCode(),
-                    metadata.qrCodeUrl(),
-                    metadata.barcodeType()
+                    finalPickupPoint,
+                    finalPickupCode,
+                    finalQrCodeUrl,
+                    finalBarcodeType
                 );
                 
                 repositoryPort.save(parcel);
