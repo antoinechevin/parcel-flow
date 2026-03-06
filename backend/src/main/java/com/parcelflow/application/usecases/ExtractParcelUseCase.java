@@ -86,6 +86,16 @@ public class ExtractParcelUseCase {
                 PickupPoint finalPickupPoint = pickupPoint != null ? pickupPoint :
                         existingParcelOpt.map(Parcel::pickupPoint).orElse(null);
 
+                // If completely unknown, provide a generic fallback
+                if (finalPickupPoint == null) {
+                    finalPickupPoint = new PickupPoint(
+                        "loc-unknown",
+                        "Point Relais (Adresse non détectée)",
+                        "Point Relais (Adresse non détectée)",
+                        null
+                    );
+                }
+
                 Parcel parcel = new Parcel(
                     parcelId,
                     cleanTrackingNumber,

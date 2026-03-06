@@ -128,7 +128,7 @@ public class ChronopostDivertedExtractionAdapter implements ParcelExtractionPort
             return extracted;
         }
 
-        return "Point Relais Diverted";
+        return null;
     }
 
     private String extractQrCodeUrl(Document doc) {

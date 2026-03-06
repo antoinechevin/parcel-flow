@@ -174,6 +174,6 @@ public class ChronopostPickupExtractionAdapter implements ParcelExtractionPort {
             return m.group(1).trim();
         }
         
-        return "Point Relais (Adresse non détectée)";
+        return null;
     }
 }
