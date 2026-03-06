@@ -265,7 +265,7 @@ dding:24px; margin:0 0 16px 0; font-size: 14px;">
   </div>
   <div style=3D"font-size:24px; font-weight:700; color:#222; margin-bottom:=
 16px;">
-    <b>17/12/2025</b>
+    <b>{{FUTURE_DATE_VINTED}}</b>
   </div>
  =20
    <div style=3D"font-size:12px; margin-bottom:16px;">

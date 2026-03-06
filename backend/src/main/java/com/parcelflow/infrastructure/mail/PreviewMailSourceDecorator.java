@@ -28,12 +28,7 @@ public class PreviewMailSourceDecorator implements MailSourcePort {
     private static final Logger log = LoggerFactory.getLogger(PreviewMailSourceDecorator.class);
     private final MailSourcePort delegate;
 
-    // Regex for dynamic tracking code replacements
-    private static final Pattern MONDIAL_RELAY_TRACKING = Pattern.compile("(Votre colis\\s+)(\\d+)(\\s+est disponible)");
-    private static final Pattern MONDIAL_RELAY_HTML_TRACKING = Pattern.compile("(<strong>)(\\d+)(</strong>)");
-    private static final Pattern CHRONOPOST_TRACKING = Pattern.compile("(n°(?:\\s*(?:de colis)?\\s*<[^>]+>\\s*|\\s+))([A-Z0-9]{10,20})", Pattern.CASE_INSENSITIVE);
-    private static final Pattern VINTED_GO_TRACKING = Pattern.compile("(numéro de suivi(?:\\s*<[^>]+>\\s*)*\\s*)([A-Z0-9]{10,20})", Pattern.CASE_INSENSITIVE);
-    private static final Pattern EXPIRATION_DATE_PATTERN = Pattern.compile("(jusqu'au\\s+(?:<[^>]+>)*)\\s*[a-zA-Z]+\\s+\\d+\\s+[a-zA-Z]+\\s+\\d{4}");
+    private boolean injectedMockOnce = false;
 
     public PreviewMailSourceDecorator(MailSourcePort delegate) {
         this.delegate = delegate;
@@ -46,13 +41,28 @@ public class PreviewMailSourceDecorator implements MailSourcePort {
         MailFetchResult realResult = delegate.fetchEmails(since, query);
         List<InboundEmail> combinedEmails = new ArrayList<>(realResult.emails());
 
-        // 2. Fetch and inject mock emails from classpath
-        try {
-            List<InboundEmail> mockEmails = loadMockEmails();
-            combinedEmails.addAll(mockEmails);
-            log.info("Injected {} mock emails into fetch results", mockEmails.size());
-        } catch (Exception e) {
-            log.error("Failed to load mock emails. Proceeding with real emails only.", e);
+        // 2. Fetch and inject mock emails only once per JVM startup/polling run cycle to avoid spamming
+        // Since EmailPollingOrchestrator loops per provider, we limit the logging and overhead.
+        if (!injectedMockOnce) {
+            try {
+                List<InboundEmail> mockEmails = loadMockEmails();
+                combinedEmails.addAll(mockEmails);
+                log.info("Injected {} mock emails into fetch results", mockEmails.size());
+                injectedMockOnce = true;
+            } catch (Exception e) {
+                log.error("Failed to load mock emails. Proceeding with real emails only.", e);
+            }
+        } else {
+            // We still need to return them on subsequent calls if the orchestrator loops,
+            // but the orchestrator calls this for EACH provider and processes them all anyway.
+            // Wait, if we don't return them on the 2nd provider, the 2nd provider won't see its mock email!
+            // Let's just suppress the log, but keep returning the list.
+            try {
+                List<InboundEmail> mockEmails = loadMockEmails();
+                combinedEmails.addAll(mockEmails);
+            } catch (Exception e) {
+                // silent
+            }
         }
 
         // Return combined list, keeping the real watermark
@@ -88,9 +98,11 @@ public class PreviewMailSourceDecorator implements MailSourcePort {
         // Force reception date to NOW so packages are not expired
         ZonedDateTime receivedAt = ZonedDateTime.now();
 
+        // To be absolutely robust, we use placeholders directly in the .eml files.
+        // Read the body, but note that reading via MimeMessage extracts the decoded text.
+        // If the placeholders were in the original file, they should survive here.
         String rawBody = extractBody(msg);
 
-        // Mock the tracking number to visually indicate it's a test package
         String mockedBody = mockTrackingNumberInBody(rawBody);
 
         return new InboundEmail(id, subject, mockedBody, sender, receivedAt);
@@ -121,40 +133,18 @@ public class PreviewMailSourceDecorator implements MailSourcePort {
         if (body == null) return null;
         String mocked = body;
 
-        // Force a future expiration date for Chronopost/Vinted
+        // 1. Replace hardcoded placeholders we manually put in the .eml files
         DateTimeFormatter frenchFormatter = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy", Locale.FRENCH);
         String futureDateStr = ZonedDateTime.now().plusDays(5).format(frenchFormatter);
-        Matcher dateMatcher = EXPIRATION_DATE_PATTERN.matcher(mocked);
-        if (dateMatcher.find()) {
-            // Replace the date part while keeping the "jusqu'au" and any HTML tags intact
-            mocked = dateMatcher.replaceAll("$1 " + futureDateStr);
-        }
+        mocked = mocked.replace("{{FUTURE_DATE_CHRONO}}", futureDateStr);
 
-        // Try to replace numbers for Mondial Relay
-        Matcher m1 = MONDIAL_RELAY_TRACKING.matcher(mocked);
-        if (m1.find()) {
-            mocked = m1.replaceAll("$1MOCK-$2$3");
-        }
-        Matcher m2 = MONDIAL_RELAY_HTML_TRACKING.matcher(mocked);
-        if (m2.find()) {
-            mocked = m2.replaceAll("$1MOCK-$2$3");
-        }
+        DateTimeFormatter slashFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String futureSlashDateStr = ZonedDateTime.now().plusDays(5).format(slashFormatter);
+        mocked = mocked.replace("{{FUTURE_DATE_VINTED}}", futureSlashDateStr);
 
-        // Try Chronopost
-        Matcher m3 = CHRONOPOST_TRACKING.matcher(mocked);
-        if (m3.find()) {
-             mocked = m3.replaceAll("$1MOCK-$2");
-        }
-
-        // Try Vinted
-        Matcher m4 = VINTED_GO_TRACKING.matcher(mocked);
-        if (m4.find()) {
-             mocked = m4.replaceAll("$1MOCK-$2");
-        }
-
-        // Add a global visual marker if no regex matched perfectly but we know it's a mock
-        if (mocked.equals(body)) {
-             mocked = body.replace("<body", "<body data-mock=\"true\"");
+        // 2. Add visual marker
+        if (!mocked.contains("data-mock")) {
+             mocked = mocked.replace("<body", "<body data-mock=\"true\"");
         }
 
         return mocked;

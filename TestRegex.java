@@ -3,11 +3,16 @@ import java.util.regex.Pattern;
 
 public class TestRegex {
     public static void main(String[] args) {
-        String chronoMail = "  N° de colis <strong>XW12345678TS</strong><br />\n";
-        String chronoMail2 = "  n° <a href=\"#\">XW12345678TS</a>";
-        Pattern CHRONOPOST_TRACKING = Pattern.compile("(n°(?:\\s*(?:de colis)?\\s*<[^>]+>\\s*|\\s+))([A-Z0-9]{10,20})", Pattern.CASE_INSENSITIVE);
+        String text = "est disponible à Panier Sympa L Alambic jusqu'au\n                  <strong>lundi 19 janvier 2026</strong>. Passé cette date, il sera";
 
-        System.out.println("1: " + CHRONOPOST_TRACKING.matcher(chronoMail).replaceAll("$1MOCK-$2"));
-        System.out.println("2: " + CHRONOPOST_TRACKING.matcher(chronoMail2).replaceAll("$1MOCK-$2"));
+        Pattern EXPIRATION_DATE_PATTERN = Pattern.compile("(jusqu'au\\s+(?:<[^>]+>)*)\\s*[a-zA-Z]+\\s+\\d+\\s+[a-zA-Z]+\\s+\\d{4}");
+
+        Matcher matcher = EXPIRATION_DATE_PATTERN.matcher(text);
+        if (matcher.find()) {
+            System.out.println("Match found!");
+            System.out.println(matcher.replaceAll("$1" + " DATE REMPLACEE"));
+        } else {
+            System.out.println("NO MATCH!");
+        }
     }
 }
