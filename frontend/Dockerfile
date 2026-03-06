@@ -31,6 +31,9 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Copy the built files from the builder stage to Nginx html directory
 COPY --from=builder /app/dist /usr/share/nginx/html
 
+# Copy custom Nginx configuration to enable API proxying
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Expose port 80
 EXPOSE 80
 

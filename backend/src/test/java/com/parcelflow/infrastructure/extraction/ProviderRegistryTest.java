@@ -22,6 +22,9 @@ class ProviderRegistryTest {
     private ChronopostPickupExtractionAdapter chronopostAdapter;
 
     @Autowired
+    private ChronopostDivertedExtractionAdapter chronopostDivertedAdapter;
+
+    @Autowired
     private MondialRelayExtractionAdapter mondialRelayAdapter;
 
     @Autowired
@@ -31,7 +34,11 @@ class ProviderRegistryTest {
     void should_contain_all_providers_with_correct_queries() {
         List<ProviderDefinition> providers = registry.getAllProviders();
         
-        assertEquals(3, providers.size());
+        assertEquals(4, providers.size());
+
+        ProviderDefinition chronopostDiverted = findProvider(providers, "Chronopost Diverted");
+        assertEquals("from:(chronopost@network1.pickup.fr OR chronopost@network2.pickup.fr)", chronopostDiverted.query());
+        assertSame(chronopostDivertedAdapter, chronopostDiverted.adapter());
 
         ProviderDefinition chronopost = findProvider(providers, "Chronopost");
         assertEquals("from:(chronopost@network1.pickup.fr OR chronopost@network2.pickup.fr)", chronopost.query());
