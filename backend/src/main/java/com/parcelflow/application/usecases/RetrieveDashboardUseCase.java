@@ -22,6 +22,8 @@ public class RetrieveDashboardUseCase {
         this.urgencyCalculator = urgencyCalculator;
     }
 
+    private static final PickupPoint UNKNOWN_PICKUP_POINT = new PickupPoint("unknown", "Lieu inconnu", "", "");
+
     public List<LocationGroup> retrieve() {
         LocalDate today = LocalDate.now(urgencyCalculator.getClock());
 
@@ -34,7 +36,7 @@ public class RetrieveDashboardUseCase {
                     }
                     return p;
                 })
-                .collect(Collectors.groupingBy(Parcel::pickupPoint))
+                .collect(Collectors.groupingBy(p -> p.pickupPoint() != null ? p.pickupPoint() : UNKNOWN_PICKUP_POINT))
                 .entrySet().stream()
                 .map(entry -> {
                     List<Parcel> parcels = entry.getValue();
